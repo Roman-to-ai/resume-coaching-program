@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boss 直聘 - 岗位查看</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --primary: #00a2ff;
+    --primary-hover: #0088dd;
+    --bg: #f5f6f8;
+    --card-bg: #fff;
+    --border: #e8e8e8;
+    --text: #333;
+    --text-secondary: #666;
+    --text-muted: #999;
+    --salary-color: #f60;
+    --tag-bg: #e8f5ff;
+    --tag-color: #00a2ff;
+    --radius: 8px;
+    --shadow: 0 1px 4px rgba(0,0,0,.08);
+    --header-h: 60px;
+    --topbar-h: 52px;
+  }
+
+  html, body { height: 100%; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); }
+
+  /* ===== Header ===== */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--header-h); background: var(--card-bg); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 24px; gap: 16px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+  .header .logo { font-size: 18px; font-weight: 700; color: var(--primary); white-space: nowrap; }
+  .header .logo span { color: var(--text); }
+
+  .exp-tabs { display: flex; gap: 4px; background: var(--bg); padding: 3px; border-radius: var(--radius); }
+  .exp-tab {
+    padding: 6px 20px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    background: transparent; transition: all .2s; white-space: nowrap;
+  }
+  .exp-tab:hover { color: var(--text); }
+  .exp-tab.active { background: var(--primary); color: #fff; box-shadow: 0 1px 3px rgba(0,162,255,.3); }
+  .exp-tab .count { font-weight: 400; font-size: 11px; opacity: .7; margin-left: 2px; }
+
+  .search-box { flex: 1; max-width: 360px; position: relative; margin-left: auto; }
+  .search-box input {
+    width: 100%; padding: 7px 14px 7px 36px; border: 1px solid var(--border);
+    border-radius: 20px; font-size: 13px; outline: none; background: var(--bg);
+    transition: all .2s;
+  }
+  .search-box input:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(0,162,255,.1); }
+  .search-box .icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 14px; pointer-events: none; }
+  .search-box .clear-btn {
+    position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+    border: none; background: none; cursor: pointer; color: var(--text-muted);
+    font-size: 16px; display: none; line-height: 1; padding: 2px 4px;
+  }
+  .search-box .clear-btn:hover { color: var(--text); }
+
+  .config-btn {
+    border: none; background: none; cursor: pointer; font-size: 20px;
+    color: var(--text-muted); padding: 4px 8px; border-radius: 6px;
+    transition: all .2s; line-height: 1; margin-left: 4px; flex-shrink: 0;
+  }
+  .config-btn:hover { color: var(--primary); background: var(--bg); }
+
+  /* ===== Config Modal ===== */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.4); backdrop-filter: blur(2px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+
+  .modal {
+    background: var(--card-bg); border-radius: 12px; width: 480px; max-width: 92vw;
+    max-height: 85vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0,0,0,.15);
+    animation: modalIn .2s ease;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: scale(.96) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 24px; border-bottom: 1px solid var(--border);
+  }
+  .modal-header h2 { font-size: 17px; font-weight: 600; }
+  .modal-close {
+    border: none; background: none; cursor: pointer; font-size: 20px;
+    color: var(--text-muted); padding: 4px; line-height: 1; border-radius: 4px;
+  }
+  .modal-close:hover { color: var(--text); background: var(--bg); }
+
+  .modal-body { padding: 20px 24px; }
+
+  .form-group { margin-bottom: 16px; }
+  .form-group:last-child { margin-bottom: 0; }
+  .form-label {
+    display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    margin-bottom: 5px;
+  }
+  .form-label .hint { font-weight: 400; color: var(--text-muted); font-size: 12px; }
+
+  .form-input {
+    width: 100%; padding: 8px 12px; border: 1px solid var(--border);
+    border-radius: 6px; font-size: 13px; outline: none; transition: all .2s;
+    font-family: inherit; background: var(--card-bg);
+  }
+  .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,162,255,.1); }
+  .form-input::placeholder { color: #bbb; }
+
+  .provider-tabs {
+    display: flex; gap: 0; background: var(--bg); border-radius: 8px; padding: 3px;
+    margin-bottom: 20px;
+  }
+  .provider-tab {
+    flex: 1; padding: 9px 0; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 13px; font-weight: 500; color: var(--text-secondary);
+    background: transparent; transition: all .2s; text-align: center;
+  }
+  .provider-tab:hover { color: var(--text); }
+  .provider-tab.active { background: var(--card-bg); color: var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+
+  .modal-footer {
+    padding: 14px 24px; border-top: 1px solid var(--border);
+    display: flex; justify-content: flex-end; gap: 10px;
+  }
+  .modal-footer button {
+    padding: 8px 24px; border: none; border-radius: 6px; cursor: pointer;
+    font-size: 13px; font-weight: 500; transition: all .2s;
+  }
+  .btn-cancel { background: var(--bg); color: var(--text-secondary); }
+  .btn-cancel:hover { background: #e0e0e0; }
+  .btn-save { background: var(--primary); color: #fff; }
+  .btn-save:hover { background: var(--primary-hover); }
+  .btn-save:disabled { opacity: .5; cursor: not-allowed; }
+
+  .config-status {
+    font-size: 12px; padding: 6px 12px; border-radius: 6px; margin-top: 12px; display: none;
+  }
+  .config-status.success { display: block; background: #e8f5e9; color: #2e7d32; }
+  .config-status.error { display: block; background: #fbe9e7; color: #c62828; }
+
+  .config-indicator {
+    display: inline-flex; align-items: center; gap: 4px; font-size: 11px;
+    color: var(--text-muted); margin-left: 8px;
+  }
+  .config-indicator.configured { color: #2e7d32; }
+  .config-indicator .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted);
+  }
+  .config-indicator.configured .dot { background: #2e7d32; }
+
+  /* ===== Resume Modal ===== */
+  .resume-textarea {
+    width: 100%; min-height: 320px; padding: 14px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 13px; line-height: 1.7; resize: vertical;
+    outline: none; font-family: inherit; transition: all .2s;
+    background: var(--card-bg); color: var(--text);
+  }
+  .resume-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,162,255,.1); }
+  .resume-textarea::placeholder { color: #bbb; }
+
+  .resume-indicator {
+    display: inline-flex; align-items: center; gap: 4px; font-size: 11px;
+    color: var(--text-muted); margin-left: 4px;
+  }
+  .resume-indicator.saved { color: #2e7d32; }
+  .resume-indicator .dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted);
+  }
+  .resume-indicator.saved .dot { background: #2e7d32; }
+
+  .resume-stats {
+    font-size: 12px; color: var(--text-muted); margin-top: 6px;
+    display: flex; gap: 16px;
+  }
+
+  /* ===== Smart Search ===== */
+  .smart-search-btn {
+    border: none; background: linear-gradient(135deg, #667eea, #764ba2);
+    cursor: pointer; font-size: 13px; font-weight: 600; color: #fff;
+    padding: 6px 16px; border-radius: 20px; transition: all .2s;
+    line-height: 1; flex-shrink: 0; white-space: nowrap;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .smart-search-btn:hover { transform: scale(1.04); box-shadow: 0 2px 12px rgba(102,126,234,.4); }
+  .smart-search-btn:active { transform: scale(.98); }
+
+  .smart-search-textarea {
+    width: 100%; min-height: 100px; padding: 12px 14px; border: 1px solid var(--border);
+    border-radius: 8px; font-size: 14px; line-height: 1.7; resize: vertical;
+    outline: none; font-family: inherit; transition: all .2s;
+    background: var(--card-bg); color: var(--text);
+  }
+  .smart-search-textarea:focus { border-color: #764ba2; box-shadow: 0 0 0 3px rgba(118,75,162,.12); }
+  .smart-search-textarea::placeholder { color: #bbb; }
+
+  .smart-search-info {
+    font-size: 12px; color: var(--text-muted); padding: 8px 0 4px;
+    line-height: 1.6;
+  }
+  .smart-search-info b { color: var(--text-secondary); }
+
+  .smart-search-loading {
+    display: none; align-items: center; gap: 10px; padding: 20px 0; justify-content: center;
+  }
+  .smart-search-loading.show { display: flex; }
+  .smart-search-spinner {
+    width: 20px; height: 20px; border: 3px solid var(--border);
+    border-top-color: #764ba2; border-radius: 50%; animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .smart-search-loading .text { font-size: 13px; color: var(--text-muted); }
+
+  .smart-stream {
+    display: none; margin-top: 8px; max-height: 200px; overflow-y: auto;
+    background: #f8f6ff; border-radius: 8px; padding: 12px 14px;
+    border: 1px solid #e8e0f0;
+  }
+  .smart-stream.show { display: block; }
+  .smart-stream-content {
+    font-size: 13px; line-height: 1.6; color: var(--text-secondary);
+    white-space: pre-wrap; word-break: break-word;
+  }
+  .smart-stream-content .stream-label {
+    font-size: 11px; font-weight: 600; color: #764ba2; margin-bottom: 4px; display: block;
+  }
+
+  .smart-search-hint {
+    text-align: center; padding: 40px 20px; color: var(--text-muted);
+  }
+  .smart-search-hint .icon { font-size: 48px; margin-bottom: 12px; }
+  .smart-search-hint .title { font-size: 15px; font-weight: 500; color: var(--text-secondary); margin-bottom: 8px; }
+  .smart-search-hint .desc { font-size: 12px; line-height: 1.6; }
+
+  .smart-search-result-item {
+    padding: 8px 12px; margin: 4px 0; border-radius: 6px; background: #f8f6ff;
+    border-left: 3px solid #764ba2; font-size: 13px; line-height: 1.5;
+  }
+  .smart-search-result-item .reason { color: var(--text-secondary); margin-top: 2px; font-size: 12px; }
+  .smart-search-result-item .score {
+    display: inline-block; font-size: 11px; font-weight: 600; color: #764ba2;
+    margin-right: 6px;
+  }
+
+  .smart-preview {
+    display: none; margin-top: 10px; max-height: 300px; overflow-y: auto;
+    border: 1px solid #e0d8f0; border-radius: 8px; background: #faf8ff;
+  }
+  .smart-preview.show { display: block; }
+  .smart-preview .sp-title {
+    padding: 10px 14px; font-size: 13px; font-weight: 600; color: var(--text-secondary);
+    border-bottom: 1px solid #e0d8f0; background: #f4f0ff;
+    position: sticky; top: 0; z-index: 1;
+  }
+  .smart-preview .sp-item {
+    display: flex; align-items: center; gap: 10px; padding: 8px 14px;
+    border-bottom: 1px solid #f0ecf8; font-size: 13px; cursor: default;
+  }
+  .smart-preview .sp-item:last-child { border-bottom: none; }
+  .smart-preview .sp-score {
+    flex-shrink: 0; width: 36px; text-align: center; font-weight: 700; font-size: 12px;
+    color: #764ba2; padding: 2px 6px; border-radius: 4px; background: #ede6ff;
+  }
+  .smart-preview .sp-info { flex: 1; min-width: 0; }
+  .smart-preview .sp-title-text { font-weight: 500; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .smart-preview .sp-meta { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .smart-preview .sp-reason { font-size: 11px; color: #764ba2; margin-top: 1px; }
+
+  .exit-smart-btn {
+    border: none; background: none; cursor: pointer; font-size: 12px;
+    color: #764ba2; padding: 2px 8px; border-radius: 4px; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 3px;
+  }
+  .exit-smart-btn:hover { background: #f0edff; }
+
+  /* ===== Main Layout ===== */
+  .main {
+    display: flex; height: 100vh; padding-top: calc(var(--header-h) + var(--topbar-h));
+  }
+
+  /* ===== Left Panel ===== */
+  .left-panel {
+    width: 380px; min-width: 320px; border-right: 1px solid var(--border);
+    background: var(--card-bg); display: flex; flex-direction: column; overflow: hidden;
+  }
+  .left-panel .topbar {
+    padding: 10px 16px; border-bottom: 1px solid var(--border);
+    font-size: 13px; color: var(--text-secondary); background: var(--bg);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .left-panel .topbar .result-count { font-weight: 500; color: var(--text); }
+  .left-panel .topbar .result-count b { color: var(--primary); }
+
+  .job-list { flex: 1; overflow-y: auto; }
+  .job-list::-webkit-scrollbar { width: 6px; }
+  .job-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+  .job-list::-webkit-scrollbar-track { background: transparent; }
+
+  .job-card {
+    padding: 14px 16px; border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: all .15s;
+  }
+  .job-card:hover { background: #f8faff; }
+  .job-card.active { background: #e8f5ff; border-left: 3px solid var(--primary); padding-left: 13px; }
+  .job-card .jc-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .job-card .jc-title { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .job-card .jc-salary { font-size: 15px; font-weight: 700; color: var(--salary-color); white-space: nowrap; margin-left: 8px; }
+  .job-card .jc-company { font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
+  .job-card .jc-info { font-size: 12px; color: var(--text-muted); display: flex; gap: 12px; flex-wrap: wrap; }
+  .job-card .jc-info span { white-space: nowrap; }
+  .job-card .jc-skills { margin-top: 6px; display: flex; gap: 4px; flex-wrap: wrap; }
+  .job-card .jc-skills .skill-tag {
+    font-size: 11px; padding: 1px 8px; border-radius: 10px;
+    background: var(--tag-bg); color: var(--tag-color); max-width: 120px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+
+  /* ===== Right Panel ===== */
+  .right-panel {
+    flex: 1; overflow-y: auto; background: var(--bg);
+    padding: 24px 32px; min-width: 0;
+  }
+  .right-panel::-webkit-scrollbar { width: 6px; }
+  .right-panel::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+  .right-panel::-webkit-scrollbar-track { background: transparent; }
+
+  .detail-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; color: var(--text-muted); font-size: 15px;
+  }
+  .detail-empty .icon { font-size: 64px; margin-bottom: 16px; opacity: .3; }
+
+  .detail-header {
+    background: var(--card-bg); border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow); margin-bottom: 16px;
+  }
+  .detail-header .dh-row1 { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+  .detail-header .dh-title { font-size: 22px; font-weight: 700; }
+  .detail-header .dh-salary { font-size: 22px; font-weight: 700; color: var(--salary-color); white-space: nowrap; }
+  .detail-header .dh-company { font-size: 16px; color: var(--text); margin-bottom: 4px; }
+  .detail-header .dh-company span { cursor: pointer; }
+  .detail-header .dh-company span:hover { color: var(--primary); }
+  .detail-header .dh-meta { font-size: 13px; color: var(--text-secondary); display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  .detail-header .dh-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .detail-header .dh-tags .tag {
+    font-size: 12px; padding: 2px 12px; border-radius: 12px; background: var(--tag-bg); color: var(--tag-color);
+  }
+  .detail-header .dh-link { margin-top: 12px; }
+  .detail-header .dh-link a {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 13px; color: var(--primary); text-decoration: none;
+    padding: 6px 16px; border: 1px solid var(--primary); border-radius: 20px;
+    transition: all .2s;
+  }
+  .detail-header .dh-link a:hover { background: var(--primary); color: #fff; }
+
+  .greeting-btn {
+    display: inline-flex; align-items: center; gap: 4px; margin-top: 10px;
+    font-size: 13px; color: #fff; text-decoration: none;
+    padding: 7px 20px; border: none; border-radius: 20px; cursor: pointer;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    transition: all .2s; font-weight: 500;
+  }
+  .greeting-btn:hover { transform: scale(1.03); box-shadow: 0 2px 12px rgba(245,87,108,.35); }
+  .greeting-btn:active { transform: scale(.98); }
+  .greeting-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  .greeting-results {
+    margin-top: 12px; background: #fafafa; border-radius: 8px;
+    padding: 14px; border: 1px solid var(--border); display: none;
+  }
+  .greeting-results.show { display: block; }
+  .greeting-results .gr-title {
+    font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;
+  }
+  .greeting-item {
+    padding: 10px 12px; margin-bottom: 8px; border-radius: 6px;
+    background: var(--card-bg); border-left: 3px solid #f5576c;
+    font-size: 13px; line-height: 1.6; color: var(--text);
+  }
+  .greeting-item:last-child { margin-bottom: 0; }
+  .greeting-item .glabel {
+    display: inline-block; font-size: 11px; font-weight: 600; color: #f5576c;
+    background: #fef0f0; padding: 1px 8px; border-radius: 8px; margin-bottom: 4px;
+  }
+  .greeting-item .gtext { white-space: pre-wrap; }
+  .greeting-loading {
+    display: none; align-items: center; gap: 8px; padding: 8px 0;
+    font-size: 13px; color: var(--text-muted);
+  }
+  .greeting-loading.show { display: flex; }
+  .greeting-spinner {
+    width: 16px; height: 16px; border: 2px solid var(--border);
+    border-top-color: #f5576c; border-radius: 50%; animation: spin .7s linear infinite;
+  }
+
+  .greeting-copy-btn {
+    float: right; border: none; background: none; cursor: pointer;
+    font-size: 12px; color: var(--text-muted); padding: 2px 6px; border-radius: 4px;
+  }
+  .greeting-copy-btn:hover { color: var(--primary); background: #f0f0f0; }
+
+  .detail-body {
+    background: var(--card-bg); border-radius: var(--radius); padding: 24px;
+    box-shadow: var(--shadow);
+  }
+  .detail-body .section-title {
+    font-size: 16px; font-weight: 600; margin-bottom: 12px;
+    padding-bottom: 8px; border-bottom: 2px solid var(--primary);
+    display: inline-block;
+  }
+  .detail-body .jd-content {
+    font-size: 14px; line-height: 1.8; color: var(--text);
+  }
+  .detail-body .jd-content p { margin-bottom: 8px; }
+  .detail-body .jd-content ul, .detail-body .jd-content ol { padding-left: 20px; margin-bottom: 8px; }
+  .detail-body .jd-content li { margin-bottom: 4px; }
+  .detail-body .jd-content strong { font-weight: 600; }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 860px) {
+    .left-panel { width: 100%; min-width: 0; }
+    .right-panel { display: none; }
+    .right-panel.show { display: block; position: fixed; top: calc(var(--header-h) + var(--topbar-h)); left: 0; right: 0; bottom: 0; z-index: 50; }
+    .header { flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 6px; }
+    .header .logo { font-size: 15px; }
+    .exp-tabs { flex-wrap: wrap; }
+    .exp-tab { padding: 4px 12px; font-size: 12px; }
+    .search-box { max-width: 100%; }
+    .main { padding-top: 100px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Data Files (loaded as JS to avoid CORS) -->
+<script src="1-3年.js"></script>
+<script src="1-3年_details.js"></script>
+<script src="3-5年.js"></script>
+<script src="3-5年_details.js"></script>
+<script src="5-10年.js"></script>
+<script src="5-10年_details.js"></script>
+
+<!-- ===== Header ===== -->
+<div class="header">
+  <div class="logo">Boss<span>直聘</span> <span class="config-indicator" id="configIndicator"><span class="dot"></span> 未配置</span><span class="resume-indicator" id="resumeIndicator"><span class="dot"></span> 无简历</span></div>
+
+  <div class="exp-tabs" id="expTabs">
+    <button class="exp-tab active" data-exp="1-3年">
+      1-3年 <span class="count" id="count-1-3"></span>
+    </button>
+    <button class="exp-tab" data-exp="3-5年">
+      3-5年 <span class="count" id="count-3-5"></span>
+    </button>
+    <button class="exp-tab" data-exp="5-10年">
+      5-10年 <span class="count" id="count-5-10"></span>
+    </button>
+  </div>
+
+  <div class="search-box">
+    <span class="icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="按岗位名称搜索..." autocomplete="off">
+    <button class="clear-btn" id="clearBtn">✕</button>
+  </div>
+
+  <button class="config-btn" id="configBtn" title="配置 AI 接口">⚙️</button>
+  <button class="config-btn" id="resumeBtn" title="我的简历">📄</button>
+  <button class="smart-search-btn" id="smartSearchBtn">✨ AI 智能搜索</button>
+</div>
+
+<!-- ===== Config Modal ===== -->
+<div class="modal-overlay" id="configOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>⚙️ AI 接口配置</h2>
+      <button class="modal-close" id="configCloseBtn">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Provider Selection -->
+      <div class="provider-tabs">
+        <button class="provider-tab active" data-provider="xiaomi">小米模拟</button>
+        <button class="provider-tab" data-provider="deepseek">DS 官网模型</button>
+      </div>
+
+      <!-- Xiaomi fields -->
+      <div id="fieldsXiaomi">
+        <div class="form-group">
+          <label class="form-label">API 地址 <span class="hint">(Endpoint)</span></label>
+          <input class="form-input" id="cfgXiaomiUrl" placeholder="https://api.xiaomi.com/v1/chat/completions" value="">
+        </div>
+        <div class="form-group">
+          <label class="form-label">API Key</label>
+          <input class="form-input" id="cfgXiaomiKey" type="password" placeholder="sk-xxxxxxxxxxxxxxxx" value="">
+        </div>
+        <div class="form-group">
+          <label class="form-label">模型名称</label>
+          <input class="form-input" id="cfgXiaomiModel" placeholder="xiaomi-ai-model" value="xiaomi-model">
+        </div>
+      </div>
+
+      <!-- DeepSeek fields -->
+      <div id="fieldsDeepseek" style="display:none;">
+        <div class="form-group">
+          <label class="form-label">API 地址 <span class="hint">(Endpoint)</span></label>
+          <input class="form-input" id="cfgDsUrl" placeholder="https://api.deepseek.com/v1/chat/completions" value="https://api.deepseek.com/v1/chat/completions">
+        </div>
+        <div class="form-group">
+          <label class="form-label">API Key</label>
+          <input class="form-input" id="cfgDsKey" type="password" placeholder="sk-xxxxxxxxxxxxxxxx" value="">
+        </div>
+        <div class="form-group">
+          <label class="form-label">模型名称</label>
+          <input class="form-input" id="cfgDsModel" placeholder="deepseek-chat" value="deepseek-chat">
+        </div>
+      </div>
+
+      <div class="config-status" id="configStatus"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="configCancelBtn">取消</button>
+      <button class="btn-save" id="configSaveBtn">保存配置</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Resume Modal ===== -->
+<div class="modal-overlay" id="resumeOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>📄 我的简历</h2>
+      <button class="modal-close" id="resumeCloseBtn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">简历内容 <span class="hint">(纯文本，粘贴你的完整简历)</span></label>
+        <textarea class="resume-textarea" id="resumeText" placeholder="请在此粘贴你的简历内容，例如：
+
+个人信息：姓名 / 电话 / 邮箱 / 求职意向
+
+教育背景：
+20xx.09 - 20xx.06  xx大学  xx专业 本科
+
+工作经历：
+20xx.07 - 至今  xx公司  xx岗位
+- 负责xxx
+- 完成xxx
+
+技能标签：
+Java, Spring Boot, MySQL, Redis, Docker"></textarea>
+      </div>
+      <div class="resume-stats">
+        <span id="resumeCharCount">0 字</span>
+        <span id="resumeLineCount">0 行</span>
+      </div>
+      <div class="config-status" id="resumeStatus"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="resumeCancelBtn">取消</button>
+      <button class="btn-save" id="resumeSaveBtn">保存简历</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Smart Search Modal ===== -->
+<div class="modal-overlay" id="smartOverlay">
+  <div class="modal" style="width:560px;">
+    <div class="modal-header">
+      <h2>✨ AI 智能搜索</h2>
+      <button class="modal-close" id="smartCloseBtn">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="smart-search-info">
+        将结合你的 <b>简历</b> 和当前 <b id="smartExpLabel">1-3年</b> 的 <b id="smartJobCount">0</b> 个岗位，用 AI 帮你筛选最匹配的职位。
+      </div>
+      <div class="form-group">
+        <label class="form-label">你想要什么样的岗位？ <span class="hint">(用自然语言描述)</span></label>
+        <textarea class="smart-search-textarea" id="smartQuery" placeholder="例如：找离家近的、薪资高的、Java 相关的&#10;或者：找适合我背景的、有发展前景的&#10;或者：只保留 15K 以上、双休、不加班的外包岗位"></textarea>
+      </div>
+      <div class="smart-search-loading" id="smartLoading">
+        <div class="smart-search-spinner"></div>
+        <span class="text" id="smartLoadingText">AI 正在分析你的简历和岗位列表...</span>
+      </div>
+      <div class="smart-stream" id="smartStream">
+        <div class="smart-stream-content" id="smartStreamContent"></div>
+      </div>
+      <div class="smart-preview" id="smartPreview">
+        <div class="sp-title">📋 AI 筛选结果预览</div>
+        <div id="smartPreviewList"></div>
+      </div>
+      <div class="config-status" id="smartStatus"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" id="smartCancelBtn">取消</button>
+      <button class="btn-save" id="smartConfirmBtn" style="display:none;background:linear-gradient(135deg,#667eea,#764ba2);">✅ 确认替换列表</button>
+      <button class="btn-save" id="smartSendBtn" style="background:linear-gradient(135deg,#667eea,#764ba2);">🚀 开始筛选</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Topbar (left panel) + Main ===== -->
+<div class="main">
+  <div class="left-panel">
+    <div class="topbar">
+      <span>共 <span class="result-count" id="resultCount"><b>0</b></span> 个岗位
+        <span id="smartResultBadge" style="display:none;font-size:12px;color:#764ba2;margin-left:6px;"></span>
+      </span>
+      <span id="resultHint" style="font-size:12px;color:var(--text-muted);"></span>
+      <button class="exit-smart-btn" id="exitSmartBtn" style="display:none;">← 退出智能筛选</button>
+    </div>
+    <div class="job-list" id="jobList"></div>
+  </div>
+
+  <div class="right-panel" id="rightPanel">
+    <div class="detail-empty" id="detailEmpty">
+      <div class="icon">💼</div>
+      <div>请从左侧选择一个岗位查看详情</div>
+    </div>
+    <div class="detail-content" id="detailContent" style="display:none;"></div>
+  </div>
+</div>
+
+<script>
+// ===== Data Store — directly from the <script> tags above =====
+const DATA = {
+  '1-3年':  { jobs: window.jobs_1_3  || [], details: window.details_1_3  || {} },
+  '3-5年':  { jobs: window.jobs_3_5  || [], details: window.details_3_5  || {} },
+  '5-10年': { jobs: window.jobs_5_10 || [], details: window.details_5_10 || {} },
+};
+
+// ===== AI Config (localStorage) =====
+const CONFIG_KEY = 'boss_jobs_ai_config';
+
+const DEFAULT_CONFIG = {
+  provider: 'xiaomi',
+  xiaomi: { url: '', key: '', model: 'xiaomi-model' },
+  deepseek: { url: 'https://api.deepseek.com/v1/chat/completions', key: '', model: 'deepseek-chat' },
+};
+
+function loadConfig() {
+  try {
+    const raw = localStorage.getItem(CONFIG_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+    const saved = JSON.parse(raw);
+    // Merge with defaults to fill missing fields
+    return {
+      provider: saved.provider || 'xiaomi',
+      xiaomi: { ...DEFAULT_CONFIG.xiaomi, ...(saved.xiaomi || {}) },
+      deepseek: { ...DEFAULT_CONFIG.deepseek, ...(saved.deepseek || {}) },
+    };
+  } catch { return JSON.parse(JSON.stringify(DEFAULT_CONFIG)); }
+}
+
+function saveConfig(cfg) {
+  localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
+}
+
+let aiConfig = loadConfig();
+
+// ===== Resume (localStorage) =====
+const RESUME_KEY = 'boss_jobs_resume';
+
+function loadResume() {
+  try { return localStorage.getItem(RESUME_KEY) || ''; }
+  catch { return ''; }
+}
+
+function saveResume(text) {
+  localStorage.setItem(RESUME_KEY, text);
+}
+
+let resumeText = loadResume();
+
+function updateResumeIndicator() {
+  const el = document.getElementById('resumeIndicator');
+  if (resumeText && resumeText.trim().length > 10) {
+    el.className = 'resume-indicator saved';
+    el.innerHTML = '<span class="dot"></span> 已保存';
+  } else {
+    el.className = 'resume-indicator';
+    el.innerHTML = '<span class="dot"></span> 无简历';
+  }
+}
+
+function openResumeModal() {
+  resumeText = loadResume();
+  document.getElementById('resumeText').value = resumeText;
+  updateResumeStats();
+  document.getElementById('resumeStatus').className = 'config-status';
+  document.getElementById('resumeStatus').style.display = 'none';
+  document.getElementById('resumeOverlay').classList.add('show');
+}
+
+function closeResumeModal() {
+  document.getElementById('resumeOverlay').classList.remove('show');
+}
+
+function saveResumeModal() {
+  const text = document.getElementById('resumeText').value;
+  saveResume(text);
+  resumeText = text;
+  updateResumeIndicator();
+
+  const status = document.getElementById('resumeStatus');
+  status.className = 'config-status success';
+  const chars = text.length;
+  status.textContent = `✅ 简历已保存到本地缓存（${chars} 字）`;
+  status.style.display = 'block';
+
+  setTimeout(closeResumeModal, 1200);
+}
+
+function updateResumeStats() {
+  const text = document.getElementById('resumeText').value;
+  document.getElementById('resumeCharCount').textContent = `${text.length} 字`;
+  const lines = text ? text.split('\n').length : 0;
+  document.getElementById('resumeLineCount').textContent = `${lines} 行`;
+}
+
+// ===== Smart Search =====
+let smartSearchActive = false;
+let smartSearchResultIds = [];    // ordered job_ids from AI
+let smartSearchReasons = {};      // job_id -> {reason, score}
+let smartPendingIds = [];         // pending results awaiting confirmation
+let smartPendingReasons = {};
+
+function callAI(messages, onChunk) {
+  const cfg = loadConfig();
+  const provider = cfg.provider;
+  const providerCfg = cfg[provider];
+  if (!providerCfg || !providerCfg.key) {
+    throw new Error('请先在 ⚙️ 中配置 AI 接口的 API Key');
+  }
+
+  const url = providerCfg.url;
+  if (!url) throw new Error('API 地址未配置');
+
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', `Bearer ${providerCfg.key}`);
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        const raw = xhr.responseText || '';
+
+        if (xhr.status >= 200 && xhr.status < 300) {
+          let content = '';
+          try {
+            const resp = JSON.parse(raw);
+            // Standard OpenAI-compatible: choices[0].message.content
+            content = resp.choices?.[0]?.message?.content || '';
+            // Some reasoning models (deepseek-v4-flash) output reasoning_content
+            // but no content field — try to extract JSON from reasoning
+            if (!content && resp.choices?.[0]?.message?.reasoning_content) {
+              const reasoning = resp.choices?.[0]?.message?.reasoning_content || '';
+              // Try to extract JSON array from reasoning text
+              const arrMatch = reasoning.match(/\[[\s\S]*\]/);
+              if (arrMatch) {
+                try { JSON.parse(arrMatch[0]); content = arrMatch[0]; } catch {}
+              }
+              // If no array, try JSON object
+              if (!content) {
+                const objMatch = reasoning.match(/\{[\s\S]*\}/);
+                if (objMatch) {
+                  try { JSON.parse(objMatch[0]); content = objMatch[0]; } catch {}
+                }
+              }
+              // Last resort: use the full reasoning text as content
+              if (!content) content = reasoning;
+            }
+          } catch (e) {
+            reject(new Error(`JSON 解析失败: ${e.message}`));
+            return;
+          }
+
+          if (content) {
+            // Notify UI with full content (non-streaming, fires once)
+            if (onChunk) onChunk(content);
+            resolve(content);
+          } else {
+            const snippet = raw.slice(0, 400);
+            reject(new Error(`AI 返回内容为空。原始响应: ${snippet || '(空)'}`));
+          }
+        } else {
+          let errMsg = `HTTP ${xhr.status}`;
+          try {
+            const err = JSON.parse(raw);
+            errMsg = err.error?.message || err.message || errMsg;
+          } catch {}
+          reject(new Error(errMsg));
+        }
+      }
+    };
+
+    xhr.onerror = () => reject(new Error('网络请求失败，请检查网络连接'));
+
+    const body = JSON.stringify({
+      model: providerCfg.model,
+      messages: messages,
+      stream: false,
+      temperature: 0.5,
+      max_tokens: 8192,
+    });
+
+    xhr.send(body);
+  });
+}
+
+function openSmartSearch() {
+  // Check config
+  const cfg = loadConfig();
+  if (!cfg[cfg.provider]?.key) {
+    document.getElementById('smartStatus').className = 'config-status error';
+    document.getElementById('smartStatus').textContent = '⚠️ 请先在 ⚙️ 中配置 AI 接口的 API Key';
+    document.getElementById('smartStatus').style.display = 'block';
+    document.getElementById('smartOverlay').classList.add('show');
+    return;
+  }
+
+  // Check resume
+  const resume = loadResume();
+  if (!resume || resume.trim().length < 10) {
+    document.getElementById('smartStatus').className = 'config-status error';
+    document.getElementById('smartStatus').textContent = '⚠️ 请先在 📄 中填写你的简历';
+    document.getElementById('smartStatus').style.display = 'block';
+    document.getElementById('smartOverlay').classList.add('show');
+    return;
+  }
+
+  // Update info
+  const jobs = DATA[currentExp].jobs;
+  document.getElementById('smartExpLabel').textContent = currentExp;
+  document.getElementById('smartJobCount').textContent = jobs.length;
+
+  document.getElementById('smartQuery').value = '';
+  document.getElementById('smartStatus').className = 'config-status';
+  document.getElementById('smartStatus').style.display = 'none';
+  document.getElementById('smartLoading').classList.remove('show');
+  document.getElementById('smartStream').classList.remove('show');
+  document.getElementById('smartStreamContent').textContent = '';
+  document.getElementById('smartOverlay').classList.add('show');
+  setTimeout(() => document.getElementById('smartQuery').focus(), 200);
+}
+
+function closeSmartSearch() {
+  document.getElementById('smartOverlay').classList.remove('show');
+  document.getElementById('smartLoading').classList.remove('show');
+  // Reset to search mode
+  document.getElementById('smartSendBtn').style.display = '';
+  document.getElementById('smartConfirmBtn').style.display = 'none';
+  document.getElementById('smartPreview').classList.remove('show');
+}
+
+function confirmSmartSearch() {
+  if (smartPendingIds.length === 0) return;
+  smartSearchActive = true;
+  smartSearchResultIds = smartPendingIds;
+  smartSearchReasons = smartPendingReasons;
+  closeSmartSearch();
+  currentJobId = null;
+  document.getElementById('detailEmpty').style.display = 'flex';
+  document.getElementById('detailContent').style.display = 'none';
+  renderJobList();
+}
+
+function doSmartSearch() {
+  const query = document.getElementById('smartQuery').value.trim();
+  if (!query) {
+    document.getElementById('smartStatus').className = 'config-status error';
+    document.getElementById('smartStatus').textContent = '请输入你的筛选需求';
+    document.getElementById('smartStatus').style.display = 'block';
+    return;
+  }
+
+  const resume = loadResume();
+  if (!resume || resume.trim().length < 10) {
+    document.getElementById('smartStatus').className = 'config-status error';
+    document.getElementById('smartStatus').textContent = '⚠️ 请先在 📄 中填写你的简历';
+    document.getElementById('smartStatus').style.display = 'block';
+    return;
+  }
+
+  // Get current jobs
+  const jobs = DATA[currentExp].jobs;
+  if (jobs.length === 0) {
+    document.getElementById('smartStatus').className = 'config-status error';
+    document.getElementById('smartStatus').textContent = '当前岗位列表为空，无法筛选';
+    document.getElementById('smartStatus').style.display = 'block';
+    return;
+  }
+
+  // Show loading
+  document.getElementById('smartStatus').className = 'config-status';
+  document.getElementById('smartStatus').style.display = 'none';
+  document.getElementById('smartLoading').classList.add('show');
+  document.getElementById('smartLoadingText').textContent = 'AI 正在分析你的简历和岗位列表...';
+  document.getElementById('smartStream').classList.remove('show');
+  document.getElementById('smartStreamContent').textContent = '';
+  document.getElementById('smartSendBtn').disabled = true;
+
+  // Build job list for AI (compact)
+  const jobListForAI = jobs.map((j, i) => ({
+    idx: i,
+    id: j.job_id,
+    title: j.title,
+    salary: j.salary,
+    company: j.company,
+    location: j.location,
+    degree: j.degree,
+    skills: j.skills,
+    experience: j.experience,
+    company_scale: j.company_scale,
+    company_industry: j.company_industry,
+    welfare: j.welfare,
+  }));
+
+  const systemPrompt = `你是一个专业的招聘匹配助手。你的任务是根据用户的简历和筛选需求，从岗位列表中选择最匹配的岗位。
+
+请严格按以下规则操作：
+1. 仔细阅读用户的简历，理解用户的技能、经验、教育背景和求职意向
+2. 仔细阅读用户的筛选需求（自然语言描述）
+3. 从岗位列表中选出最匹配的岗位，按匹配度从高到低排序
+4. 你可以筛掉完全不匹配的岗位，也可以保留全部（如果都很匹配）
+
+【重要】你在思考分析完之后，在最后输出一个 JSON 数组作为最终答案。
+不要用 \`\`\`json 或 \`\`\` 包裹 JSON。
+格式如下：
+[
+  {"idx": 0, "reason": "匹配原因（20字以内）", "score": 95},
+  {"idx": 1, "reason": "匹配原因（20字以内）", "score": 80}
+]
+
+如果没有任何岗位匹配，返回空数组 []。`;
+
+  const userPrompt = `=== 我的简历 ===
+${resume}
+
+=== 我的筛选需求 ===
+${query}
+
+=== 当前岗位列表 (${jobs.length} 个) ===
+${JSON.stringify(jobListForAI, null, 2)}
+
+请严格按照系统指令的 JSON 格式返回，只输出 JSON 数组，不要输出任何其他文字。`;
+
+  callAI([
+    { role: 'system', content: systemPrompt },
+    { role: 'user', content: userPrompt },
+  ], (partial) => {
+    // Show streaming content in real-time
+    const streamEl = document.getElementById('smartStream');
+    const contentEl = document.getElementById('smartStreamContent');
+    streamEl.classList.add('show');
+    contentEl.innerHTML = `<span class="stream-label">🤖 AI 正在分析...</span>${escapeHtml(partial)}`;
+    // Auto-scroll to bottom
+    streamEl.scrollTop = streamEl.scrollHeight;
+  }).then(responseText => {
+    document.getElementById('smartLoading').classList.remove('show');
+    document.getElementById('smartSendBtn').disabled = false;
+
+    // Update stream to show completion
+    const streamContent = document.getElementById('smartStreamContent');
+    streamContent.innerHTML = streamContent.textContent.trim()
+      ? `<span class="stream-label">✅ AI 分析完成</span>${streamContent.textContent}`
+      : '';
+
+    // Parse JSON from response
+    let results = [];
+    try {
+      let text = responseText.trim();
+
+      // Try 1: Extract JSON from markdown code block ```json ... ```
+      const mdMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (mdMatch) text = mdMatch[1].trim();
+
+      // Try 2: Extract JSON array [...] from anywhere in the text
+      const arrMatch = text.match(/\[[\s\S]*\]/);
+      if (arrMatch) {
+        results = JSON.parse(arrMatch[0]);
+      } else {
+        // Try 3: Parse entire response as JSON
+        results = JSON.parse(text);
+      }
+    } catch (e) {
+      console.error('Parse error:', e, 'Response:', responseText);
+      const snippet = responseText ? responseText.slice(0, 300) : '(空)';
+      document.getElementById('smartStatus').className = 'config-status error';
+      document.getElementById('smartStatus').textContent = `AI 返回格式异常，请重试。回复内容: ${escapeHtml(snippet)}`;
+      document.getElementById('smartStatus').style.display = 'block';
+      return;
+    }
+
+    if (!Array.isArray(results) || results.length === 0) {
+      document.getElementById('smartStatus').className = 'config-status error';
+      document.getElementById('smartStatus').textContent = 'AI 认为没有匹配的岗位，试试调整筛选条件';
+      document.getElementById('smartStatus').style.display = 'block';
+      return;
+    }
+
+    // Build result maps
+    const ids = [];
+    const reasons = {};
+    for (const r of results) {
+      const job = jobs[r.idx];
+      if (job) {
+        ids.push(job.job_id);
+        reasons[job.job_id] = { reason: r.reason || '匹配', score: r.score || 0 };
+      }
+    }
+
+    if (ids.length === 0) {
+      document.getElementById('smartStatus').className = 'config-status error';
+      document.getElementById('smartStatus').textContent = '没有找到有效的匹配结果，请重试';
+      document.getElementById('smartStatus').style.display = 'block';
+      return;
+    }
+
+    // Store as pending — user must click confirm to apply
+    smartPendingIds = ids;
+    smartPendingReasons = reasons;
+
+    // Show preview in modal
+    document.getElementById('smartSendBtn').style.display = 'none';
+    document.getElementById('smartConfirmBtn').style.display = '';
+    const previewList = document.getElementById('smartPreviewList');
+    const matchedJobs = ids.map(id => jobs.find(j => j.job_id === id)).filter(Boolean);
+    previewList.innerHTML = matchedJobs.map(job => {
+      const r = reasons[job.job_id] || {};
+      return `
+        <div class="sp-item">
+          <div class="sp-score">${r.score || '?'}</div>
+          <div class="sp-info">
+            <div class="sp-title-text">${escapeHtml(job.title)} · ${job.salary || ''}</div>
+            <div class="sp-meta">${escapeHtml(job.company || '')} · ${job.location || ''}</div>
+            ${r.reason ? `<div class="sp-reason">💡 ${escapeHtml(r.reason)}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('smartPreview').classList.add('show');
+    document.getElementById('smartStatus').className = 'config-status success';
+    document.getElementById('smartStatus').textContent = `✅ AI 筛选完成，共 ${ids.length} 个匹配岗位，请确认是否替换列表`;
+    document.getElementById('smartStatus').style.display = 'block';
+  }).catch(err => {
+    document.getElementById('smartLoading').classList.remove('show');
+    document.getElementById('smartSendBtn').disabled = false;
+    document.getElementById('smartStatus').className = 'config-status error';
+    document.getElementById('smartStatus').textContent = '❌ ' + (err.message || '请求失败');
+    document.getElementById('smartStatus').style.display = 'block';
+  });
+}
+
+function exitSmartSearch() {
+  smartSearchActive = false;
+  smartSearchResultIds = [];
+  smartSearchReasons = {};
+  currentJobId = null;
+  document.getElementById('detailEmpty').style.display = 'flex';
+  document.getElementById('detailContent').style.display = 'none';
+  renderJobList();
+}
+
+// ===== Greeting Generation =====
+function generateGreeting(jobId) {
+  const btn = document.getElementById(`greetBtn_${jobId}`);
+  const loading = document.getElementById(`greetLoading_${jobId}`);
+  const results = document.getElementById(`greetResults_${jobId}`);
+
+  // Check config
+  const cfg = loadConfig();
+  if (!cfg[cfg.provider]?.key) {
+    results.className = 'greeting-results show';
+    results.innerHTML = `<div style="color:#c62828;font-size:13px;">⚠️ 请先在 ⚙️ 中配置 AI 接口的 API Key</div>`;
+    return;
+  }
+
+  // Check resume
+  const resume = loadResume();
+  if (!resume || resume.trim().length < 10) {
+    results.className = 'greeting-results show';
+    results.innerHTML = `<div style="color:#c62828;font-size:13px;">⚠️ 请先在 📄 中填写你的简历</div>`;
+    return;
+  }
+
+  // Get job detail
+  const store = DATA[currentExp];
+  const detail = store.details[jobId];
+  const job = store.jobs.find(j => j.job_id === jobId);
+  if (!detail || !job) return;
+
+  btn.disabled = true;
+  loading.classList.add('show');
+  results.className = 'greeting-results';
+  results.innerHTML = '';
+
+  const systemPrompt = `你是一个求职面试助手。你的任务是根据用户的简历和目标岗位的职位描述，生成4条不同长度的打招呼语。
+
+要求：
+1. 每条招呼语都要**结合用户简历中的具体经历**和**岗位要求中的具体技能/职责**
+2. 从合适的角度突出用户与岗位的匹配度，吸引面试官继续沟通
+3. 语气自然诚恳，不浮夸，适合 BOSS 直聘场景
+4. 不要用"您好"开头（太模板化），可以直接用"你好"或自然切入
+5. 不要包含{{变量}}或占位符
+
+【重要】你只返回一个 JSON 对象，不要包含任何其他文字、分析过程或代码块标记。
+直接输出 JSON，不要用 \`\`\`json 或 \`\`\` 包裹。
+格式：
+{
+  "s50": "50字左右的招呼语",
+  "s80": "80字左右的招呼语",
+  "s120": "120字左右的招呼语",
+  "s150": "150字左右的招呼语"
+}`;
+
+  const userPrompt = `=== 我的简历 ===
+${resume}
+
+=== 目标岗位 ===
+岗位名称：${job.title}
+公司：${job.company}
+薪资：${job.salary}
+地点：${job.location}
+技能要求：${job.skills || '未列出'}
+职位描述：${detail.description || '无描述'}
+
+请根据以上内容，生成3条不同长度的招呼语，让我能吸引面试官继续沟通。`;
+
+  callAI([
+    { role: 'system', content: systemPrompt },
+    { role: 'user', content: userPrompt },
+  ], (partial) => {
+    // Show streaming progress in the results area
+    results.className = 'greeting-results show';
+    results.innerHTML = `
+      <div class="gr-title">⏳ AI 生成中...</div>
+      <div style="font-size:12px;color:var(--text-muted);white-space:pre-wrap;">${escapeHtml(partial.slice(-200))}</div>
+    `;
+    btn.textContent = '⏳ 生成中...';
+  }).then(responseText => {
+    loading.classList.remove('show');
+    btn.disabled = false;
+    btn.innerHTML = '💬 生成招呼语录';
+
+    let data;
+    try {
+      let text = responseText.trim();
+      // Try 1: Extract JSON from markdown code block ```json ... ```
+      const mdMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (mdMatch) text = mdMatch[1].trim();
+      // Try 2: Extract JSON object with s50/s80/s120/s150 keys
+      const jsonMatch = text.match(/\{[\s\S]*"s50"[\s\S]*"s80"[\s\S]*"s120"[\s\S]*"s150"[\s\S]*\}/);
+      if (jsonMatch) {
+        data = JSON.parse(jsonMatch[0]);
+      } else {
+        // Try 3: Any JSON object
+        const fallback = text.match(/\{[\s\S]*\}/);
+        if (fallback) data = JSON.parse(fallback[0]);
+        else data = JSON.parse(text);
+      }
+    } catch (e) {
+      results.className = 'greeting-results show';
+      const snippet = responseText ? responseText.slice(0, 300) : '(空)';
+      results.innerHTML = `
+        <div style="color:#c62828;font-size:13px;margin-bottom:6px;">❌ AI 返回格式异常</div>
+        <div style="font-size:11px;color:#999;white-space:pre-wrap;max-height:200px;overflow-y:auto;">${escapeHtml(snippet)}</div>
+        <button onclick="this.parentElement.innerHTML=''" style="margin-top:8px;border:none;background:var(--bg);padding:4px 12px;border-radius:4px;cursor:pointer;font-size:12px;">关闭</button>
+      `;
+      return;
+    }
+
+    const items = [
+      { label: '📄 精简 (约50字)', text: data.s50 || '' },
+      { label: '📄 标准 (约80字)', text: data.s80 || '' },
+      { label: '📄 详细 (约120字)', text: data.s120 || '' },
+      { label: '📄 完整 (约150字)', text: data.s150 || '' },
+    ];
+
+    results.className = 'greeting-results show';
+    results.innerHTML = `
+      <div class="gr-title">✨ 生成的招呼语录 <span style="font-weight:400;color:var(--text-muted);font-size:12px;">点击右侧 📋 复制</span></div>
+      ${items.filter(i => i.text).map(item => `
+        <div class="greeting-item">
+          <button class="greeting-copy-btn" onclick="copyGreeting(this)">📋 复制</button>
+          <div class="glabel">${item.label}</div>
+          <div class="gtext">${escapeHtml(item.text)}</div>
+        </div>
+      `).join('')}
+    `;
+  }).catch(err => {
+    loading.classList.remove('show');
+    btn.disabled = false;
+    btn.innerHTML = '💬 生成招呼语录';
+    results.className = 'greeting-results show';
+    results.innerHTML = `<div style="color:#c62828;font-size:13px;">❌ ${err.message || '请求失败，请重试'}</div>`;
+  });
+}
+
+function copyGreeting(btn) {
+  const text = btn.closest('.greeting-item').querySelector('.gtext').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => { btn.textContent = orig; }, 1500);
+  }).catch(() => {
+    // Fallback
+    const range = document.createRange();
+    const el = btn.closest('.greeting-item').querySelector('.gtext');
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    sel.removeAllRanges();
+    const orig = btn.textContent;
+    btn.textContent = '✅ 已复制';
+    setTimeout(() => { btn.textContent = orig; }, 1500);
+  });
+}
+
+// ===== Config Modal =====
+function openConfigModal() {
+  const cfg = loadConfig();
+  aiConfig = cfg;
+
+  // Set provider tab
+  document.querySelectorAll('.provider-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.provider === cfg.provider);
+  });
+
+  // Show/hide fields
+  document.getElementById('fieldsXiaomi').style.display = cfg.provider === 'xiaomi' ? 'block' : 'none';
+  document.getElementById('fieldsDeepseek').style.display = cfg.provider === 'deepseek' ? 'block' : 'none';
+
+  // Fill values
+  document.getElementById('cfgXiaomiUrl').value = cfg.xiaomi.url || '';
+  document.getElementById('cfgXiaomiKey').value = cfg.xiaomi.key || '';
+  document.getElementById('cfgXiaomiModel').value = cfg.xiaomi.model || 'xiaomi-model';
+  document.getElementById('cfgDsUrl').value = cfg.deepseek.url || 'https://api.deepseek.com/v1/chat/completions';
+  document.getElementById('cfgDsKey').value = cfg.deepseek.key || '';
+  document.getElementById('cfgDsModel').value = cfg.deepseek.model || 'deepseek-chat';
+
+  document.getElementById('configStatus').className = 'config-status';
+  document.getElementById('configStatus').style.display = 'none';
+  document.getElementById('configOverlay').classList.add('show');
+}
+
+function closeConfigModal() {
+  document.getElementById('configOverlay').classList.remove('show');
+}
+
+function saveConfigModal() {
+  const provider = document.querySelector('.provider-tab.active')?.dataset.provider || 'xiaomi';
+  const cfg = {
+    provider,
+    xiaomi: {
+      url: document.getElementById('cfgXiaomiUrl').value.trim(),
+      key: document.getElementById('cfgXiaomiKey').value.trim(),
+      model: document.getElementById('cfgXiaomiModel').value.trim() || 'xiaomi-model',
+    },
+    deepseek: {
+      url: document.getElementById('cfgDsUrl').value.trim() || 'https://api.deepseek.com/v1/chat/completions',
+      key: document.getElementById('cfgDsKey').value.trim(),
+      model: document.getElementById('cfgDsModel').value.trim() || 'deepseek-chat',
+    },
+  };
+
+  // Validate: at least key is required for the active provider
+  const activeCfg = cfg[provider];
+  if (!activeCfg.key) {
+    const status = document.getElementById('configStatus');
+    status.className = 'config-status error';
+    status.textContent = '请填写 API Key';
+    status.style.display = 'block';
+    return;
+  }
+
+  saveConfig(cfg);
+  aiConfig = cfg;
+  updateConfigIndicator();
+
+  const status = document.getElementById('configStatus');
+  status.className = 'config-status success';
+  status.textContent = '✅ 配置已保存到浏览器本地缓存';
+  status.style.display = 'block';
+
+  setTimeout(closeConfigModal, 1200);
+}
+
+function updateConfigIndicator() {
+  const el = document.getElementById('configIndicator');
+  const cfg = aiConfig;
+  const activeCfg = cfg[cfg.provider];
+  const hasKey = activeCfg && activeCfg.key;
+  if (hasKey) {
+    el.className = 'config-indicator configured';
+    el.innerHTML = '<span class="dot"></span> 已配置';
+  } else {
+    el.className = 'config-indicator';
+    el.innerHTML = '<span class="dot"></span> 未配置';
+  }
+}
+
+let currentExp = '1-3年';
+let currentJobId = null;
+let searchTerm = '';
+
+// Update count badges immediately
+Object.keys(DATA).forEach(exp => {
+  const el = document.getElementById(`count-${exp}`);
+  if (el) el.textContent = `(${DATA[exp].jobs.length})`;
+});
+
+// ===== Render Job List =====
+function renderJobList() {
+  const store = DATA[currentExp];
+  const list = document.getElementById('jobList');
+  const resultCount = document.getElementById('resultCount');
+  const hint = document.getElementById('resultHint');
+  const exitBtn = document.getElementById('exitSmartBtn');
+  const smartBadge = document.getElementById('smartResultBadge');
+
+  let jobs = store.jobs;
+
+  // Smart search filter
+  if (smartSearchActive) {
+    const idSet = new Set(smartSearchResultIds);
+    jobs = jobs.filter(j => idSet.has(j.job_id));
+    // Sort by AI rank
+    const rankMap = {};
+    smartSearchResultIds.forEach((id, i) => { rankMap[id] = i; });
+    jobs.sort((a, b) => (rankMap[a.job_id] ?? 999) - (rankMap[b.job_id] ?? 999));
+
+    exitBtn.style.display = 'inline-flex';
+    smartBadge.style.display = 'inline';
+    smartBadge.textContent = `✨ AI 筛选 ${smartSearchResultIds.length} 个`;
+  } else {
+    exitBtn.style.display = 'none';
+    smartBadge.style.display = 'none';
+  }
+
+  // Filter by search
+  if (searchTerm.trim()) {
+    const kw = searchTerm.trim().toLowerCase();
+    jobs = jobs.filter(j => j.title && j.title.toLowerCase().includes(kw));
+  }
+
+  // Update counts
+  if (searchTerm.trim()) {
+    hint.textContent = `搜索“${searchTerm.trim()}”`;
+  } else {
+    hint.textContent = '';
+  }
+  resultCount.innerHTML = `<b>${jobs.length}</b>`;
+
+  if (jobs.length === 0) {
+    list.innerHTML = `
+      <div style="padding: 60px 20px; text-align: center; color: #999;">
+        <div style="font-size: 40px; margin-bottom: 12px;">🔍</div>
+        <div>没有找到匹配的岗位</div>
+        ${searchTerm.trim() ? '<div style="font-size: 12px; margin-top: 8px;">试试其他关键词</div>' : ''}
+      </div>
+    `;
+    return;
+  }
+
+  list.innerHTML = jobs.map(job => {
+    const isActive = job.job_id === currentJobId;
+    const skills = job.skills ? job.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+    return `
+      <div class="job-card ${isActive ? 'active' : ''}" data-job-id="${job.job_id}" onclick="selectJob('${job.job_id}')">
+        <div class="jc-top">
+          <div class="jc-title">${escapeHtml(job.title)}</div>
+          <div class="jc-salary">${job.salary || ''}</div>
+        </div>
+        <div class="jc-company">${escapeHtml(job.company || '')}
+          ${job.company_scale ? ` · ${escapeHtml(job.company_scale)}` : ''}
+          ${job.company_stage ? ` · ${escapeHtml(job.company_stage)}` : ''}
+        </div>
+        <div class="jc-info">
+          <span>📍 ${job.location || ''}</span>
+          <span>🎓 ${job.degree || ''}</span>
+          ${job.welfare ? `<span>🏷️ ${escapeHtml(job.welfare.split(',').slice(0,2).join(','))}${job.welfare.split(',').length > 2 ? '…' : ''}</span>` : ''}
+        </div>
+        ${skills.length > 0 ? `
+        <div class="jc-skills">
+          ${skills.slice(0, 5).map(s => `<span class="skill-tag">${escapeHtml(s)}</span>`).join('')}
+          ${skills.length > 5 ? `<span class="skill-tag">+${skills.length - 5}</span>` : ''}
+        </div>` : ''}
+        ${smartSearchActive && smartSearchReasons[job.job_id] ? `
+        <div class="smart-search-result-item">
+          <span class="score">${smartSearchReasons[job.job_id].score}分</span>
+          ${escapeHtml(smartSearchReasons[job.job_id].reason)}
+        </div>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  // Scroll to active card
+  const activeEl = list.querySelector('.job-card.active');
+  if (activeEl) {
+    activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+
+// ===== Select Job =====
+function selectJob(jobId) {
+  currentJobId = jobId;
+  renderJobList();
+  renderDetail(jobId);
+
+  // On mobile, show right panel
+  if (window.innerWidth <= 860) {
+    document.getElementById('rightPanel').classList.add('show');
+  }
+}
+
+// ===== Render Detail =====
+function renderDetail(jobId) {
+  const store = DATA[currentExp];
+  const detail = store.details[jobId];
+  const job = store.jobs.find(j => j.job_id === jobId);
+
+  const empty = document.getElementById('detailEmpty');
+  const content = document.getElementById('detailContent');
+
+  if (!detail || !job) {
+    empty.style.display = 'flex';
+    content.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  content.style.display = 'block';
+
+  const skills = job.skills ? job.skills.split(',').map(s => s.trim()).filter(s => s) : [];
+  const welfareList = job.welfare ? job.welfare.split(',').map(s => s.trim()).filter(s => s) : [];
+
+  // Back button for mobile
+  const backBtn = window.innerWidth <= 860
+    ? `<button onclick="closeMobileDetail()" style="margin-bottom:12px;border:none;background:var(--bg);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;color:var(--primary);">← 返回列表</button>`
+    : '';
+
+  content.innerHTML = `
+    ${backBtn}
+    <div class="detail-header">
+      <div class="dh-row1">
+        <div class="dh-title">${escapeHtml(detail.title)}</div>
+        <div class="dh-salary">${detail.salary || ''}</div>
+      </div>
+      <div class="dh-company">${escapeHtml(detail.company || '')}</div>
+      <div class="dh-meta">
+        <span>📍 ${detail.location || ''}</span>
+        <span>🎓 ${detail.degree || ''}</span>
+        <span>💼 ${detail.experience || ''}</span>
+      </div>
+      ${skills.length > 0 ? `<div class="dh-tags">${skills.map(s => `<span class="tag">${escapeHtml(s)}</span>`).join('')}</div>` : ''}
+      ${welfareList.length > 0 ? `<div style="margin-top:8px;color:var(--text-muted);font-size:13px;">🏷️ ${welfareList.join(' · ')}</div>` : ''}
+      <div class="dh-link">
+        <a href="${detail.url || job.job_link || '#'}" target="_blank" rel="noopener">
+          🔗 查看 BOSS 直聘原页面
+        </a>
+      </div>
+      <button class="greeting-btn" onclick="generateGreeting('${job.job_id}')" id="greetBtn_${job.job_id}">
+        💬 生成招呼语录
+      </button>
+      <div class="greeting-loading" id="greetLoading_${job.job_id}">
+        <div class="greeting-spinner"></div>
+        <span>AI 正在结合你的简历和岗位要求，生成招呼语...</span>
+      </div>
+      <div class="greeting-results" id="greetResults_${job.job_id}"></div>
+    </div>
+
+    <div class="detail-body">
+      <div class="section-title">职位描述</div>
+      <div class="jd-content">${detail.description || '暂无描述'}</div>
+    </div>
+  `;
+}
+
+function closeMobileDetail() {
+  document.getElementById('rightPanel').classList.remove('show');
+}
+
+// ===== Switch Experience =====
+function switchExp(exp) {
+  if (exp === currentExp) return;
+
+  currentExp = exp;
+  currentJobId = null;
+  searchTerm = '';
+
+  // Exit smart search when switching
+  exitSmartSearch();
+
+  // Update tab styles
+  document.querySelectorAll('.exp-tab').forEach(tab => {
+    tab.classList.toggle('active', tab.dataset.exp === exp);
+  });
+
+  document.getElementById('searchInput').value = '';
+
+  // Reset detail
+  document.getElementById('detailEmpty').style.display = 'flex';
+  document.getElementById('detailContent').style.display = 'none';
+
+  renderJobList();
+}
+
+// ===== Search =====
+function doSearch() {
+  searchTerm = document.getElementById('searchInput').value;
+  document.getElementById('clearBtn').style.display = searchTerm ? 'block' : 'none';
+  renderJobList();
+}
+
+// ===== Utility =====
+function escapeHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ===== Init =====
+function init() {
+  // Tab click handlers
+  document.querySelectorAll('.exp-tab').forEach(tab => {
+    tab.addEventListener('click', () => switchExp(tab.dataset.exp));
+  });
+
+  // Search handlers
+  document.getElementById('searchInput').addEventListener('input', doSearch);
+  document.getElementById('clearBtn').addEventListener('click', () => {
+    document.getElementById('searchInput').value = '';
+    doSearch();
+  });
+
+  // Keyboard shortcut: Escape to clear search
+  document.getElementById('searchInput').addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.getElementById('searchInput').value = '';
+      doSearch();
+    }
+  });
+
+  // Config modal
+  document.getElementById('configBtn').addEventListener('click', openConfigModal);
+  document.getElementById('configCloseBtn').addEventListener('click', closeConfigModal);
+  document.getElementById('configCancelBtn').addEventListener('click', closeConfigModal);
+  document.getElementById('configOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeConfigModal();
+  });
+  document.getElementById('configSaveBtn').addEventListener('click', saveConfigModal);
+
+  // Resume modal
+  document.getElementById('resumeBtn').addEventListener('click', openResumeModal);
+  document.getElementById('resumeCloseBtn').addEventListener('click', closeResumeModal);
+  document.getElementById('resumeCancelBtn').addEventListener('click', closeResumeModal);
+  document.getElementById('resumeOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeResumeModal();
+  });
+  document.getElementById('resumeSaveBtn').addEventListener('click', saveResumeModal);
+  document.getElementById('resumeText').addEventListener('input', updateResumeStats);
+
+  // Smart search
+  document.getElementById('smartSearchBtn').addEventListener('click', openSmartSearch);
+  document.getElementById('smartCloseBtn').addEventListener('click', closeSmartSearch);
+  document.getElementById('smartCancelBtn').addEventListener('click', closeSmartSearch);
+  document.getElementById('smartOverlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeSmartSearch();
+  });
+  document.getElementById('smartSendBtn').addEventListener('click', doSmartSearch);
+  document.getElementById('smartConfirmBtn').addEventListener('click', confirmSmartSearch);
+  document.getElementById('smartQuery').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.ctrlKey) doSmartSearch();
+  });
+  document.getElementById('exitSmartBtn').addEventListener('click', exitSmartSearch);
+
+  // Provider tab switching
+  document.querySelectorAll('.provider-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.provider-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('configStatus').className = 'config-status';
+      document.getElementById('configStatus').style.display = 'none';
+      const p = tab.dataset.provider;
+      document.getElementById('fieldsXiaomi').style.display = p === 'xiaomi' ? 'block' : 'none';
+      document.getElementById('fieldsDeepseek').style.display = p === 'deepseek' ? 'block' : 'none';
+    });
+  });
+
+  // Keyboard shortcut: Escape to close modal
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (document.getElementById('configOverlay').classList.contains('show')) closeConfigModal();
+    if (document.getElementById('resumeOverlay').classList.contains('show')) closeResumeModal();
+    if (document.getElementById('smartOverlay').classList.contains('show')) closeSmartSearch();
+  });
+
+  updateConfigIndicator();
+  updateResumeIndicator();
+  renderJobList();
+}
+
+init();
+</script>
+</body>
+</html>
