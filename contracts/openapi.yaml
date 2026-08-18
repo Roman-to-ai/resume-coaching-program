@@ -97,9 +97,9 @@ components:
   schemas:
     JobSummary:
       type: object
-      required: [jobId, title, company]
+      required: [job_id, title, company]
       properties:
-        jobId: { type: string, description: 岗位唯一 ID（boss job_id） }
+        job_id: { type: string, description: 岗位唯一 ID（boss job_id） }
         title: { type: string }
         company: { type: string }
         salary: { type: string, example: 8-13K }
@@ -107,15 +107,15 @@ components:
         experience: { type: string, example: 1-3年 }
         degree: { type: string, example: 大专 }
         skills: { type: string, description: 逗号分隔技能串 }
-        companyIndustry: { type: string }
+        company_industry: { type: string }
     JobDetail:
       allOf:
         - $ref: "#/components/schemas/JobSummary"
         - type: object
           properties:
             description: { type: string, description: 岗位描述（HTML 或纯文本） }
-            companyScale: { type: string }
-            companyStage: { type: string }
+            company_scale: { type: string }
+            company_stage: { type: string }
             welfare: { type: string }
             url: { type: string }
     JobListResponse:
