@@ -1,0 +1,131 @@
+-4 年-AI 智能应用开发能应用开发
+性别: 籍贯:
+学历: 本科 邮箱:
+工作经验: 4 年 手机 :
+技能特长
+1,熟练使用 Python,了解 web 框架（FastAPI）
+2,熟悉 LangChain 及 LangGraph 框架
+3,熟练使用向量数据库（如 Milvus），擅长非结构化数据的向量化存储与检索。
+4,熟悉 Prompt Engineering（提示词工程），掌握 ReAct Agent 设计模式。
+5,熟悉使用 PostgreSQL 及 MySQL，SQL 优化、索引设计及事务隔离级别控制。
+6,了解微服务架构，掌握服务注册发现（Nacos）
+7，熟练使用 dify，coze 制作工作流
+8，熟练使用 Spring AI, Spring AI alibaba ,Langchain4j
+教育背景
+杭州电子科技大学 - 本科 - 软件工程
+工作经历
+北京华宇信码技术有限公司 AI 开发工程师 2023-10 - 2026-04
+项目经历
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+
+项目名称： 智汇电商平台
+项目周期：2025-06 - 2026-02
+项目介绍：
+基于 LangGraph 状态机 与 A2A 开放协议，构建电商领域多智能体协同系统，统一对接
+大模型，实现推荐、订单、售后、营销全链路自动化服务。平台采用 Spring Cloud Gateway
++ Python LangGraph 混合架构，集成 MCP 标准化工具，融合 RAG 知识库与向量检索，支
+撑日均数万级对话请求，显著降低人工成本，提升用户体验。
+技术栈:
+A2A 协 议 ， MCP 协 议 ， LangChain ， LangGraph ， FastAPI ， Spring Cloud Gateway ，
+PostgreSQL ，Redis ，Qwen3.7-plus ， RabbitMQ ，Nacos ，MySQL
+个人职责： .
+1，RAG 知识增强：集成电商知识库，通过 Milvus 向量检索 + 混合排序抑制"幻觉"，
+推荐准确率提升至 92%
+2，MCP 工具服务化：封装通用业务工具为 MCP Server，避免重复开发，工具变更
+无需重启 Agent 服务。
+3，A2A 协议标准化：引入 Google A2A 协议封装各智能体，实现松耦合通信，便
+于对接第三方服务
+● 挑战：传统单 Agent 在处理"业务咨询"+"精准推荐"+"购买下单"等交织任务时，
+Prompt 过长导致逻辑混乱、Token 消耗剧增，且多轮对话上下文维护困难。
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+
+● 攻坚：采用 LangGraph StateGraph 将系统拆分为专职子 Agent，通过 RouteState
+状态对象在节点间传递上下文，利用条件路由机制实现意图驱动的智能跳转。
+配合 PostgreSQL 实现长对话的精准状态回溯。
+● 成果：复杂业务场景下 Token 平均消耗降低 35%，多轮对话准确率提升至
+92%，系统可维护性显著提高。
+项目名称：智能知识问答系统
+项目周期：2025-03-2025-7
+项目简介：
+我们把公司散落各处的产品手册、业务流程、FAQ 等知识统一整合，搭建了一套智能问
+答系统，员工提问即答，覆盖售前售中售后全场景，彻底告别“翻半天找不到”的老大
+难。
+技术栈:
+Python、LangChain、BGE-M3、Milvus、OCRPDFLoader、FastAPI
+个人职责：
+1，多源数据接入：对接 OA、工单系统、文件服务器等，开发适配器支持 Word / PDF
+/ Excel / HTML 自动解析清洗
+2，父子递归分块策略：父块保留段落语义，子块切割细粒度文本，检索时子块匹配
++ 父块上下文追溯，Top-5 召回准确率显著提升
+3，混合检索实现：设计"向量检索 + 关键词检索"混合方案 + 业务重排序，保障
+Top-N 命中率达标相比传统关键词匹配，Top-5 准确率提升约 35%，客服人员
+无需二次筛选
+● 创新点：传统固定规则分块简单高效但语义割裂严重。我设计并落地了父子递
+归分块方案，父块保留完整段落/章节语义，子块切割为细粒度文本片段。
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+
+● 技术价值：检索时以子块进行精准匹配，命中后自动追溯父块获取完整上下文，
+既保证了召回精度，又兼顾了生成答案所需的完整信息
+● 业务效果：解决了产品参数被切断、业务逻辑不完整等实际问题，Top-5 召回准
+确率显著提升。
+项目名称：电商智能运营体验 AI 助手系统
+项目时间：2024-09-2024-12
+技术栈：Springboot、MyBatis、Vue3、ElementPlus、MySQL、Redis、Dify、RAGFlow、阿里
+百炼-Qwen、MCP（Java）、Langchain、FastAPI（Python）
+项目介绍：面向电商企业的智能化运营与客户体验平台。针对商品信息杂乱、促销规
+则复杂、客诉压力大、竞品分析耗时等痛点，系统基于 Dify 与 RAGFlow 整合商品详情、
+平台规则、售后政策、交易数据、竞品评价等多源信息，提供卖点提炼、合规校验、竞
+品报告生成、客诉话术拟定等 AI 辅助能力，大幅提升运营与客服团队响应效率。
+个人职责：
+1，负责整体技术架构设计，主导 Dify 工作流编排与 RAGFlow 知识库构建，实现多源文
+档的智能解析与检索增强生成（RAG）
+2，开发并集成外部知识库 API，打通 Dify 与 RAGFlow 数据流，解决商品参数表格、促销
+价签图片等复杂素材的识别与问答难题
+项目名称：WMS 系统
+项目周期：2024-02-2024-08
+项目介绍：WMS（ Warehouse Management System）即仓库管理系统，它是一套专门用
+于管理仓库操作的软件系统，它通过自动化和系统化的方式，帮助企业优化库存管理、
+订单处理、货物接收与发货、仓库布局优化等关键环节，提高仓库运营效率和准确性。
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+
+技术栈：Spring Boot 3、Spring AI、Spring Cache、MyBatis-Plus、MySQL8、
+Redis、RabbitMQ，Vue 3 + TypeScript + ES6
+个人职责：
+1，参与入库管理模块的需求分析与数据库设计，设计了入库单主表与明细表（一对多）、
+任务与任务记录表（多对多）、库存与库存变更表的 E-R 模型，确立了“入库单 → 收货
+任务 → 上架任务”的数据流转链路。
+2，开发入库单的创建、修改、删除、提交审核、审核等核心接口。
+3，实现了动态库存变更逻辑：区分良品与不良品，根据唯一键（商品+储位+批号）判
+断是新增库存还是累加库存，确保库存数据的最终一致性。
+工作成果
+检索精度提升：相比传统关键词匹配，混合检索+重排序方案使 Top-5 准确率提升约
+35%，有效降低误召回，客服人员无需二次筛选。
+可扩展架构：父子分块+双路检索设计为后续多模态扩展（如图表解析、产品图片
+识别）和增量学习预留了空间，业务团队可自助更新知识库。
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~
+d75aa49c271234521HN509q4FlNVy469VfyaWOKllvXRNxhj2A~~

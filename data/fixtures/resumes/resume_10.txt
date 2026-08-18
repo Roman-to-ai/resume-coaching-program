@@ -1,0 +1,131 @@
+- 高级前端 / AI 应用前端
+ 
+ 个人简介
+• 5 年前端开发经验，以 Vue 技术栈为主要方向，长期参与中后台、低代码平台、多端小程序、 APP H5 和 AI
+对话类产品建设。具备从需求澄清、方案评估、组件沉淀、跨端兼容、性能优化到 CI/CD 自动化发布的完整
+交付经验。
+• 参与千万粉丝法律咨询平台、百万用户塑化交易平台、低代码平台、GPT 行业智能体等项目。近年重点关注
+AI 应用前端体验与工程化落地，包括渐进式输出、 WebSocket 流式对话、多节点状态管理、 Markdown/公
+式/PDF 渲染、推荐结果展示、埋点和 AI Coding 规范沉淀。
+ 专业技能
+• 前端框架：深入使用 Vue2、Vuex、Vue Router、Element UI，具备复杂中后台、低代码平台和多端业务开发
+经验；具备 Vue3、TypeScript、Pinia 项目实践。
+• 多端开发：熟悉 uni-app、原生小程序、uView、H5 嵌入 APP、JSBridge，处理过微信、支付宝、抖音、百
+度、快手、小红书等小程序平台转换和兼容问题。
+• AI 应用前端：参与法律咨询、塑化配方等 AI 对话类产品建设，熟悉类流式输出、WebSocket 流式输出、多
+节点状态、Markdown/MathJax 渲染、PDF 资料展示、推荐卡片和埋点设计。
+• 工程化与性能：具备多项目规范配置、 AI Coding rules/skills 沉淀、CI/CD 自动化发布、小程序多平台发布、
+Code Review、Performance/Memory 分析、复杂表单和直播白屏优化经验。
+• 其他能力： 了解React、Redux、React Router、Electron、Node.js、MySQL 基础使用； 近期学习Midway.js，
+具备基于分层架构开发基础接口服务的实践经验。
+ 工作经历
+广州法度信息科技有限公司 高级前端开发工程师 2025.03 – 2026.03
+• 职责
+– 主导法律咨询平台多端前端交付， 覆盖原生小程序、uni-app、APP H5、 中后台等项目， 负责需求评审、 方
+案设计、排期拆解、联调验收和上线质量控制。
+– 统筹多平台小程序适配和发布链路建设，支持微信、支付宝、抖音、百度、快手、小红书等平台复用同一
+套业务代码，并减少多端重复维护成本。
+– 沉淀多项目 AI 协作 rules/skills 与前端开发规范，统一组件、接口、目录、埋点和发布约定，提升团队开发
+效率约 60%。
+厦门最有料新材科技有限公司 中级前端开发工程师 2022.03 – 2025.01
+• 职责
+– 参与塑化交易平台、低代码平台、行业智能体等项目建设，承担需求澄清、技术方案评估、组件沉淀、性
+能优化、代码评审和技术分享。
+– 负责低代码平台复杂表单、动态表格、审批流、权限、 BI 设计态/运行态等核心模块，支撑 OA、CRM、
+ERP、OKR、BI 等业务应用搭建。
+– 负责塑化行业 AI 智能体前端交互，落地 WebSocket 流式对话、Markdown/公式/PDF 渲染和多节点状态
+处理，提升行业知识问答和配方建议体验。
+厦门星火相连教育科技有限公司 前端开发工程师 2020.12 – 2022.02
+• 职责
+– 参与公众号、APP 嵌入 H5、Electron 讲师端等项目建设，覆盖微信授权、微信支付、商城营销、在线上
+课、IM/TRTC、直播回放等业务模块。
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+
+– 负责公众号商城模块嵌入 APP 与原生交互，保障多端页面适配、支付流程和活动营销链路稳定；参与
+Electron 讲师端图片生成、课程表、学生提问等模块。
+ 项目经历
+多问律师
+• 项目介绍：千万粉丝量法律咨询平台，覆盖各平台小程序、 APP、中后台等端，提供法律咨询、法律知识内
+容、律师/律所推荐等能力。
+• 技术栈：Vue3、TypeScript、Pinia、Axios、原生小程序、uni-app、uView、小程序 CI 等。
+• 职责描述
+– 负责平台多端前端交付，覆盖原生小程序、uni-app、APP H5、中后台等项目，推进需求评审、方案设计、
+开发排期、联调验收和上线发布。
+– 设计 AI 咨询对话的渐进式输出体验，在后端结果型接口约束下，通过分段渲染、打字机策略和生成状态管
+理降低用户等待感。
+– 串联法律知识内容、律师/律所推荐结果展示和咨询链路关键行为埋点，提升咨询过程完整度，并为转化分
+析与产品优化提供数据基础。
+– 设计多平台小程序转换方案，统一处理平台 API、组件、样式和发布配置差异，实现微信、支付宝、抖音、
+百度、快手、小红书等平台适配。
+– 设计多端小程序自动化构建发布链路，基于阿里云云效整合 GitLab、平台转换脚本和各平台小程序 CI，标
+准化代码转换、构建和上传流程，构建发布时间节省约 60%。
+配方系统
+• 项目介绍：专塑视界体系内的塑化行业 GPT 智能体项目，结合自有塑化行业专利、论文库和业务知识，为用
+户提供行业知识问答、配方建议和资料查询能力。
+• 技术栈：Vue3、TypeScript、Vue Router、AntD、Axios、WebSocket、Marked、MathJax、vue-pdf-embed、
+PDF.js 等。
+• 职责描述
+– 负责 GPT 配方智能体前端建设，围绕行业知识问答、配方建议、专利 /论文资料展示等场景，设计对话式
+智能体交互和结果展示方案。
+– 基于 WebSocket 落地流式对话输出，设计检索中、生成中、多节点输出、完成、异常等状态展示，减少用
+户等待感并提升生成过程可理解性。
+– 调整 Marked 与 MathJax 渲染规则，解决 Markdown 与公式混排、增量输出过程中公式渲染错乱等问题。
+– 深入 PDF.js / vue-pdf-embed 相关实现，定位并解决 PDF 缩放、文本复制错位等问题，提升资料阅读和
+引用体验。
+低代码平台
+• 项目介绍：集合可视化图形界面、审批流、自动化、BI、权限等能力的低代码平台，支撑 OA、CRM、ERP、
+OKR、BI 等系统应用搭建。
+• 技术栈：Vue、Vuex、Vue Router、Element UI、Vant、Axios、AntV S2、AntV G2、TinyMCE、IndexedDB
+等。
+• 职责描述
+– 参与低代码平台 Web 端和移动端核心能力建设，负责复杂表单、动态表格、审批流、权限系统、 BI 表单
+设计态/运行态等模块。
+– 基于 Performance 与 Memory 对复杂表单加载链路进行分析，优化组件加载、数据渲染、打包体积和内存
+占用，使页面加载时间减少约 80%。
+– 沉淀复杂表单、动态表格、表格拖拽、视图拖拽等低代码交互能力，提升配置体验和运行态稳定性。
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+
+专塑视界
+• 项目介绍：百万用户塑化交易平台，覆盖中台、后台、原生 APP、H5、算法数据、小程序、直播和行业智能
+体等业务。
+• 技术栈：Vue、Pinia、Vue Router、Element UI、Axios、POLYV、vue-video-player、uni-app、JSBridge 等。
+• 职责描述
+– 参与百万用户塑化交易平台前端建设，覆盖中后台、原生 APP、H5、小程序、直播和算法数据等模块。
+– 负责 H5 嵌入原生 APP 与小程序的跨端适配，封装 native API、JSBridge 调用和页面埋点能力，保障跨端
+体验一致性。
+– 优化直播页面加载链路，降低页面白屏风险；二次封装 Element UI 业务组件，提升中后台页面交付效率。
+– 参与复杂录制场景技术方案评估，从协议清晰度、码率、 FPS、客户端压力、服务端压力和实现成本等角
+度进行方案取舍。
+星伴读公众号与讲师端
+• 项目介绍： 面向学生、 家长和讲师的在线阅读与教学平台， 包含公众号学习端、 商城营销、 在线上课、Electron
+讲师端、IM/TRTC、直播回放等模块。
+• 技术栈：Vue2、TypeScript、Vue Class Component、Vuex、Vant、Electron、IM、TRTC、ECharts、Element
+UI 等。
+• 职责描述
+– 参与公众号从 0 到 1 建设，落地微信授权、微信支付、商城营销、阅读、学生在线上课等核心模块。
+– 负责 Electron 讲师端 IM/TRTC 接入，打通学生提问、在线上课、直播回放、教师课程表和学习报告等教
+学流程。
+– 基于 Vue2 + TypeScript + Vue Class Component / 装饰器语法开发业务模块，并解决 html2canvas 图片
+生成失真和跨设备截图不完整问题。
+ 其他
+• 英语六级
+• 计算机二级
+ 教育经历
+福建农林大学 2015.09 – 2019.06
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~
+5f611daf584f90ed1HN509q4EFRZxou_WPKaWOKllvXRNxhj2A~~

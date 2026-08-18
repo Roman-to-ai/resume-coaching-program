@@ -1,0 +1,173 @@
+年龄： 最高学历：本科 户籍：
+工作情况： 三年后端开发工作经验
+AI 大模型集成与智能应用能力：
+1 . 掌握 Spr ing AI  与 LangChain  双框架 AI 微服务开发，能根据业务阶段完成框架选型与迁移。在 Spring AI 
+双模型 共存场景下，通过自定义 Aut oConfiguration 解决了框架原生的  Bean 注入冲突 问题，实现通义千问
+（主对话 + Function Calling）与 OpenAI（文本润色 / T TS / ST T）的模型能力分工。
+2 .  掌握 Elasticsear ch  实现向量存储，借助 QuestionAnsw erAdvisor 组件实现检索增强生成，提升 AI 回答的
+准确性和专业性。
+3 . 掌握 混合检索 体系全链路搭建： BGE-M3  稠密  + 稀疏 双向量双路召回、 BGE-R erank er  重排序精排、 父子
+分块 策略（子块检索，父块返回给 LLM）、中文语义 递归分割 ， 支持 PDF / W or d / PPT / 图片 OCR 多模态
+文档自动解析入库。
+4 . 设计 意图路由 机制，通过 BER T  分类将通用问题直达 LLM 跳过检索，减少 30% 以上无效检索开销； 通过检
+索 加权融合策略 调优，兼顾语义匹配与关键词精确命中，解决关键词检索失效与上下文残缺问题。
+5 . 具备 Function Calling  业务工具封装能力，打通课程查询、预下单等跨服务调用链路； 实现多轮 对话窗口截
+断 、结构化工具结果 流式同步推送 、优雅停止生成与中断内容自动保存等交互优化方案。
+6 . 具备工程化落地能力： 提示词双通道热更新 （Nacos + 文件监听）无需重启服务； 能横向对比 Spring AI 与
+LangChain 在不同阶段的适用性，根据现有系统架构制定平滑迁移策略， 兼顾新能力引入与旧服务复用。
+核心后端开发能力：
+1 . 熟练掌握 J av a 基础与 面向对象 编程思想，理解 JVM 原理 （ 内存划分 、类加载阶段、双亲委派机制、GC垃圾
+回收流程 ），能定位 OOM、死锁 等性能问题。
+2 . 熟悉集合框架（ HashMap、ArrayList 等）底层结构与使用场景，掌握反射、注解、异常处理等核心语法。
+3 . 熟悉 多线程开发 ，理解 线程池执行流程、Concurr entHashMap底层、R eentrantLock锁 等，了解不同业
+务场景下 线程池核心参数 设置原则，具备良好的并发编程习惯。
+4 . 掌握常用 设计模式 （ 策略、责任链、工厂 等），具备一定的系统设计能力。
+5 . 熟悉主流开发框架如 Spr ing Boot 、Spr ing MV C 、MyBatis 、MyBatisPlus ，熟悉 IOC/A OP 原理，掌握 S
+pr ingBoot 自动装配原理 与熟悉常用的 事务传播行为。
+6 . 熟悉 MySQL 关系型数据库 ，了解其底层核心结构，掌握 索引优化、慢 SQL 分析， 能有效提高SQL执行速
+度；理解 事务隔离级别 与 锁机制 （ 行锁、表锁、死锁 等）。
+7 . 熟悉 R edis 缓存原理，掌握 R edis数据类型 及使用场景 ； 熟练使用 R edisson 实现分布式锁；熟悉缓存三兄弟
+问题及解决方案， 例如 布隆过滤器解决缓存穿透问题、用分布式锁解决缓存击穿问题、设置不同过期时间和
+搭建R edis集群解决缓存雪崩问题等；
+个人优势
+e5910 edd21HN509W-EltQxYi_WP KllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+
+8 . 熟悉 RabbitMQ 消息中间件 ，实现异步解，掌握 死信队列 与 幂等控制 ，能实现 消息可靠投递与消费 。
+9 . 熟悉 Spr ing CloudAlib ab a 微服务体系，熟练使用 Nacos搭建 注册中心和配置中心 ，不同微服务模块间使用 
+OpenFeign 实现远程调用 ，使用 gat eway 做网关，统一管理流量入口，拦截非法请求。
+10 . 熟悉 Seata 分布式事务 框架，了解两阶段提交原理，掌握 A T/XA 模式的使用；熟悉 CAP 理论 与 Base理论。
+11.熟练掌握 Dock er 容器快速部署生产环境，了解拉取镜像与创建自定义镜像，创建容器运行不同应用，挂
+载     数据卷对容器和数据解耦，了解Dock erCompose部署分布式应用。
+12.熟练使用 Git、Git ee 版本控制工具，掌握 Mav en 依赖管理与 IDE A 集成开发工具 的调试能力。
+13.熟悉接口开发工具如 Y Api 、 S wagger， 也会用 Apifo x 做简单的接口测试；熟练使用 Spr ingBootT est 进
+行   单元测试。
+团队配合能力：
+1 . 需求评审主动对接产品对齐业务，提前排查逻辑漏洞，输出落地优化方案，减少返工；
+2 . 高效完成分配开发任务，交付稳定可靠，定期主动同步开发进度给上级；
+3 . 善于跨同事沟通协作，遇技术难点组织共同研讨，高效配合推进项目。
+教育经历
+2019.09 - 2023.06
+工作经历
+2024.09 - 至今
+2023.07 - 2024.09
+项目经历
+技术架构
+• F astAPI、LangChain、BGE-M3、BGE-R erank er、Milvus、P addleOCR、SpringAI、SSE 、R edis、MyS
+QL 、Elasticsear ch、 Nacos
+项目描述
+• 东培学堂 AI 智能助手微服务，面向学员提供 7×24 小时智能问答、课程查询、下单辅助、语音交互，替代
+传统人工客服。分两阶段独立开发：初期基于 Spring AI 搭建服务，采用 Elasticsear ch 实现基础 RA G；针
+对检索召回差、资源开销高问题，完成架构迁移至 LangChain+F astAPI，替换 Milvus 混合检索方案，T op
+5 文档召回率提升至 92%，无效检索调用减少 30%，显著优化问答精准度与接口响应速度。
+核心职责
+• 独立完成 AI 助手微服务全流程开发，基于 Spring AI 实现 SSE 流式对话、多轮记忆（R edis）、Elasticsear
+ch 基础 RA G 检索、Function Calling 业务工具（课程查询/预下单），替代传统人工客服。
+2026.03 - 至今
+广东工业大学
+软件工程 | 本科
+广东好易点科技有限公司
+Agent开发工程师
+广东安护通信息科技有限公司
+J av a后端开发工程师
+东培学堂
+Agent开发工程师
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+
+• 设计 DashScope + OpenAI 双模型架构，通过自定义 Aut oConfiguration 解决 Spring Bean 注入冲突，
+主对话由通义千问承载（含 Function Calling），文本润色/语音交互由 OpenAI 承载，各取所长。
+• 将架构从 Spring AI 迁移至 LangChain，基于 LangChain bind_t ools 实现 Function Calling，通过 http x
+异步调用 J av a 课程服务/交易服务，保持与原系统接口兼容。
+• 以 Milvus 替代原 ES 单路检索，引入 BGE-M3 混合检索 + BGE-R erank er 精排，搭配父子分块策略（子块
+检索，父块返回给 LLM）， 解决专有名词漏召回问题和上下文不足问题，T op 5 召回率约 92%。集成 P ad
+dleOCR 实现 PDF/W or d/图片多模态知识库自动入库。
+• 接入 BER T 查询意图分类，将"闲聊/通用问题"直达 LLM 跳过检索，减少约 30% 无效检索调用，降低平均
+响应延迟。
+• 搭建提示词热更新体系（Nacos + 文件监听），支持运营实时调整 AI 回答风格，无需重启服务。
+• 设计分层存储方案：R edis 存对话消息内容、MySQL 存会话元数据，支持历史会话按时间分组展示和完整
+对话回溯。
+技术架构
+•  SpringBoot、SpringMV C、SpringCloudAlib ab a、MySQL、R edis 、RabbitMQ、Elasticsear ch、IO T、
+Dock er、nginx
+项目描述
+• 在日常出行中，电动车代步的占比非常大，电动车充电市场也相当庞大，在小区内、一些公共场所都可以安
+装充电桩供电。针对传统充电桩人工管理低效、设备状态无法实时监控、用户充电流程繁琐的痛点，我们设
+计了这套软硬件一体化物联网充电管理方案，实现用户小程序自助充电、后端运维实时监控、设备云端统一
+调度全链路能力
+核心职责
+• 负责 IoT 设备消息处理相关工作，统筹充电桩设备云端接入、实时状态上报、故障信息传递等核心业务，保
+障设备与平台之间消息流转顺畅，确保设备状态可实时监控、故障可及时响应。
+• 主导支付资金安全相关业务落地，负责用户充值、充电计费、退款全流程管控，制定资金风险防控规则，规
+避重复回调、恶意套现、漏单等资金风险，保障平台资金流转安全。
+• 运用策略模式落地充电计费、充值优惠相关业务规则，针对不同场景制定差异化策略，实现策略的灵活配置
+与切换，简化后续业务规则迭代流程。
+• 优化充电计费逻辑，完善计费规则的落地执行，确保不同场景下计费准确，同时配合支付模块，保障计费与
+资金扣减的一致性。
+• 负责用户资产相关业务管理，统筹用户账户余额、优惠券等资产的发放、扣减与核对，配合支付资金安全模
+块，保障用户资产数据准确无误。
+• 设计周边充电桩检索相关业务流程，结合用户定位需求，优化检索逻辑，实现按距离、空闲状态、营业状态
+筛选，提升用户找桩便捷性。
+• 制定退款审核相关业务机制，结合支付资金安全要求，规范退款流程，保障退款操作合规、资金退回及时，
+平衡风控与用户体验。
+• 协同前端、测试团队完成核心业务模块联调测试，处理线上业务异常与用户反馈，保障 IoT 消息处理、支
+付、计费等核心功能稳定运行。
+2025.06 - 至今
+技术架构
+2024.09 - 2025.06
+好易点快充
+J av a后端开发工程师
+春祉养老
+J av a后端开发工程师
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+
+• Spring Boot、Spring Cloud Alib ab a（Nacos/Gat eway/OpenFeign）、MySQL、R edis、RabbitMQ、
+阿里云IO T
+项目描述
+• 春祉 养老是一个智慧养老综合管理平台，覆盖老人从入住、护理到退住的完整生命周期。核心业务流程：老
+人通过小程序或前台办理入住 → 系统分配床位房型 → 根据评估定级匹配护理计划/项目 → 生成每日护理任
+务 → 老人或家属小程序查看、缴费 → 退住结算。
+核心职责
+• 对接阿里云第三方平台，接收阿里云平台传回来的数据，实时同步给家属和护理人员
+• 设备数据告警判断与处理
+• 负责护理等级、护理计划、护理项目三大模块，覆盖 C 端小程序和 B 端后台两端接口
+• 实现后台管理系统登录，实现小程序端微信授权登录
+• 小程序端护理项目查询、参观预约完整流程
+技术架构
+• Spring Boot、Spring Cloud Alib ab a（Nacos/Gat eway/OpenFeign）、MySQL、R edis、RabbitMQ、
+腾讯位置服务、阿里云短信服务
+项目描述
+• 安护通陪诊是一个专业陪诊服务综合管理平台，覆盖用户从预约陪诊、服务执行到评价的全流程服务闭环。
+同时支持家属代预约、加急陪诊、多科室联合陪诊等特色服务，解决独居老人、异地就医、行动不便人群的
+就诊难题。
+核心职责
+• 对接腾讯位置服务，实现用户就诊地点定位、陪诊师位置实时追踪，同步展示给下单用户及家属，保障服务
+透明度。
+• 对接阿里云短信服务和微信模板消息，实现预约成功、陪诊师接单、服务开始、服务结束、费用结算等全流
+程消息推送，确保用户及时掌握服务进度。
+• 负责陪诊师管理、服务订单管理、服务评价管理三大核心模块，覆盖 C 端小程序和 B 端后台管理系统两端接
+口开发与维护。
+• 实现后台管理系统账号密码登录、权限分配与角色管理，小程序端支持微信授权登录、手机
+录，保障账号安全与登录便捷性。
+2023.07 - 2024.09 安护通陪诊
+J av a后端开发工程师
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~
+e59108ee2e77edd21HN509W-EltQxYi_WPOWWOKllvXRNxhj2A~~

@@ -1,0 +1,115 @@
+｜Java后端开发工程师｜6年企业应用开发经
+验
+具备企业级后台系统完整研发经验，参与过从需求分析、接口设计、数据库设计、开发测试、部署上线到后期
+维护的完整流程，能够独立负责业务模块开发与迭代。
+具备高并发场景优化和系统稳定性治理经验，熟悉缓存优化、异步处理、消息队列、分布式锁、数据库性能优
+化等常见技术方案，并能够结合业务场景进行技术落地。
+具备线上问题定位和故障处理经验，能够分析接口异常、慢SQL、服务调用异常等问题并进行优化；日常研发
+过程中使用ChatGPT、Codex、DeepSeek等AI工具辅助需求分析、技术方案设计、代码开发和问题排查，提
+升研发效率。
+核心职责
+负责企业数据安全产品相关业务模块开发，参与接口设计、数据库设计及系统迭代维护。
+参与Spring Cloud微服务开发、K3S部署及开发测试环境维护，协助排查部署及线上问题。
+核心职责 ：
+负责餐饮SaaS系统桌台管理、二维码管理、扫码点餐、优惠券等核心业务模块开发。
+参与需求分析、技术方案设计、接口设计、数据库设计、联调测试及线上问题排查，持续优化系统性能
+与稳定性。
+核心职责 ：
+负责WMS、清关后台等物流核心系统研发，负责需求沟通、任务拆分、版本发布及项目推进。
+负责团队开发协作、生产环境部署、线上问题排查及系统稳定性保障。
+餐饮SaaS｜跨境物流｜Spring Boot｜Spring Cloud｜微服务架构
+ 134 2214 2586（微信同号）  
+教育背景
+中山大学南方学院 - 计算机科学与技术（本科 全日制） 2015.09 - 2019.06
+职业概述
+专业技能
+Java
+Java基础、集合、多线程、JUC、CompletableFuture异步编程，常见设计模式
+Spring 生态
+Spring Boot、Spring Cloud、Spring MVC、OpenFeign、Gateway、Nacos、Resilience4j
+数据库
+MySQL、PostgreSQL，MyBatis、索引设计、SQL调优、慢SQL排查、事务处理
+Redis
+缓存设计、Redisson分布式锁、Lua脚本、热点数据优化、缓存一致性处理
+中间件
+RabbitMQ、XXL-Job、ShardingSphere-JDBC，消息异步处理、延迟队列、定时任务、分库分表
+部署运维
+Linux、Docker、K3S，项目部署、环境维护、线上问题排查
+开发工具
+IDEA、Maven日常开发构建，Git代码版本管理与分支协作，Postman接口调试，Navicat数据库管理
+AI 辅助开发
+ChatGPT、Codex、DeepSeek，应用于需求分析、技术方案设计、代码开发、问题排查及文档整理
+工作经历
+广东源方科技有限公司                        Java开发工程师 2026.03 - 2026.06
+广州开付信息科技有限公司                 Java开发工程师 2025.02 - 2026.02
+广州云泰软件科技有限公司                 Java开发工程师（兼物流线项目负责
+人）
+2021.04 - 2024.11
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce6 1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+
+核心职责 ：
+作为公司唯一开发人员，独立负责需求分析、数据库设计、前后端开发、测试、部署上线及后期维护。
+完成行政管理系统及产品防伪系统0-1建设，持续负责功能迭代与系统维护。
+技术栈：Spring Cloud  Spring Boot  PostgreSQL  Redis  RabbitMQ  OpenFeign  Resilience4j
+项目描述：面向餐饮门店经营场景的SaaS系统，覆盖扫码点餐、收银结算、桌台管理、优惠券、会员积分等
+核心业务，支撑餐饮门店点餐、收银及会员运营等业务流程。
+技术亮点：
+针对扫码点餐二维码生命周期管理场景，采用 RabbitMQ 延迟队列 替代定时轮询，实现二维码自动失效
+处理，降低数据库轮询压力，提高处理实时性。
+针对菜单详情等业务聚合查询场景，采用 CompletableFuture + 自定义线程池 实现多服务异步并行调
+用，减少串行等待时间，并结合 OpenFeign + Resilience4j 实现超时、熔断及降级处理，避免非核心服
+务异常影响主流程。
+针对菜单、桌台等热点数据高频访问场景，设计 Redis + Caffeine 两级缓存架构，优化热点数据访问，
+降低数据库压力，并处理 缓存穿透、缓存击穿、缓存雪崩 等缓存异常场景，提升系统稳定性。
+针对优惠券高并发领取场景，采用 Redis + Lua脚本 实现库存原子扣减，结合 接口幂等设计，解决高并
+发情况下库存超卖及重复领取问题。
+针对订单完成后积分发放涉及跨服务分布式事务一致性问题，采用 本地消息表 + RabbitMQ 实现业务最
+终一致性，结合 消费幂等、失败重试机制 保证消息可靠处理，避免服务间数据不一致问题。
+针对餐饮桌台状态流转复杂、业务规则分散问题，引入 Spring StateMachine 状态机 管理桌台状态变更
+流程，统一控制状态转换规则，避免非法状态流转，提升业务可维护性。
+技术栈：Spring Boot  MyBatis  MySQL  Redis  RabbitMQ
+项目描述：仓库货物存储运输管理，包含订单签收、⼊库管理、预配实配管理、货物管理、货柜管理、无主货
+处理等功能支撑跨境物流业务仓储作业流程
+技术亮点：
+针对仓储入库、库存变更等高频业务操作，采用 Redisson分布式锁 控制并发访问，避免多请求同时修
+改库存数据导致数据异常，保障库存数据一致性。
+针对订单签收后的入库任务通知场景，采用 RabbitMQ + SSE 实现状态事件异步处理与实时推送，解耦
+业务流程，提升系统扩展性。
+针对订单、货物等业务单号生成需求，采用 Redis Increment 实现递增编号生成，保证业务编号唯一
+性，提高编号生成效率。
+针对仓储业务数据查询性能问题，结合 MySQL索引优化、SQL执行计划分析 排查慢SQL，优化复杂查
+询，提高接口响应速度。
+技术栈：SpringCloud  MyBatis  MySQL  Redis  ShardingSphere-JDBC  Spring Cache
+项目描述：面向跨境物流报关业务，负责海关数据处理及业务管理，包含运单管理、报关清单、商品备案、货
+物扫描实时展示等核心模块。
+技术亮点：
+针对海关业务数据持续增长导致单表查询性能下降问题，采用 ShardingSphere-JDBC 分库分表 方案拆
+分业务数据，优化大数据量场景下查询性能。
+针对海关报关数据批量导入场景，采用 EasyExcel 分批读取 + 多线程并行处理 + 批量插入 优化数据处理
+流程，将百万级数据导入耗时由180s降低至24s。
+技术栈：Spring Cloud  MyBatis  MySQL PostgreSQL  Redis  Docker  K3S  MinIO
+项目描述：面向企业数据安全管理场景，提供文件安全存储、加解密策略配置、租户资源管理等能力，支持企
+业文件安全处理和资源管理。
+技术亮点：
+负责文件安全、租户资源管理等核心业务模块开发，实现文件上传下载、加解密策略配置、资源审批等
+功能。
+参与 K3S 容器环境搭建与服务部署，排查 Pod 启动异常、版本兼容等问题，并参与 ShardingSphere-
+Proxy 数据库代理兼容性测试。
+汕头威士达化妆有限公司                     Java全栈工程师 2019.05 - 2021.03
+项目经历
+餐饮收银SAAS系统 广州开付信息科技有限公司
+WMS仓储系统 ⼴州云泰软件科技有限公司
+清关后台管理系统 ⼴州云泰软件科技有限公司
+文件安全管理系统 广东源方科技有限公司
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~
+a802a879b59ce64d1HN509q0FFtZx4S-VvqaWOKllvXRNxhj2A~~

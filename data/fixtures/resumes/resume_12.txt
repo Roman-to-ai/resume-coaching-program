@@ -1,0 +1,164 @@
+个人简历  
+基本信息
+姓　　名： 年　　龄： 25岁
+性　　别： 女 工作年限： 4年经验
+电　　话： 邮　　箱： 
+2018-09 ~ 2022-07 西安财经大学 网络工程（本科）
+教育背景
+· AI应用开发：熟悉 Python、FastAPI、LangChain、LangGraph及Dify，具备RAG、Tool Calling与多智能体应用
+开发经验。
+· 分布式架构：熟悉Redis、Redisson、RabbitMQ、Seata及XXL-Job，具备分布式锁、事务一致性、消息可靠性处
+理经验。
+· RAG检索技术：掌握文档分块、向量化、混合检索及重排序技术栈，熟悉BGE-M3、Milvus、Elasticsearch、
+BM25算法与RAGAS评估框架体系。
+· Java技术体系：熟练使用Java、Spring Boot及Spring Cloud Alibaba微服务架构，掌握Nacos、Gateway、
+Sentinel、OpenFeign等组件落地实战。
+· 数据持久化：熟练使用MySQL、MyBatis-Plus及SQLAlchemy，掌握索引优化、SQL优化与分库分表。
+· 搜索与实时通信：熟悉Elasticsearch全文及向量检索，掌握WebSocket、SSE流式响应与多轮会话状态管理。
+· 网关与安全治理：具备JWT认证、接口限流、熔断降级、服务发现及网关统一鉴权开发经验。
+· 工程化能力：熟悉Git、Maven、Docker容器化部署及Jenkins自动化构建，能够独立完成服务开发、部署与持续优
+化。
+工作技能
+2024-02 ~ 2026-08 长沙迭亦信息技术有限公司 AI应用开发工程师
+2022-07 ~ 2024-02 湖南智软信息技术有限公司 Java后端开发工程师
+工作经历
+2026-03 ~ 2026-08 启智助教 AI应用开发工程师
+项目描述：
+面向教师日常教学场景的 AI 教学助手，基于 LangGraph 构建多智能体协作框架，覆盖智能问答、自动出题、作业批
+改、知识检索与多轮会话管理等核心功能。系统通过 MCP 协议统一对接课程中心、题库和作业平台，实现业务数据的
+集中调用与流转；采用 Agent Skills 将不同题型的出题逻辑封装为可复用模块，便于后续快速扩展和维护。
+技术栈：
+FastAPI、LangGraph、LangChain、Agent Skills、MCP、Function Calling、Qwen-Max、JWT、SQLite、SSE、
+Pydantic、RAG、MySQL、vLLM、MinerU、Qwen2.5-7B
+项目经验
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa ba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+
+2025-08 ~ 2026-03 片语寻医 AI应用开发工程师
+2024-02 ~ 2025-08 片语寻医 AI应用开发工程师
+个人职责：
+· 基于 LangGraph 设计并实现多智能体协作架构，包含意图识别路由、结构化出题、答案与解析生成、教学问答四大 
+Agent，通过状态图定义节点与条件边实现请求的智能分发，并集成 SQLite Checkpoint 持久化多轮会话状态。
+· 为 QuestionGen Agent 设计项目级 Skill，将通用出题流程、难度定义、质量检查和 JSON 输出契约迁移至 
+SKILL.md，选择题、填空题、简答题等题型规则拆分至独立 references；实现渐进式加载，仅将当前题型规则注入
+上下文，保持 RAG 检索和题集落库链路兼容。
+· 基于 MCP 和 Function Calling 构建工具调用体系，将课程大纲封装为 Resources，题库查询、题集保存和作业发
+布封装为 Tools；通过 MCP 协议完成工具动态发现与跨系统调用，打通出题、答案生成到作业发布的业务闭环。
+· 为 QuestionGen Agent 设计项目级 Skill，将通用出题流程、难度定义、质量检查和 JSON 输出契约迁移至 
+SKILL.md，各题型规则拆分至独立 references；实现渐进式加载，仅将当前题型规则注入上下文，保持 RAG 检索
+和题集落库链路兼容，不增加额外 LLM 调用。
+· 实现 RAG 知识库链路，支持 PDF、Markdown 教学资料上传，集成 PaddleOCR 与 PyPDF 降级解析，完成文本切
+分、BGE Embedding 向量化、Milvus 相似度检索及 MySQL 元数据管理，为 AnswerGen 和 Chitchat Agent 提
+供精准知识支撑。
+· 基于 FastAPI 构建 RESTful API 和 SSE 流式交互，完成 JWT 身份认证、异步数据访问、会话管理及题库、知识库
+和批改记录管理，保障前端调用的安全性、一致性与实时流式体验。
+项目描述：基于大语言模型的多智能体协作医疗诊断平台。用户上传患者医疗报告，系统自动并行调度心脏病、心理
+科、呼吸科、神经科四位 AI 专家独立分析，再由多学科综合团队汇总各方意见生成统一诊断结论。前端通过 SSE 实时
+流式展示分析进度与诊断结果，支持追问对话和 EU AI Act 合规审计日志下载。
+技术栈：
+Python 3.10、FastAPI、Uvicorn、LangChain、LangGraph、LangChain-OpenAI、Pydantic、PyMuPDF、
+MySQL、Milvus、text-embedding-v3、阿里云 DashScope（Qwen-Plus）
+项目职责：
+· 设计并实现多智能体协作诊断架构，基于 LangGraph StateGraph 构建意图路由 → 四专家并行分析 → 综合聚合的
+诊断流水线，定义 MedicalState 统一状态模型，实现 Agent 抽象基类及 6 个具体 Agent（Supervisor / 4 位专科
+专家 / Aggregator）。
+· 搭建 FastAPI 异步后端服务，开发文件上传解析、SSE 流式分析、追问对话、审计日志下载等 RESTful 接口，实现
+内存会话存储与合规日志链路追踪。
+· 主导医疗文档解析引擎重构，基于开源MinerU框架深度定制，统一处理多格式输入，集成其内置OCR与布局分析能
+力，实现含中文图文混合医疗文档的精准识别与结构化信息抽取，解决了多源异构数据治理难题。
+· 构建 RAG 医学知识检索模块，基于Milvus向量数据库存储医学文献与诊疗指南，采用 text-embedding-v3 进行文
+档向量化，在专家分析前检索相关知识增强诊断质量。
+· 集成阿里云 DashScope 大模型服务（Qwen-Plus），通过 OpenAI 兼容 API + LangChain-OpenAI 统一调用，实
+现 LLMFactory 单例模式管理模型实例，支持温度参数可配。
+项目描述：
+面向大众用户设计并落地了片语寻医app，解决了患者口语化症状描述与医学专业术语之间的匹配难题，并强制大模型
+基于权威资料作答，确保健康科普信息的精准定位与安全溯源，大幅提升了用户的健康自查效率。
+技术栈：
+Python, PyTorch, BGE-M3模型, bge-reranker-large, Milvus向量数据库, MySQL, Redis, Bert模型, BM25, LLM
+项目职责：
+· 设计多级医疗问答架构，构建 Redis 缓存、BM25 传统匹配、Bert 语义路由和 Milvus 混合检索的分层系统，为医
+疗健康平台提供面向大众用户的智能自查与科普问答服务。
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+
+2023-09 ~ 2024-02 益年伴 Java后端开发工程师
+2023-03 ~ 2023-09 速达快递 Java后端开发工程师
+· 针对疾病百科、药品说明书、健康科普长图文等非结构化海量文本的自动化切分链路，采用父子文档拆分器实现语义
+切分，并建立附带了多维元数据的结构化医疗垂直领域知识库。
+· 基于 BGE-M3 实现稠密与稀疏双路向量提取，存入 Milvus，解决患者通俗描述与医学专业疾病诊断术语之间的深层
+语义匹配难点。
+· 搭建 Redis 与 MySQL 历史问答库，利用 BM25 加 Softmax 概率阈值拦截高频重复的健康咨询，大幅降低系统推
+理负载。
+· 引入 bge-reranker-large 对检索出的医疗片段进行精排，定制强约束性 LLM Prompt，规定大模型必须严格基于检
+索到的医学资料作答，确保医疗信息的权威性与可追溯性。
+项目描述：
+随着我国人口老龄化问题的日趋严峻，对专业化养老院的需求与日俱增。而大部分养老院信息化水平较低，现代化服务
+装备普遍欠缺，管理和服务效率低下，无法满足老人对专业化护理的需求。益年伴为养老院量身定制专业的养老管理软
+件，覆盖从入住到退住的完整业务流程。
+技术栈： 
+SpringBoot、Mybatis-Plus、Spring Security、Redis、MySQL、HutoolNginx、Docker、Swagger、若依框架
+项目职责：
+· 入住表结构设计与优化，主导入住办理模块表结构设计，对入住表进行垂直分割为入住表和入住配置表，分离高频与
+低频访问字段；采用逻辑外键替代物理外键，提升增删改性能与架构灵活性。
+· 入住全流程接口开发，设计并实现入住办理7个核心接口（分页列表、老人信息回显、护理等级查询、楼层床位树形
+数据、房间价格查询、入住申请提交、入住详情查询），覆盖从选床到签约的完整业务链路。
+· 多表协同事务处理：实现入住申请接口，在一个事务中同步操作老人表、床位表、入住表、入住配置表、合同表共5
+张表，通过事务保证数据一致性；利用JSON序列化将家属信息存入备注字段，简化表结构。
+· 护理等级列表查询接口：开发护理等级全量查询接口，支持按启用状态过滤，返回护理等级ID、等级名称、护理费
+用等字段，为入住办理页面提供下拉选项数据源，前端选中等级后自动填充护理费用单价，提升表单填写效率。
+项目描述：
+速达快递是一套基于微服务架构体系的生产级TMS运输管理系统，业务侧重于快递员智能调度、作业范围管理、线路规
+划等核心物流场景，通过智能化的调度决策与流程管控，实现从下单到取件任务生成的自动化闭环，有效提升人效与管
+控效率。
+技术栈：
+MongoDB、Spring Data MongoDB、Neo4j、Spring Data Neo4j、RabbitMQ、OpenFeign、Spring Boot、
+Spring Cloud、Redis
+项目职责：
+· 负责使用 MongoDB + 2dsphere地理索引 存储机构与快递员的作业范围多边形数据，实现基于坐标点的空间查
+询。
+· 负责 智能调度-分配快递员 功能开发，通过服务范围匹配、排班过滤、任务负载均衡三层筛选，实现最优快递员的
+自动分配。
+· 使用 RabbitMQ 实现订单消息的异步消费与延时任务投递，根据期望上门时间动态控制取件任务的下发时机。
+· 负责 路线管理 功能开发，基于 Neo4j图数据库 实现机构间路线的创建与分页查询，支持按路线编号、名称、类型
+等多条件搜索。
+· 负责 线路成本配置与调度策略 开发，基于 Redis 实现线路平均成本的动态配置，并集成调度策略根据转运次数最少
+或成本最低自动规划运输路线。
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+
+2022-07 ~ 2023-03 安练 Java后端开发工程师
+项目描述：
+在解决客户运动安全缺乏实时保障、环境安全隐患响应滞后等行业痛点，平台通过接入智能手环与烟雾报警器等物联网
+设备，实现数据实时采集与监控，结合动态报警规则与多渠道通知机制，确保异常情况及时触达责任人，形成从设备监
+控到报警处置的完整闭环。
+技术栈：
+华为云IoTDA、Spring Boot、Spring Security、MyBatis-Plus、Drools规则引擎、WebSocket、阿里云短信服务、
+Redis、XXL-JOB、Hutool
+项目职责：
+· 基于华为云IoTDA完成智能手环与烟雾报警器的产品创建、物模型定义及设备注册，实现设备与会员/房间的业务绑
+定；开发设备同步、查询等核心接口。
+· 设计动态报警规则配置模块，支持按产品、物模型属性、阈值、持续周期、沉默周期等维度设定；开发定时任务匹配
+设备数据进行报警过滤，结合Redis实现连续计数与沉默周期管理。
+· 集成阿里云短信服务，报警触发后通过短信实时通知责任人；设计通知人动态分配策略，会员异常报警通知对应教
+练，设备异常报警通知行政人员及超级管理员。
+· 通过Redis缓存设备最新数据与报警中间状态，减少数据库查询压力；设计沉默周期与短信频次控制机制，避免重复
+推送；制定定时任务容错与监控方案，保障报警服务持续稳定运行。
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~
+9fa8ae974aba2b3d1HN509q4E1NWwYy_UfOaWOKllvXRNxhj2A~~

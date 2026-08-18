@@ -1,0 +1,124 @@
+意向岗位：Java 开发工程师
+性别： 年龄： 岁
+学历：本科 工作经验：三年
+电话： 邮箱:
+熟练 Spring、SpringMVC、SpringBoot 主流开发框架，理解 IOC、AOP、事务管理核心原理；
+熟悉 Spring Cloud Alibaba 微服务生态，会使用 Nacos、Gateway 等常用组件；
+会用 MyBatis、MyBatis-Plus 进行数据层开发，能够独立设计 MySQL 库表结构，熟练编写业务 SQL，
+具备索引优化、慢查询排查与调优实操经验。
+能够运用 Redis 做业务缓存、会话存储及分布式锁开发，了解缓存穿透、击穿、雪崩常见问题的解决方案。
+熟悉 RabbitMQ 消息队列应用，可借助消息队列实现业务异步处理、模块解耦，了解消息幂等性、死信队
+列的实际业务使用场景。
+熟悉使用 Vue3 + Element Plus 开发后台管理系统，掌握 JavaScript 基础语法，了解 Uni-app 移动端
+开发，可独立完成前后端接口联调。
+了解 MQTT 物联网协议，掌握停车道闸、充电桩等硬件设备的指令下发与状态上报流程，对接物联网通信。
+开发过程遵循阿里巴巴 Java 开发规范，代码结构清晰、易维护；熟练使用 Cursor、Claude Code
+有 Coze 智能体定制与业务集成实战经历，可将 AI 能力落地融入实际业务开发。
+2019.09-2023.06 | 武汉学院 | 软件工程专业 | 本科
+2023-06-2026-06 | 武汉市苍云大数据科技有限责任公司 | Java 开发工程师
+参与公司果壳优选全链路小程序商城、云仓智汇 ERP、智慧停车充电一体化平台的研发工作，主要负责核
+心业务模块的需求分析、后端开发及系统维护。参与系统的性能优化与日常迭代。
+20 .11-2026.06 果壳优选 B2C 全链路商城-小程序 Java 开发工程师
+项目描述：果壳优选是一套基于 Spring Cloud 微服务架构的 B2C 综合电商平台，面向 C 端消费者提
+供全品类线上购物体验，同时为运营方提供 Web 管理后台。平台涵盖商品多规格管理（SPU-SKU 体系）、
+三级分类浏览、库存实时管控（超卖预警）、营销促销（优惠券）以及订单-支付-物流全链路闭环。
+99b19860aaf2bf1HN509q5FF
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2 5FFRRyo6 llvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+
+集成 cozeAI 智能体实现智能客服，支持退款审核与订单逆向流程。
+技术栈：Spring Cloud + Nacos + Spring Boot + MyBatis + Redis + RabbitMQ + Spring
+Security + JWT + MySQL + Vue3 + cozeAI 智能体 + Element Plus + Vite + uni-app
+解决方案：
+负责用户登录模块（微信授权、JWT 认证）、商品模块（三级分类、SPU/SKU、库存预警、搜索、COS 存
+储）、订单模块（购物车、下单、微信支付 V3、回调确认、超时取消、物流追踪）、余额充值（下单→支
+付→回调→流水）等微服务模块的设计与开发。
+基于 Spring Cloud+ Nacos 搭建微服务体系，实现服务注册发现、配置中心统一管理、服务间
+Feign 远程调用与负载均衡，支撑各业务模块独立部署与动态扩缩容。
+采用 Redis SETNX + Lua 脚本实现分布式锁，锁粒度细化至用户 ID + 优惠券 ID 维度，杜绝同一用户并
+发重复领取。
+引入 RabbitMQ 异步削峰与顺序消费，结合消息幂等性设计及数据库唯一索引，确保高并发场景下领券业
+务最终一致，用户不重复领券。
+实现购物车数据与 Redis 缓存联动，用户登录后自动合并本地购物车与服务端数据，解决多端购物车数据
+同步问题。
+基于 uni-app 搭建微信小程序端，一套代码多端运行，降低跨平台开发成本。
+使用 Vue3 + Element Plus 开发管理后台页面，实现商品列表、订单详情等核心界面。
+集成 cozeAI 智能体，实现小程序端智能客服，支持商品咨询、订单查询与售后问题自动应答，提升用户体
+验，降低人工客服压力。
+2025.01-2025.09 电驿·智慧停车系统 Java 开发工程师
+项目描述: 电驿·智慧停车充电一体化管理平台是一套企业级智慧停车与充电管理解决方案。系统后端采用
+Spring Boot 微服务架构，前端基于 Vue 3 + Element Plus 开发，覆盖停车场管理、充电桩管理、支付对
+接、用户管理、岗亭收费等核心业务场景。
+核心功能模块： 停车模块包括车辆入场/出场管理、多协议车牌识别相机对接、灵活计费引擎（按时/按次/
+阶梯/免费时段）、车位管理、岗亭收费、支付对接及数据统计。充电模块包括充电桩台账管理、充电计费
+引擎（按电量/时长/峰谷电价）、实时数据监控、充电记录与订单管理、支付对账及统计报表。
+核心功能模块： 一键授权登录、扫码取还、订单流水、个人中心、设备运维、用户体系、计费规则引擎
+技术栈：Springcloud+SpringBoot+SpringSecurity+JWT+MyBatis+MySQL+Redis+MongoDB+微信
+支付+SDK+Vue +ElementPlus+MQTT
+解决方案：
+停车模块基于 Netty + WebSocket 实现车牌识别相机与服务器的实时通信，
+通过 MQTT 协议对接充电桩设备，实现数据实时上报与远程指令下发。
+后端采用 Dubbo + ZooKeeper 微服务架构进行服务治理与 RPC 调用，
+Spring Security OAuth2 + JWT 实现统一认证授权。
+MySQL + Druid 存储核心业务数据，Redis 缓存高频数据，
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+
+MongoDB 存储充电桩时序数据，微信支付 SDK 对接支付。
+个人成长：负责停车与充电两大模块的全链路开发，独立完成数据库设计、后端接口开发及前端页面联调。
+在停车模块中攻克多协议车牌识别相机兼容难题，设计灵活可扩展的计费引擎；在充电模块中实现充电桩从
+台账管理、实时监控到计费支付的数据闭环，开发统计报表功能。参与系统性能优化与日常迭代，保障高并
+发场景下系统稳定性。
+2024.05-2024.12 韵时共享满电仓 Java 开发工程师
+项目描述：随着智能时代发展对智能设备续航的需求也越来越高，但用户在户外常常遇到电量不足的情况，
+充电宝的出现让生活更加方便，为此我们开发了一个租借充电宝的服务平台，它是一种可以随时随地借
+用和归还的充电设备，用户通过韵时共享满电仓 app，可以方便的找到附近的充电宝并进行租借。整个
+项目功能模块有用户模块,规则模块,设备模块,设备格子模块,商户模块,押金模块，微信小程序一键登录，
+扫码租借模块，归还设备模块等。
+环境部署：JDK、IDEA、Maven、MySQL，VsCode
+技术选型：SpringCloudAlibaba、SpringBoot、Redis、Mybatis、SpringSecurity 、MySQL、MQTT
+解决方案：
+个人负责用户模块，商户模块, 微信小程序一键登录，扫码租界模块，归还设备等功能模块。
+1. 使用 SpringCloudAlibaba 为项目提供微服务架构支持，实现高可用、可扩展的分布式系统。
+2. 使用 Redis 用于缓存数据，提高系统响应速度。
+3. 使用 SpringSecurity 确保系统的安全防护，对用户认证和授权进行严格管理。
+4. 使用 MQTT 协议实现设备与服务器之间的高效通信，确保充电宝的租借和归还操作及时响应。
+2023.09-2024.04 云仓智汇 ERP Java 开发工程师
+项目描述： 云仓智汇是一套基于 Spring Cloud 微服务架构的仓储企业 ERP 系统，面向仓储管理企业提
+供采购、库存、客户、订单等核心业务的全链路数字化管控。系统将采购管理、销售管理、订单管理、客户
+管理、商品管理、仓库管理、财务管理、出入库管理、用户管理等模块拆分为独立微服务，各服务可独立部
+署、独立扩展，有效提升系统的可维护性与业务敏捷性，帮助企业降本增效、提升客户满意度。
+技术栈： Spring Cloud + Spring Boot + Spring Security + MyBatis + MySQL + Redis + RabbitMQ
++ JWT
+解决方案：
+负责采购管理、商品管理、出入库管理、用户管理等微服务模块的设计与开发，各模块独立拆分部署，通过
+Feign 实现服务间远程调用。
+基于 Nacos 实现服务注册发现与配置中心统一管理，支撑各业务模块动态扩缩容与灰度发布。
+采用 Spring Security + JWT 搭建无状态认证体系，Token 存储于 Redis 中，实现微服务网关统一鉴权，
+各项服务无需重复认证。
+使用 Spring 事务保证采购入库后库存数据的一致性，结合分布式事务方案确保跨服务数据最终一致。
+集成阿里云 OSS 实现商品图片的统一存储与访问。
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+
+引入 RabbitMQ 消息中间件，实现出入库单据生成、库存变更通知等流程的异步解耦，提升系统吞吐量。
+拥有三年 Java 开发经验，工作严谨负责，逻辑清晰，能快速抓住核心需求并推动方案落地。注重代码规范
+与质量，追求简洁可维护的技术实现，善于跳出常规思路解决复杂问题。团队中善于沟通协调，能快速融入
+并主动承担关键任务。
+fa9 bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~
+fa99b19860aaf2bf1HN509q5FFRRyo66U_OfWOKllvXRNxhj2A~~

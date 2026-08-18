@@ -1,0 +1,17 @@
+简历 基本信息 姓名：              性别：               现居地： 出生年月：       联系电话：  意向职位：Web 全栈开发工程师/高级 Web 前端开发工程师 教育经历 长安大学（本科）      公路工程专业毕业            2009.9～2013.6 技术特长 熟练掌握 HTML、CSS、JavaScript、jQuery 相关知识，熟悉 W3C 标准，熟悉前端开发调试工具的使用，能根据设计稿完成前端静态页面及动态效果的开发，能兼容流行的浏览器 熟练使用 ES6+ 语法及 TypeScript 熟悉 Spring Boot、MyBatis-Plus、MySQL。熟练掌握 Linux 常用命令，熟悉 Docker 的使用     熟悉单页面应用的开发，熟练掌握组件化开发方式。对 Vue.js 有深入的理解，熟练掌握 React.js 熟练使用 Cursor、Codex 等 AI 辅助编程工具提高开发效率、检查代码规范与质量 能够构建 React/Vue 组件库开发全流程，熟悉单元测试工具 jest 和持续集成工具 circle CI 熟悉 Webpack、Vite 等前端工程化工具 了解 Agent 开发，基于 LangChain、LangGraph、CrewAI 等实现多 Agent 协作系统 具有良好的编码习惯、团队合作精神 工作经历 2021.10至2025.06：在太平洋网络科技有限公司担任高级Web前端开发工程师 2021.04至2021.09：在对庄科技有限公司担任 Web 前端组组长 2018.11至2020.06：在锦江信息技术（广州）有限公司担任 Web 前端开发工程师 
+559f182d41f1ea8a1HN509W_GVpXw4W3V RNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+
+2017.04至2018.09：在广州中国科学院计算机网络信息中心担任中级 Web 前端开发工程师 2015.11至2017.03：在上海谷居网络科技有限公司任职为初级Web前端开发工程师 项目经验 1) 太平洋网络科技有限公司（太平洋汽车网）     1.负责搭建太平洋汽车网C端架构，推动新项目 Vue3 普及率达100%。选用 TypeScript 后线上类型错误减少30%，部分 PC 项目采用 TailwindCSS 实现响应式设计，页面开发效率提升约30%     2.负责太平洋汽车网海外站（马来西亚和泰国）从零到一的前端开发，使用 @nuxtjs/i18n 支持泰语、英语双语，借助 SSR 与语义化 HTML 优化，站点在 Google 搜索中的首页关键词覆盖率提升至40个词，日均自然访问量达1.2万次     3.负责太平洋汽车网核心业务PC、H5、小程序、APP端的开发，如选车页、车系页、参配及对比页、PC端首页、PC端AI选车等页面。帮助每月数万加用户获得更好的用户体验     4.封装 dsbridge 与APP原生交互的方法，并将异步方法 Promisifying，并以 Async 前缀命名。负责太平洋汽车鸿蒙端APP车系/车型等页面开发     5.负责活动管理后台部分后端接口开发，技术栈为 Spring Boot + MyBatis-Plus + Redis + MySQL 2) 对庄科技有限公司     1.担任前端小组组长，负责日常的管理工作，制定项目文档参考和 git 开发规范，优化项目构建发布流程。     2.负责平台客服和商家客服聚合聊天项目的开发，主要技术栈为 React + @reduxjs/toolkit + ahooks + styled-component + SCSS。包含基本的 im 功能及扩展的客户资料、订单、浏览记录、优惠券、话术、宝贝、工单、充值等功能。使用 React 函数式组件和 Hooks，并大量使用自定义 Hooks 封装组件间通用逻辑。     3.客户关系后台管理系统的开发，技术栈主要涉及 Ant Design Pro，TypeScript，React ，less。     4.新版PC官网和移动官网的开发，涉及 Next.js，Vite，React 等技术。     5.负责公司内部组件库的搭建和开发。 3) 锦江信息技术（广州）有限公司 
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+
+    1.将原有营销通、门店通相关功能迁移合并到新的会员通系统，并开发和维护新功能。主要技术栈为 Vue 2、Vue-Router、Vuex、axios、TypeScript、ElementUI、SCSS。使用 Jenkins 统一构建发布，为完全的前后端分离，通过 nginx 转发到后台对应服务。在后面的迭代中，为提升页面加载速度，使用了前端微架构技术进行优化。     2.运营平台后台管理系统、统一登录管理系统等的前端开发和维护     3.移动端APP中H5页面使用 APP Bridges SDK 和客户端进行交互。使用 Vue 2 相关技术栈，部分项目使用了 Vant 组件库。部分页面使用了骨架屏优化加载体验。 4) 广州中国科学院计算机网络信息中心     1.在PC 端后台管理系统的前端开发和维护开发中对其进行了进一步的封装，如用表驱动法和动态组件封装表单组件、封装筛选表格分页组件等。这有效地加快了新项目的开发进度。随着实践经验的积累，摸索出了一套比较适合公司项目的代码文件组织形式，并编写了示例 demo和文档，向其他成员进行推广，方便维护代码。     2.负责核心官网和活动页面等的开发，移动端活动页面没有使用任何 UI 框架，并封装常用组件 个人评价     1.做事勤恳踏实、乐于探索、责任心强是身边人对我的评价；     2.独立解决问题能力强，能快速适应新的工作学习和生活环境，个人学习能力强。 
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~
+559f182d41f1ea8a1HN509W_GVpXw4W3Vv-eWOKllvXRNxhj2A~~

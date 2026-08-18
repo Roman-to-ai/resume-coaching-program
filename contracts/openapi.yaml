@@ -1,0 +1,187 @@
+openapi: 3.0.3
+info:
+  title: CareerLens Job Match API
+  version: 1.0.0
+  description: |
+    CareerLens 求职匹配纵向闭环的公共契约。请求链：
+    Vue 3 → Node BFF (:3000) → Java/Spring Boot (:8080) → Python (:8001) → LLM。
+    本文档描述前端经 BFF 暴露的公共 API 与共享 DTO；Java→Python 内部接口见
+    `paths./internal/analyze`（实现细节，不对外）。
+servers:
+  - url: http://localhost:3000/api
+    description: BFF 公共入口
+
+tags:
+  - name: jobs
+    description: 岗位领域 API
+  - name: analyze
+    description: 简历匹配分析
+
+paths:
+  /jobs:
+    get:
+      tags: [jobs]
+      summary: 岗位列表（分页 + 搜索）
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema: { type: string }
+          description: 按标题/公司/技能模糊搜索
+        - name: experience
+          in: query
+          required: false
+          schema: { type: string, example: 1-3年 }
+          description: 经验档位，如 1-3年 / 3-5年 / 5-10年
+        - name: page
+          in: query
+          required: false
+          schema: { type: integer, default: 1, minimum: 1 }
+        - name: size
+          in: query
+          required: false
+          schema: { type: integer, default: 20, minimum: 1, maximum: 100 }
+      responses:
+        "200":
+          description: 岗位列表
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/JobListResponse" }
+  /jobs/{jobId}:
+    get:
+      tags: [jobs]
+      summary: 岗位详情
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: 岗位详情
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/JobDetail" }
+        "404":
+          description: 岗位不存在
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ErrorResponse" }
+  /analyze:
+    post:
+      tags: [analyze]
+      summary: 提交简历文本 + 岗位，返回结构化问题/命中项/缺口/匹配度
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/AnalyzeRequest" }
+      responses:
+        "200":
+          description: 匹配结果
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/MatchResult" }
+        "400":
+          description: 入参非法（简历文本为空 / jobId 缺失或不存在）
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ErrorResponse" }
+        "504":
+          description: 上游超时
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ErrorResponse" }
+
+components:
+  schemas:
+    JobSummary:
+      type: object
+      required: [jobId, title, company]
+      properties:
+        jobId: { type: string, description: 岗位唯一 ID（boss job_id） }
+        title: { type: string }
+        company: { type: string }
+        salary: { type: string, example: 8-13K }
+        location: { type: string }
+        experience: { type: string, example: 1-3年 }
+        degree: { type: string, example: 大专 }
+        skills: { type: string, description: 逗号分隔技能串 }
+        companyIndustry: { type: string }
+    JobDetail:
+      allOf:
+        - $ref: "#/components/schemas/JobSummary"
+        - type: object
+          properties:
+            description: { type: string, description: 岗位描述（HTML 或纯文本） }
+            companyScale: { type: string }
+            companyStage: { type: string }
+            welfare: { type: string }
+            url: { type: string }
+    JobListResponse:
+      type: object
+      properties:
+        total: { type: integer }
+        page: { type: integer }
+        size: { type: integer }
+        items:
+          type: array
+          items: { $ref: "#/components/schemas/JobSummary" }
+    AnalyzeRequest:
+      type: object
+      required: [resume_text, job_id]
+      properties:
+        resume_text: { type: string, minLength: 1, description: 简历原文文本 }
+        job_id: { type: string, description: 所选岗位 jobId }
+    MatchResult:
+      type: object
+      required: [match_score, level, hits, gaps, degree_match, experience_match, structured_resume, issues]
+      properties:
+        match_score: { type: integer, minimum: 0, maximum: 100, description: 岗位匹配度 }
+        level:
+          type: string
+          enum: [high, medium, low]
+          description: high≥70, medium 40-69, low<40
+        hits:
+          type: array
+          items: { $ref: "#/components/schemas/HitItem" }
+        gaps:
+          type: array
+          items: { $ref: "#/components/schemas/GapItem" }
+        degree_match: { type: boolean, description: 学历是否达标 }
+        experience_match: { type: boolean, description: 经验年限是否达标 }
+        structured_resume: { $ref: "#/components/schemas/StructuredResume" }
+        issues:
+          type: array
+          items: { $ref: "#/components/schemas/ResumeIssue" }
+    HitItem:
+      type: object
+      properties:
+        skill: { type: string, description: 岗位要求技能 }
+        matched_skill: { type: string, description: 简历中命中的技能（归一化后） }
+        source: { type: string, description: 命中来源，如 技能列表/工作经历 }
+    GapItem:
+      type: object
+      properties:
+        skill: { type: string, description: 缺失技能 }
+        importance: { type: string, enum: [high, medium, low] }
+        suggestion: { type: string, description: 补强建议 }
+    StructuredResume:
+      type: object
+      properties:
+        skills: { type: array, items: { type: string } }
+        experience_years: { type: number, nullable: true }
+        degree: { type: string, nullable: true }
+        role: { type: string, nullable: true, description: 推断的目标岗位方向 }
+        summary: { type: string, nullable: true, description: 清洗后的简历摘要 }
+    ResumeIssue:
+      type: object
+      properties:
+        field: { type: string, description: 问题字段，如 experience/degree/skills }
+        severity: { type: string, enum: [error, warn, info] }
+        message: { type: string }
+    ErrorResponse:
+      type: object
+      properties:
+        code: { type: string, example: BAD_REQUEST }
+        message: { type: string }

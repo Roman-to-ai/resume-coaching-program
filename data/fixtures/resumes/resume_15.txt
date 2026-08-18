@@ -1,0 +1,78 @@
+求职岗位：java 开发工程师
+ 有良好的 Java SE 基础，熟悉常用的设计模式，有良好的编程习惯。
+ 熟悉 Spring、SpringMVC、MyBatis、Hibernate、SpringBoot、SpringCloud 等主流框架基础上开发。
+ 熟悉 Oracle、MySQL、SQL Server、Redis、Elasticsearch 数据库以及常见的优化手段。
+ 熟悉 Linux 开发环境，掌握 Docker 容器基本操作，了解 Jenkins CI/CD 构建部署流程。
+ 熟悉 HTML5/CSS5、JavaScript 等 Web 前端基础技术，熟悉 Vue、Element UI、Bootstrap 等主流前端框架。
+ 熟练使用 Intel IDEA、Postman 等开发调试工具，掌握 Maven、GitLab 项目与代码管理工具。
+ 熟悉 Go 语言，Gin 框架开发。
+ 熟练使用 Axure RP 完成产品部分模块原型设计，有微信小程序实际开发经验。
+ 能够熟练使用 AI 工具辅助开发，借助大语言模型梳理需求、排查开发问题，提升开发效率。
+2025.03-2026.06 广州猪多美财税科技有限公司 JAVA 全栈工程师
+工作内容：
+负责公司现有产品的日常运维，根据客户反馈的问题定位优化，修复系统缺陷 BUG，持续完善现有产品功能点以及功能点重构。
+负责新产品的前后端开发工作以及小程序的前端开发。
+2023.07-2024.12 商密信息科技有限公司 JAVA 工程师
+工作内容：
+负责项目功能前后端开发，跟进需求落地到功能上线全流程。
+辅助产品经理完成原型设计，输出业务时序图、用户交互手册等文档，降低研发沟通成本。
+负责公司存量产品维护迭代，完成功能 bug 修复与体验升级，降低产品线上故障率。
+个人简历
+年 龄：24
+邮 箱：
+姓 名：
+性 别：女
+住 址：广州
+求职意向
+专业技能
+工作经验
+教育背景
+2019.09-2023.06
+/本科
+湘潭理工学院 专业：计算机科学与技术
+ed3be7824af8b7091HN509W5E1JZy4i3V RNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+
+ 2025.06 - 2025.11 供应链系统:
+项目描述：供应链系统是围绕企业从采购、生产、仓储、配送到销售全链路的数字化协同管理平台，实现供应链全流程可视化、
+智能化，降本增效同时提升抗风险能力。
+技术栈：前端使用 Vue3、TypeScript、Element Plus,后端使用基于 java 的 Spring Cloud 分布式系统，数据库使用 mysql。
+责任描述：负责系统的前后端开发。
+ 2025.03 - 2025.05 金名财税小程序:
+项目描述：金名财税小程序是面向中小微企业和代账机构的轻量化财税服务平台，涵盖基础账务管理、财务凭证等功能，提升
+财税处理效率。
+技术栈：使用微信开发者工具。
+责任描述：负责小程序的页面开发。
+ 2024.03 - 2024.12 医疗健康管理系统:
+项目描述：该系统是一款应用于健康管理机构的业务系统，可以实现医院内部管理流程的自动化和信息化，提高医院的管理效
+率和运营效益。同时系统还可以提供全面的医疗信息管理和服务，包括患者信息管理、医疗记录管理、药品库存管理等功能。
+技术栈：SpringBoot、SpringCloud、Redis、Swagger、Vue、Echart、ElementUI、MySQL、Jenkins、RocketMQ
+责任描述：1.药房管理（基于领药、发药、退药、报损、调药数据，自动生成入出库明细账、库存台账、进销存月报，支持单
+药安全库存预警、实时库存查询，实现药房全流程综合管理。）2.药库管理（采购计划、采购结算、记录和评估供应商、库房
+进库动态查询、药库库存动态查询、药品零售动态查询、库房报损动态查询）3.医护人员管理，患者管理，角色管理。
+ 2023.07 - 2024.02 云密码管理服务平台:
+项目描述：该平台能整合密码产品、策略、接口和服务流程，实现统一管理和自动化部署，提高工作效率。并且用户无需单独
+采购密码硬件设备，节约建设、运维和管理成本，实现成本优化。
+技术栈：Spring Boot、SpringCloud Alibaba、Nacos、MyBatisPlus、Mysql、Vue3、TypeScript、Echart、Element UI
+责任描述：负责前后端开发，端软件管理、实时监测和告警模块。
+项目经验
+ 2025.12 - 至今 云算盘 V5:
+项目描述：基于云算盘 V4 的业务逻辑，使用新技术架构重做的自由度更高、性能更稳定的财务软件，根据企业实际业务需求
+定制化开发，适用性强。依据企业业务流程，制定软件运转逻辑，交互型便捷操作。高市场性价比的技术开发服务，降低企业
+成本。
+技术栈：Spring Boot、Spring Cloud Alibaba、Dubbo、Nacos、MyBatis-Plus、Redis、MySQL、XXL-JOB、Vue3、TypeScript、
+Element Plus
+责任描述：负责前后端开发，1、账簿查阅模块 PDF 打印，Excel 导出。2、基础设置（初始余额，科目设置，账套管理部分）
+和人员、角色、权限管理。3、库存管理（库存信息，实时库存表，库存盘点表，库存明细账）功能。4、根据客户需求跟踪修
+改系统中需要优化的业务。
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~
+ed3be7824af8b7091HN509W5E1JZy4i3VvidWOKllvXRNxhj2A~~

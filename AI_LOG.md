@@ -48,9 +48,19 @@
 - **AI 动作**：创建本文件；约定后续所有会话持续追加记录。
 - **产出**：`AI_LOG.md`（本文件）
 
+#### 7. 初始化提交并开始执行
+- **用户提问**：先提交一次 git 作为初始化，然后按计划执行。
+- **AI 动作**：建 `.gitignore`；按 `git-commit` 规范显式暂存（排除 vendored 技能目录）；secrets grep 通过；完成初始提交。
+- **产出**：commit `c3b0c76`（41 文件，全中文 Conventional Commits + Co-Authored-By）
+
+#### 8. 阶段 0：契约与数据准备
+- **AI 动作**：建 `contracts/openapi.yaml`（3 接口 + 共享 DTO）、`db/schema.sql`（jobs + analysis_record）、`.env.example`；写 `data/extract_resumes.py` 抽取 20 份脱敏简历 PDF 为 fixture。
+- **决策**：JD 导入推迟到阶段 2，由 Java 后端 CommandLineRunner 读取 JSON 种入 MySQL（免去 Python 的 MySQL 驱动依赖）。
+- **产出**：`contracts/openapi.yaml`、`db/schema.sql`、`.env.example`、`data/fixtures/resumes/*.txt`（20 份）
+
 ---
 
 ## 待办 / 下一步
 
-- 从阶段 0 开始：建契约（`contracts/openapi.yaml`）+ 导入 JD 数据 + 抽取 PDF 简历 fixture
-- 用全中文 Conventional Commits 做第一次基线 commit
+- 阶段 1：Python AI 服务（清洗/归一化/匹配/打分，LLM 兜底）
+- 后续按 `PLAN.md` 执行，commit 遵循 `git-commit` 规范

@@ -1,0 +1,102 @@
+前端开发工程师
+25岁
+广州市海珠区 Go_going_-CSDN 个人博客主页
+教育背景
+2019.09-2023.07 广州南方学院(原中山大学南方学院） 计算机科学与技术-本科
+个人技能
+ 熟练 Vue2/3、JavaScript/TypeScript、Element UI、Sass，有 30+业务模块实战经验
+ 熟练 Vite、pnpm workspace Monorepo，Git 多人协作
+ 熟悉 Node.js、Express 框架开发后端服务，有 RESTful API 设计完整项目经验（聊天机器人）
+ 熟悉 Webpack、Vue Router、Git 团队协作，有 PM2 进程管理和服务器部署经验
+ 了解 Puppeteer、XPath 编写自动化脚本，Linux 常见操作
+ 熟练 MySQL、PostgreSQL，了解 Sequelize ORM，有独立数据库设计经验
+ 熟练运用 AI 智能化开发、Claude Code、Cursor、GitHub Copilot、AI Skill 工作流、Subagent-Driven
+Development
+工作经历
+2025.08 - 至今 广州迅越科技有限公司 前端开发
+ 维护企业级 ERP Monorepo（40+ 子包 pnpm workspace），独立负责 20 个业务模块开发与迭代，
+覆盖质量检测、客户/供应商管理、基础资料等领域。
+ 设计配置化批量表单校验引擎，支持按字段分组返回错误信息，被 10+ 模块复用，减少重复校验代码
+约 60%。
+ 主导 AI 辅助规模化改造：基于 Claude Code 落地 unify-date-picker-daterange Skill，完成 41
+个文件日期选择器替换 + 57 个表单项配置补全，将原本需 2–3 天的全仓库改造缩短至一天。
+ AI 驱动复杂链路治理：系统追踪采购订单、物料到货、IQC、MES 工作站等模块上游数据重复问题，
+统一去重/合并键并抽取共享工具，覆盖 5 个业务子包。
+ 理解上游数据的组成和流转规则，处理前端展示数据准确一致；参与现有模块优化，改进代码结构和
+性能，处理产能计算浮点数精度问题。
+2023.09-2025.07 广州领匠网络科技有限公司 前端开发与设计
+ 负责桌面应用“快电喵加速器”的开发和维护，实现充值模块后台交互和功能优化
+ 模块化前端组件，封装通用模块和组件，实现代码高复用性；优化前端工程架构
+ 对接业务需求，参与服务端项目技术方案的制定，协助数据库设计和服务器部署
+ 使用 Node.js+Express+TS 开发聊天管理机器人服务，独立设计 PostgreSQL 数据库和 SQL 接口
+ 独立实现积分商城小程序（Uniapp），包含抽奖、商品、社区模块界面实现和后台交互
+ff5161cdbcdd5db91HN509q6GVZZy
+ff5161cdbcdd5db91HN509q6
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+
+项目经历
+2025.08-至今 ERP 系统
+技术栈：Vue2/3 + Vite + pnpm workspace + Element UI + TypeScript + XEUtils
+工作内容：
+ AI 辅助快速交付：4 天内使用 Claude Code 完成物料动态库存分析页面，从需求解读到 28 个源码
+文件落地，实现导出、空数据校验、来源明细弹窗自闭环事件等功能。
+ 组件复用：将 3 个重复来源明细子组件合并为通用 SourceDetailTable.vue，统一交互规范并减少维
+护成本。
+ 独立开发客户/供应商分类、成品分类等树形结构模块，实现导入校验与编辑功能。
+ 负责生产排程系统的 2.0 优化，使用 XEUtils 处理小数计算，避免浮点数精度问题。
+ 实现 IPQC、质检检验标准、质检检验等级等 20+ 模块的开发、优化与维护。
+ 优化数据列表渲染样式，封装自定义单元格渲染方式
+2023.12-2025.03 聊天管理机器人 项目负责人之一
+技术栈：Node.js + Express + TypeScript + PostgreSQL + Sequelize + Vue3 + MQTT + G2Chart
+工作内容：
+ 独立设计 PostgreSQL 数据库表结构，编写复杂的 SQL 查询语句，实现消息记录、用户管理、违禁词
+过滤等业务逻辑，研究技术框架并实践应用；并协助负责服务器部署和维护
+ 使用 Node.js+Express 开发 RESTful API 接口
+ 使用 MQTT 实现消息队列，处理实时消息传递
+ 使用 Vue3 + NestJS 开发机器人管理后台，G2Chart 实现数据可视化，负责测试环境部署与维护
+2024.06-2024.09 快电喵加速器 前端开发小组成员
+技术栈：Vue3 + TypeScript + Pinia + Scss + Element-ui
+工作内容：
+ 参与支付模块优化，增加国外支付功能，根据用户状态展示不同支付窗口
+ 处理仓库工单中的多个 Bug，增加项目埋点功能
+ 参与二次优化，增加换肤功能，支持白天/夜间模式
+ 封装基于 Vue3 的 h 函数的消息弹窗组件，支持多条消息显示
+2024.05-2024.06 自动化脚本 开发小组成员
+技术栈：XPath + Puppeteer + Node.js
+工作内容：
+ 基于 XPath 和 Puppeteer 定位页面元素，编写 Node.js 脚本实现无头自动化操作
+ 使用 Plimit 动态并发控制，根据系统资源调整并发数
+ 设计错误处理机制，确保脚本在异常时自动恢复和重试
+ff5161cdbcdd5db91HN509q6
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+
+其他项目
+ 积分商城小程序（2025.05-2025.07，UniApp）：复刻抽奖、商城和社区界面
+评论、点赞、转发等功能。
+ 财务系统后台管理 (2025.04-2025.05，Vue3）：负责表格渲染、数据筛选、SSE 文件导出。
+ ai-face（2024.03-2024.05）：Vue3 音视频处理项目，负责路由结构和页面架构设计
+ 客户管理系统（2023.01-2023.08，PHP+FastAdmin）：全栈开发，实现客户来源、公海私海管理
+ React 活动服务平台（2022.10-2023.01，ThinkPHP+React）：负责前后台功能实现
+个人优势
+ 技术栈匹配：Vue2/3 + TypeScript + Element UI 与目标岗位高度匹配，熟悉 Vue 响应式原理与核
+心生态。
+ 工程化能力：有 Monorepo、Vite 库模式、组件库封装、SDK 对接等前端工程化实战经验。
+ AI 辅助开发：深度使用 Claude Code / Cursor / Copilot，能把重复改造场景沉淀为可复用自动化工
+作流。
+ 复杂系统落地：有 ERP 这种长链路、多状态、多模块协同的复杂系统经验，能快速理解业务并落地。
+ 全栈与自驱：具备 Node.js 后端、数据库设计、服务器部署能力，持续学习大模型 API 与 Agent 工
+程化。
+ff5161cdbcdd5db91HN509q6
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~
+ff5161cdbcdd5db91HN509q6GVZZy4m3VfudWOKllvXRNxhj2A~~

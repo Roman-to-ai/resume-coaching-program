@@ -1,0 +1,108 @@
+ 
+院校：贵州大学                             在校时间：2017.9-2021.7 
+证书：英语四级                             
+专业技能 
+1. 熟练掌握 ui 布局、 javascript，typescript 和 es6 特性，熟悉基本的数据结构和算法。 
+2. 熟悉掌握 vue2、vue3 全家桶及相关生态，了解框架响应式原理。掌握 element,ant design、
+vant 等 ui 库；熟悉 echarts 图表，canvas 画布等可视化库的基本使用；了解服务端渲染(如 nuxt) 、
+react、react-native 等框架。 
+3. 熟练使用 vite 和 webpack 构建工具，掌握前端工程化流程，独立搭建工程化项目；熟悉常见的
+前端性能优化手段。  
+4. 熟悉 Java 基础语法，可基于 SpringBoot3 完成项目开发；熟悉 SpringCloud 微服务体系；掌握 
+MySQL 基础增删改查、索引设计。 
+5. 了解 Redis 缓存、Kafka 消息队列的落地使用场景。 
+6. 掌握 Linux 基础操作命令，能够使用 Docker 完成容器打包部署，CI/CD 等，可通过 Nginx 配置
+反向代理、缓存策略，协助运维定位线上基础故障。 
+7. 熟悉 vibe coding,SDD 等多种 AI 编程模式，能够编写 codex,claude code 等智能体的 skill。 
+工作经历 
+一．宁波德业科技有限公司 |全栈工程师（ AI coding ）(2025.12 -2026-6) 
+离职原因：公司降本增效裁员 ,协商离职  
+项目一： 工商储云端 前端（app+web ）+后端 
+项目背景 ：面向工商业储能场景，移动端基于  React -Native 开发，Web 端采用 Vue3+TS + 国
+际化；后端 使用 SpringCloud 微服务，整合  MySQL 、TDengine 、Redis 、Kafka 完成数据存储 、
+消息推送能力  。 
+核心职责：  
+1. 制定统一前端代码规范，编写  AI 智能体配套执行规则脚本，约束  Codex 、Claude Code 生成
+代码的格式、安全边界，保障  AI 产出代码符合项目标准 。 
+2. 依托 AI 辅助工具完成前端业务页面、多语言国际化、 同步参与后端接口、业务逻辑编码工作，
+提升整体迭代效率 。 
+234cc24a51ed86f41HN509W_GFdVwI-8 RNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+
+项目二：大储 web 端+后端 
+项目背景： 储能业务配套监控系统，前端  Vue3 技术栈，后端复用工商储微服务底座，支持  
+5MWh 储能设备全量数据监测，单设备电芯级数据量级可达百万条，包含设备告警、故障记录、实
+时统计功能。  
+核心职责：  
+1. 独立负责前端架构搭建，基于  Vue3+TS+Element Plus 搭建项目基础骨架，统一全局缓存、状
+态管理方案，输出项目开发规范与编码标准 。 
+2. 针对百万级电芯数据渲染性能问题，前端采用虚拟滚动优化长列表渲染；后端采用计算结果缓存
+方案，减少大数据量传输带来的带宽消耗 。 
+3. 完成设备告警、故障数据全流程页面开发，对接后端统计接口，实现多维度储能数据可视化展示  
+二. 贵阳高登世德金融科技有限公司  | Web 前端开发（ 2024.05 -2025.1 2） 
+离职原因：我还年轻我想去一线城市拼搏  
+项目一：华泰保险资管金融服务管理系统（核心项目，从零到  1 搭建） 
+项目背景：为华泰保险提供资产管理后台，支持  100 + 企业客户的资产 项目管理，业务处理以及数
+据检测等操作 。 
+核心职责：  
+主导前端架构设计，基于  Vue3+TypeScript+Element Plus 搭建项目骨架 ，缓存策略等 ，制定代
+码规范（ ESLint+Prettier ）以及项目的开发规范等。  
+封装 20 + 通用业务组件 ，其中包括对第三方的组件库二次封装和自定义组件。 使用 Vite 替代 
+Webpack ，将项目构建速度提升  40%；组件复用率达  70%，减少重复开发工作量  
+实现资产数据可视化模块（ ECharts ），支持多维度筛选， 操作功能的搜索， 操作效率提升  35% ，
+项目报错减少 30% 以上。 
+前后端编程一体化 AIcoding 的初步尝试和探索。  
+项目二：万怡医学内部管理系统  
+项目背景：服务于医疗企业内部人事、财务与费用结算，对接招商银行支付接口实现 采购缴费等 
+核心职责：  
+负责采购、暂支退款等 模块开发与微前端集成（基于  qiankun 框架 
+用 Canvas 绘制医疗数据统计图表 ，手动签名等交互工具 ，对接招行支付接口 。  
+解决微前端应用间 数据通信混乱 、路由跳转异常 ，各模块加载缓慢，权限控制 等问题 。  
+万怡医学延伸项目 -科室医生病例信息记录 项目： 
+项目背景：web 端：vue2 生态，后端： springboot+mysql  
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+
+核心职责： AI coding 协助全栈开发的初步尝试 ，编写前端业务和后端业务， AI 能够参考已有的业
+务快速仿写代码，但是缺乏全局观和效率。  
+三. 贵州乐诚技术有限公司  | Web 前端开发（ 2023.02 -2024.05 ） 
+离职原因：拖欠五个月工资  
+项目一：看守所  / 监狱后台管理系统  
+项目背景：服务于省内 /省外 10 + 看守所/监狱，实现监区人员管理 信息变更 、家属会见 、各类审
+批流等功能，用户覆盖  2000 + 监管人员 。 
+核心职责： 负责实时监控模块与数据统计报表开发，基于  WebSocket 实现监区状态（如人员位置、
+设备状态）实时同步 ，监狱大屏的 echarts 图表等信息展示 。 
+项目二：移动端  H5 - 家属端（ Vue3+TS 技术栈）  
+核心职责：基于  Vue3+Vant4+Vite+Pinia 开发家属会见预约、消息通知模块，处理移动端适配
+（iOS/Android 多机型兼容） 。 
+成果：使用  Vant4 组件库 与多屏适配 ，兼容 90% 以上移动端机型 。 
+项目四：会见叫号大屏  / 平板购物端  / 监狱官网  
+会见叫号大屏：基于  WebSocket+Vue2 实现监狱会见叫号实时展示 ，实现 WebSocket 断线重
+连机制，保障实时数据传输稳定性 。  
+平板购物端： Vue2+Vant2 适配 4+ 款平板机型，嵌入安卓系统，解决触摸操作兼容问题，购物流
+程完成率提升  22% 
+监狱官网： Nuxt2 服务端渲染，优化  SEO ，适配多个电脑尺寸   
+自我评价 
+1. 项目交付与技术深度 ：多年 Web 前端开发经验，深耕  Vue 技术栈，主导  / 参与 6 + 政
+企级核心项目（监管、银行、医疗、保险 ，储能）；能独立完成从技术选型、架构设计
+到上线交付的全流程，严格遵守开发规范，保障代码可维护性与项目稳定性）。  
+2. 全栈思维与问题解决 ：持续学习 Java （SSM/Spring Boot ，springcloud ）后端开发 ，
+能对接后端接口、协助编写业务逻辑， 简化前后端沟通和跨技术的认知 。 
+3. 持续学习与团队协作 ：热爱技术，保持长期学习习惯，主动拓展技术广度与深度；工作
+中积极与产品、后端、第三方沟通，分享技术方案并采纳团队建议，推动产品质量优化。  
+ 
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~
+234cc24a51ed86f41HN509W_GFdVwI-8Wf6fWOKllvXRNxhj2A~~

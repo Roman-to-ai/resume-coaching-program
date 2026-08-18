@@ -1,0 +1,90 @@
+PERSONAL RESUME
+教育背景
+2019.09-2023.06 四川工商学院 计算机科学与技术 本科
+工作经验
+2023.07-2026.07 四川明域科技有限公司 java开发工程师
+• 负责公司后端架构设计、数据库搭建、接口开发与业务逻辑实现，保障系统稳定、安全、高效运行；
+• 负责项目数据交互处理与后端功能调度，配合前端、Flutter开发团队完成接口与功能对接，保障项目正常落地；
+• 修复后端程序漏洞与上线问题，优化系统性能、保障数据安全，负责项目交付后的运维与迭代维护；
+专业技能
+熟悉掌握java基础，面向对象，集合，多线程，开发规范遵循阿里java开发标准
+熟练掌握SpringBoot、MyBatis-Plus，可独立完成项目搭建、业务接口开发与单元测试。
+熟悉SpringCloud微服务架构，熟练使用Nacos、Gateway、Feign等核心组件，具备微服务项目开发经验。
+熟练使用MySQL数据库，掌握复杂SQL编写、索引优化、事务控制，能独立完成数据库性能调优。
+熟练使用Redis缓存，熟悉常用数据结构、持久化方案，掌握缓存穿透/击穿/雪崩的解决方案。
+熟练使用RabbitMQ消息队列，掌握消息生产消费、异步解耦、业务削峰场景的落地实现。
+熟悉前端基础技术栈（HTML/CSS/JS/Ajax），可配合Vue2/3 + Element UI/Plus完成前后端分离开发。
+熟悉AI相关应用，了解过大模型API对接、智能对话场景的开发。
+项目经验
+2025.09-2026.06 潮品优选商城 java开发工程师
+项目介绍：面向 C 端消费者的品牌自营电商微信小程序，完整覆盖一键登录、商品分类检索、购物车、订单、 在线支付、
+物流追踪等；配套 B 端运营后台，全面支持商品上下架、订单控制流、用户管理及数据统计，打通 直营闭环场景。
+技 术 选 型 : SpringCloudAlibaba 、 JDK1 7 、 SpringBoot 、 Nacos 、 Sentinel 、 RabbitMQ 、 Redis 、
+MySQL 、 MyBatis 、 Dynamic- DS 、 Seata、 Coze智能体，UniApp、Vue3、Element Plus；
+负责模块：商品中心模块、订单核心模块、AI 智能客服模块
+职责描述：
+姓名：
+籍贯：
+学历：本科
+年 龄：24
+工作年限：3年
+求职意向：java开发工程师
+邮 箱
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59 31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+
+1. 负责商品中心模块开发，实现了商品的多规格（SKU）管理、分类检索以及商品上下架的业务逻辑；
+2.负责订单交易链路开发，利用 Redis 缓存商品库存信息，通过 Lua 脚本实现库存校验与扣减原子操作，有效解决高
+并发场景下的超卖问题；
+3. 利用 RabbitMQ 的延时消息实现订单超时未支付自动取消功能，保证了订单状态与库存的最终一致性；
+4. 使用 UniApp+Vue3 开发小程序购物车、结算页面；使用 Element Plus 开发 B 端后台商品管理、订单管理页面；
+5. 参与基于Coze平台的智能客服功能开发，通过知识库和工作流配置实现常见问题自动回复；
+2024.11-2025.08 睿产云 ERP 系统 java开发工程师
+项目介绍： 面向制造业的一体化 SaaS ERP 系统，采用高内聚模块化架构打通计划、生产、供应链全链路。 核 心解决传
+统工厂生产排程混乱、物料需求 (MRP) 滞后、进度不透明、成本核算不准等痛点。上线后实现提升了 采购流程效率、库
+存数据准确率，助力企业实现生产过程的可视化与精细化管理。
+技 术 选 型 ： Spring Cloud、SpringBoot、Spring Security+JWT、MyBatis-Plus、MySQL、Redis、RabbitMQ、
+EasyExce
+负责模块：采购管理、库存管理、生产管理、BOM 管理
+职责描述：
+1.基于 Redis 缓存物料库存数据，结合数据库事务 + Redis 分布式锁，保障入库/出库/领料/盘点
+数据一致性，杜绝库存超扣问题；
+2.使用 Quartz 定时任务 + RabbitMQ（ACK 机制）实现工单自动下发、报工数据异步同步，生产进度查询效率
+提升 80%；
+3. 结合 Redis、MQ 优化生产领料、数据同步逻辑，保障库存与生产数据准确，提升车间生产管控效率；
+2024.02-2024.10 智能仓储自动化管控中台 java开发工程师
+项目介绍：面向制造业的工业级智能化仓储管理中台，采用前后端分离架构，解决库存数据滞后、设备无联动
+痛点。系统深度集成企业 EBS 与 WCS 控制系统，实现扫码入库至堆垛机全流程自动执行。
+技术选型 ： SpringBoot，Spring Security，JWT，MyBatis-Plus，Redis，Quartz，WebSocket，EasyExcel
+负责模块 ：物料管理模块 、 单据管理模块 、任务管理模块 、 监控管理模块
+职责描述 ：
+1. 负责入库、出库核心模块的后端接口开发，使用 MyBatis-Plus 实现业务逻辑与单据流转处理。
+2. 使用 Redis 缓存热点物料库存数据，减少数据库访问压力，提升接口响应效率。
+3. 参与任务调度功能开发，通过定时任务处理异步库存落库与状态更新，提高系统稳定性。
+2023.07-2024.01 云企客户关系智能管理系统 java开发工程师
+项目介绍：企业级智能化客户关系管理平台，打通线索跟进、流转分配、转化促成到客户维护的全生命周期，
+支持多维报表、考勤打卡以及企微生态无缝推送服务。
+技 术 选 型 ： SpringBoot、MyBatis-Plus、MySQL、Redis、Redisson、RabbitMQ、Quartz、Spring Security、JWT
+负责模块：参与CRM系统客户管理相关功能开发、负责客户信息维护、业务接口开发及系统维护工作
+职责描述：：
+1. 负责业务接口开发与维护，完成相关数据处理逻辑。
+2. 编写SQL语句完成客户数据查询和统计功能。
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+
+3. 配合前端完成接口联调，解决开发过程中的问题。
+4. 参与系统日常维护和Bug修复，保障系统正常运行。
+自我评价
+性格踏实稳重 ，做事认真负责 ，有良好的团队协作和沟通能力。熟练掌握 Java 基础与 SpringBoot、Spring Cloud Alib
+aba 微服务开发 ，具备实际电商项目完整开发经验。熟练运用 Redis、 RabbitMQ、 MySQL 等技术解决业务问题 ，能够
+独立进行接口开发、功能实现和 Bug 排查。学习主动性强 ，愿意钻研技术细节 ，代码书写规范 ，能快速适应开发工作节
+奏，服从团队安排，踏实做好后端开发本职工作。
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
+1b44e1baa68b59e31HN509u6FVNTyo66VPyYWOKllvXRNxhj2A~~
