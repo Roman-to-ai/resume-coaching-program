@@ -58,9 +58,44 @@
 - **决策**：JD 导入推迟到阶段 2，由 Java 后端 CommandLineRunner 读取 JSON 种入 MySQL（免去 Python 的 MySQL 驱动依赖）。
 - **产出**：`contracts/openapi.yaml`、`db/schema.sql`、`.env.example`、`data/fixtures/resumes/*.txt`（20 份）
 
+#### 9. 阶段 1：Python AI 服务
+- **AI 动作**：实现 `cleaner/normalizer/matcher/llm` 四模块 + `/api/v1/analyze`；技能归一化词典（~50 技能）+ LLM 优先、规则兜底；打分 技能60+经验25+学历15。
+- **产出**：`ai-service/app/*`，15 项 pytest 通过；修复 MyBatis-Plus 词典重复项。
+
+#### 10. 阶段 2：Java 后端
+- **AI 动作**：Job 实体/JPA、`GET /api/v1/jobs`（关键词/经验筛选+分页）、`GET /api/v1/jobs/{id}`、`POST /api/v1/analyze`（透传 Python MatchResult）；`JdDataImporter` 启动时从 classpath 导入 630 条岗位；Jackson 全局 SNAKE_CASE。
+- **产出**：`backend/`，`mvn test` 通过（含无 DB 依赖的 JdDataParserTest）。
+
+#### 11. 阶段 3：Node BFF
+- **AI 动作**：Express 聚合层，转发 jobs/analyze 到 Java、extract-pdf 到 Python（multer 2.x），统一 502 错误映射。
+- **产出**：`bff/`，smoke 测试 `/health` 通过。
+
+#### 12. 阶段 4：Vue 3 前端
+- **AI 动作**：简历输入（文本粘贴 + PDF 上传）+ 岗位搜索/筛选/分页 + 结果展示（分数/命中/缺口/问题）；Vite 代理 `/api` 到 BFF。
+- **产出**：`frontend/`，`npm run build` 通过。
+
+#### 13. 阶段 5：Docker/Compose
+- **AI 动作**：五服务编排 + 各服务多阶段构建 + 前端 nginx 反代 + healthcheck；`docker compose config` 校验通过。
+- **产出**：`docker-compose.yml` + 各 `Dockerfile`。
+
+#### 14. 用户提问：远程 git 仓库怎么没有
+- **用户提问**：远程 git 仓库怎么没有（看不到提交）。
+- **AI 动作**：排查发现本地一直 `commit` 未 `push`；`git push -u origin main` 推送全部提交并建立上游跟踪。
+- **结论**：本地提交 ≠ 远程可见；此后每阶段提交后一并 push。
+
+#### 15. 端到端联调（含环境排障）
+- **AI 动作**：`docker compose up --build` 失败——Docker Desktop 无法连接 Docker Hub（`registry-1.docker.io:443` 超时，国内网络）。
+- **替代方案**：发现本机已有运行中的 `mysql8` 容器（`vitamojo/mysql8`，root/123456，映射 3306，镜像来自 DaoCloud 加速）；用 `docker exec` 创建 `careerlens` 库，四服务本地启动。
+- **修复**：JDBC `characterEncoding=utf8mb4` 触发 `UnsupportedEncodingException`（connector 只认 Java 字符集），改为 `characterEncoding=UTF-8`。
+- **验证**：全链路（前端→BFF→Java→Python→MySQL）实测通过：列表 total=630、详情含 description、分析 score=70/high、命中 [Java,Docker,MySQL]、缺口 [大数据,PostgreSQL,Python]、PDF 提取 3517 字符、中文往返无乱码。
+
+#### 16. 阶段 6/7：测试 + 交付文档
+- **AI 动作**：新增 `BackendIntegrationTest`（H2 内存库验证 JD 导入/接口/snake_case 反序列化，5/5 通过）；写 `scripts/smoke_test.py` 端到端冒烟；写 `DELIVERY.md`（架构/启动/契约/算法/测试/验证/取舍/答辩脚本）；更新本记录。
+- **产出**：`scripts/smoke_test.py`、`DELIVERY.md`。
+
 ---
 
 ## 待办 / 下一步
 
-- 阶段 1：Python AI 服务（清洗/归一化/匹配/打分，LLM 兜底）
-- 后续按 `PLAN.md` 执行，commit 遵循 `git-commit` 规范
+- 全部 8 阶段已完成，全链路端到端验证通过。
+- 可选后续：真实 LLM 简历优化建议、岗位倒排索引/推荐、分析历史落库。
