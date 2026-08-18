@@ -93,6 +93,12 @@
 - **AI 动作**：新增 `BackendIntegrationTest`（H2 内存库验证 JD 导入/接口/snake_case 反序列化，5/5 通过）；写 `scripts/smoke_test.py` 端到端冒烟；写 `DELIVERY.md`（架构/启动/契约/算法/测试/验证/取舍/答辩脚本）；更新本记录。
 - **产出**：`scripts/smoke_test.py`、`DELIVERY.md`。
 
+#### 17. 前端选岗详情修复
+- **用户提问**：前端修复点击选择岗位，下方显示的是岗位详情。
+- **AI 动作**：原先选岗后只展示 标题/薪资/公司/地点/经验/学历/行业/技能；改为在下方完整展示岗位详情——新增 `stripHtml`（HTML→纯文本）、`metaParts`（补齐公司规模/阶段）、`jobDescription` 计算属性，模板扩充 岗位描述/福利/公司规模/阶段/原文链接，并补对应 CSS。
+- **验证**：`npm run build` 通过；curl 实测 `/api/jobs/{id}` 返回 description=1516 / welfare=147 / url=67 / company_scale / company_stage / company_industry 均有值；vite HMR 自动热更新。
+- **产出**：commit `d9ad2bb`（`fix(frontend): 点击选岗后展示完整岗位详情`），已推送。
+
 ---
 
 ## 待办 / 下一步
