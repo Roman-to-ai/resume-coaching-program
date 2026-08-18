@@ -1,0 +1,67 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: careerlens-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: careerlens
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p123456"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  ai-service:
+    build: ./ai-service
+    container_name: careerlens-ai
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+    ports:
+      - "8001:8001"
+
+  backend:
+    build: ./backend
+    container_name: careerlens-backend
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: careerlens
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+      AI_SERVICE_URL: http://ai-service:8001
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      ai-service:
+        condition: service_started
+
+  bff:
+    build: ./bff
+    container_name: careerlens-bff
+    environment:
+      BACKEND_BASE_URL: http://backend:8080
+      AI_SERVICE_URL: http://ai-service:8001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+      - ai-service
+
+  frontend:
+    build: ./frontend
+    container_name: careerlens-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - bff
+
+volumes:
+  mysql-data:
