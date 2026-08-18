@@ -17,6 +17,33 @@ const error = ref('');
 
 const canAnalyze = computed(() => resumeText.value.trim() && selectedJob.value);
 
+const metaParts = computed(() => {
+  const j = selectedJob.value;
+  if (!j) return [];
+  return [j.company, j.location, j.experience, j.degree, j.company_industry, j.company_scale, j.company_stage]
+    .filter(Boolean);
+});
+
+const jobDescription = computed(() => stripHtml(selectedJob.value?.description || ''));
+
+function stripHtml(html) {
+  if (!html) return '';
+  return html
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(p|div|li|h[1-6]|tr|section)>/gi, '\n')
+    .replace(/<li[^>]*>/gi, '• ')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 async function loadJobs({ keyword = '', experience = '', page: p = 1 } = {}) {
   try {
     const data = await listJobs({ keyword, experience, page: p, size });
@@ -92,16 +119,19 @@ onMounted(() => loadJobs());
     </div>
 
     <div v-if="selectedJob" class="card selected-job">
+      <h3 class="sj-heading">岗位详情</h3>
       <div class="sj-title">
         <b>{{ selectedJob.title }}</b>
         <span class="salary">{{ selectedJob.salary }}</span>
       </div>
-      <div class="sj-meta">
-        <span>{{ selectedJob.company }}</span> · <span>{{ selectedJob.location }}</span> ·
-        <span>{{ selectedJob.experience }}</span> · <span>{{ selectedJob.degree }}</span> ·
-        <span>{{ selectedJob.company_industry }}</span>
-      </div>
+      <div class="sj-meta">{{ metaParts.join(' · ') }}</div>
       <div class="sj-skills">技能：{{ selectedJob.skills }}</div>
+      <div v-if="selectedJob.welfare" class="sj-welfare">福利：{{ selectedJob.welfare }}</div>
+      <div class="sj-desc">
+        <h4>岗位描述</h4>
+        <pre class="sj-desc-body">{{ jobDescription }}</pre>
+      </div>
+      <a v-if="selectedJob.url" class="sj-url" :href="selectedJob.url" target="_blank" rel="noopener">查看原岗位 →</a>
     </div>
 
     <div class="analyze-bar">
@@ -164,6 +194,12 @@ h2 {
 .selected-job {
   margin-top: 20px;
 }
+.sj-heading {
+  margin: 0 0 10px;
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 600;
+}
 .sj-title {
   display: flex;
   justify-content: space-between;
@@ -182,6 +218,42 @@ h2 {
   margin-top: 6px;
   font-size: 13px;
   color: var(--muted);
+}
+.sj-welfare {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.sj-desc {
+  margin-top: 12px;
+}
+.sj-desc h4 {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+.sj-desc-body {
+  margin: 0;
+  padding: 12px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: #fafbfd;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+}
+.sj-url {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--primary);
+  text-decoration: none;
+}
+.sj-url:hover {
+  text-decoration: underline;
 }
 .analyze-bar {
   display: flex;
