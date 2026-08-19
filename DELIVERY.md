@@ -191,7 +191,7 @@ PDF 提取：`/api/v1/extract-pdf` 返回结构化中文简历文本（3517 字�
 | MatchResult 建模 | Java 以 `Map` 透传 Python 结果 | 避免 6 个嵌套 DTO 的重复建模 |
 | `analysis_record` 表 | 未实现 | schema.sql 中保留为可选项，未接入代码 |
 | 真实 LLM 效果 | 未实测 | 无 API key，仅验证规则路径与 LLM 调用代码路径 |
-| 分支策略 | 直提 `main` | 1 天预算下简化，提交历史仍符合 Conventional Commits |
+| 分支策略 | `main` / `pre-release` / `develop` 三环境 | 初始版本已固化于 `main`；开发走 `develop`，集成验证走 `pre-release`，稳定后合并 `main` |
 
 ---
 

@@ -111,6 +111,11 @@
 - **验证**：`grep -c "INSERT INTO"` = 630，与 jobs 数一致。
 - **产出**：commit `099c978`（`feat(db): 导出并纳入完整数据库初始化文件`），已推送。
 
+#### 20. 三环境分支建立
+- **用户提问**：初始版本确认，帮我新建预发布和开发环境两个版本的 git 环境。
+- **AI 动作**：以 `main`（初始版本，最新 `da03e66`）为基线，新建并推送 `develop`（开发环境）、`pre-release`（预发布）两分支；更新 `DELIVERY.md` §9 分支策略为三环境流转（开发 `develop` → 集成验证 `pre-release` → 稳定合并 `main`）。
+- **产出**：远程新增 `origin/develop`、`origin/pre-release`，均跟踪 main 初始提交。
+
 ---
 
 ## 待办 / 下一步
