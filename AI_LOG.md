@@ -105,6 +105,12 @@
 - **验证**：运行脚本后四端 health 均 200，`smoke_test.py` 4/4 通过（total=630 / score=70/high）。
 - **产出**：`scripts/start_all.sh`、`scripts/stop_all.sh`。
 
+#### 19. 数据库初始化文件入库
+- **用户提问**：刚把数据库初始化文件导出，帮我上传到 git。
+- **AI 动作**：用户用 Navicat 导出 `db/careerlens.sql`（careerlens 库：DROP+CREATE `jobs` 表 + 630 条 INSERT 数据，1.3MB/678 行）；同时把 `logs/` 加入 `.gitignore`（运行时日志不入库）、清理残留的 hue 忽略行。
+- **验证**：`grep -c "INSERT INTO"` = 630，与 jobs 数一致。
+- **产出**：commit `099c978`（`feat(db): 导出并纳入完整数据库初始化文件`），已推送。
+
 ---
 
 ## 待办 / 下一步
