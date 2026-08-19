@@ -24,11 +24,11 @@ target/
 *.p12
 *.pfx
 
-# === Vendored skill (自带 .git，不属于本项目源码) ===
-.claude/skills/hue/
-
 # === OS / IDE ===
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+
+# === Runtime ===
+logs/
