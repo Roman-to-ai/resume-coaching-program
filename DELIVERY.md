@@ -101,6 +101,8 @@ cd frontend && npm install && npm run dev
 
 环境变量见根目录 `.env.example`（OPENAI_API_KEY 缺省时自动走规则算法兜底）。
 
+> 快捷方式（Git Bash，复用已有 mysql8 容器）：`bash scripts/start_all.sh` 一键后台拉起四服务，`bash scripts/stop_all.sh` 停止；日志在 `logs/*.log`。
+
 ---
 
 ## 5. 接口契约

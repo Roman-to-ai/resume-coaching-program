@@ -99,6 +99,12 @@
 - **验证**：`npm run build` 通过；curl 实测 `/api/jobs/{id}` 返回 description=1516 / welfare=147 / url=67 / company_scale / company_stage / company_industry 均有值；vite HMR 自动热更新。
 - **产出**：commit `d9ad2bb`（`fix(frontend): 点击选岗后展示完整岗位详情`），已推送。
 
+#### 18. 一键启动/停止脚本
+- **用户提问**：全部启动脚本。
+- **AI 动作**：后台启动的服务进程此前被回收，新增 `scripts/start_all.sh`（复用 mysql8 容器建库 → 依次后台拉起 Python :8001 / Java :8080 / BFF :3000 / Vue :5173，日志写 `logs/*.log`、PID 写 `logs/*.pid`）与 `scripts/stop_all.sh`（按 PID 连带子进程停止）。
+- **验证**：运行脚本后四端 health 均 200，`smoke_test.py` 4/4 通过（total=630 / score=70/high）。
+- **产出**：`scripts/start_all.sh`、`scripts/stop_all.sh`。
+
 ---
 
 ## 待办 / 下一步
