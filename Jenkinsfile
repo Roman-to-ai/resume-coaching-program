@@ -3,10 +3,11 @@ pipeline {
 
     environment {
         COMPOSE_PROJECT_NAME = 'careerlens-ci'
+        COMPOSE_FILES = '-f docker-compose.yml -f docker-compose.test.yml'
     }
 
     options {
-        timeout(time: 15, unit: 'MINUTES')
+        timeout(time: 20, unit: 'MINUTES')
         timestamps()
         disableConcurrentBuilds()
     }
@@ -14,71 +15,33 @@ pipeline {
     stages {
         stage('准备环境') {
             steps {
-                echo "=== CI Pipeline 开始 ==="
+                echo "=== CareerLens CI Pipeline ==="
                 echo "Build #${env.BUILD_NUMBER}"
                 echo "Git Commit: ${env.GIT_COMMIT?.take(8) ?: 'N/A'}"
 
-                // 释放端口：停掉宿主机可能占用 3306/8080/3000/8001/5173 的容器
                 sh '''
                     echo "清理可能冲突的旧容器..."
+                    docker compose ${COMPOSE_FILES} --profile test down --volumes --remove-orphans 2>/dev/null || true
                     docker ps -q --filter "publish=3306" | xargs -r docker stop 2>/dev/null || true
                     docker ps -q --filter "publish=8080" | xargs -r docker stop 2>/dev/null || true
                     docker ps -q --filter "publish=3000" | xargs -r docker stop 2>/dev/null || true
                     docker ps -q --filter "publish=8001" | xargs -r docker stop 2>/dev/null || true
+                    docker ps -q --filter "publish=5173" | xargs -r docker stop 2>/dev/null || true
                     sleep 2
+                    echo "环境清理完成"
                 '''
             }
         }
 
-        stage('构建验证') {
-            parallel {
-                stage('Backend (Maven)') {
-                    steps {
-                        dir('backend') {
-                            sh 'mvn clean package -DskipTests -B -q'
-                            echo 'Backend 构建成功'
-                        }
-                    }
-                }
-                stage('Frontend (npm)') {
-                    steps {
-                        dir('frontend') {
-                            sh 'npm ci --prefer-offline --no-audit --silent'
-                            sh 'npm run build'
-                            echo 'Frontend 构建成功'
-                        }
-                    }
-                }
-                stage('BFF (npm)') {
-                    steps {
-                        dir('bff') {
-                            sh 'npm ci --prefer-offline --no-audit --silent'
-                            echo 'BFF 构建成功'
-                        }
-                    }
-                }
-                stage('AI Service (pip)') {
-                    steps {
-                        dir('ai-service') {
-                            sh '''
-                                python -m venv .venv
-                                . .venv/bin/activate
-                                pip install -r requirements.txt -q
-                            '''
-                            echo 'AI Service 依赖安装成功'
-                        }
-                    }
-                }
-            }
-        }
-
-        stage('Docker Compose 部署') {
+        stage('Docker 构建 & 部署') {
             steps {
                 sh '''
                     echo "构建并启动所有服务..."
-                    docker compose -f docker-compose.yml up -d --build --wait
-                    echo "等待服务就绪..."
-                    sleep 15
+                    docker compose ${COMPOSE_FILES} up -d --build 2>&1
+                    echo "等待服务就绪 (MySQL healthcheck + 依赖启动)..."
+                    sleep 20
+                    echo "当前运行的容器:"
+                    docker compose ${COMPOSE_FILES} ps
                 '''
             }
         }
@@ -87,7 +50,21 @@ pipeline {
             steps {
                 sh '''
                     echo "运行端到端冒烟测试..."
-                    python scripts/smoke_test.py http://localhost:3000
+                    docker compose ${COMPOSE_FILES} --profile test up smoke-test 2>&1
+                    RESULT=$(docker compose ${COMPOSE_FILES} --profile test ps smoke-test --format json 2>/dev/null || echo '{}')
+
+                    # 检查退出码
+                    EXIT_CODE=$(docker inspect careerlens-smoke-test --format '{{.State.ExitCode}}' 2>/dev/null || echo "1")
+                    echo "冒烟测试退出码: ${EXIT_CODE}"
+
+                    # 显示测试输出
+                    docker compose ${COMPOSE_FILES} --profile test logs smoke-test
+
+                    if [ "${EXIT_CODE}" != "0" ]; then
+                        echo "冒烟测试失败!"
+                        exit 1
+                    fi
+                    echo "冒烟测试通过!"
                 '''
             }
         }
@@ -95,10 +72,9 @@ pipeline {
 
     post {
         always {
-            echo "清理 Docker Compose 环境..."
             sh '''
-                docker compose -f docker-compose.yml down --volumes --remove-orphans 2>/dev/null || true
-                # 清理 CI 构建镜像
+                echo "清理 CI Docker 环境..."
+                docker compose ${COMPOSE_FILES} --profile test down --volumes --remove-orphans 2>/dev/null || true
                 docker image prune -f 2>/dev/null || true
             '''
         }
@@ -106,11 +82,10 @@ pipeline {
             echo "✅ CI Pipeline 全部通过!"
         }
         failure {
-            echo "❌ CI Pipeline 失败，查看上方日志定位问题"
-            // 输出各服务日志便于排查
+            echo "❌ CI Pipeline 失败"
             sh '''
-                echo "=== 服务日志 ==="
-                docker compose -f docker-compose.yml logs --tail=20 2>/dev/null || true
+                echo "=== 各服务最后 30 行日志 ==="
+                docker compose ${COMPOSE_FILES} logs --tail=30 2>/dev/null || true
             '''
         }
     }
