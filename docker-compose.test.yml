@@ -2,14 +2,12 @@ services:
   smoke-test:
     image: python:3.11-slim
     container_name: careerlens-smoke-test
-    network_mode: "service:bff"
     volumes:
       - ./scripts:/scripts:ro
-    command: ["python", "/scripts/smoke_test.py", "http://localhost:3000"]
+    command: ["python", "/scripts/smoke_test.py", "http://careerlens-bff:3000"]
     depends_on:
       - bff
       - backend
       - ai-service
-      - mysql
     profiles:
       - test
