@@ -2,7 +2,7 @@ name: Trigger Jenkins Job
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   workflow_dispatch:
     inputs:
       pipeline_mode:
