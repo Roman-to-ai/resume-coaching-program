@@ -22,39 +22,41 @@ jobs:
           JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
 
           echo "=== 获取 Jenkins Crumb ==="
-          CRUMB_JSON=$(curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
-            "${JENKINS_URL}/crumbIssuer/api/json" || true)
+          CRUMB_RESPONSE=$(curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
+            "${JENKINS_URL}/crumbIssuer/api/json")
+          echo "Raw response: $CRUMB_RESPONSE"
 
-          if echo "$CRUMB_JSON" | grep -q "crumb"; then
-            CRUMB_FIELD=$(echo "$CRUMB_JSON" | sed 's/.*"crumbRequestField":"\([^"]*\)".*/\1/')
-            CRUMB_VALUE=$(echo "$CRUMB_JSON" | sed 's/.*"crumb":"\([^"]*\)".*/\1/')
-            echo "Crumb 获取成功"
-          else
-            echo "警告: 无法获取 Crumb"
-            CRUMB_FIELD=""
-            CRUMB_VALUE=""
+          # 用 awk 解析 JSON，比 sed 更可靠
+          CRUMB_FIELD=$(echo "$CRUMB_RESPONSE" | tr ',' '\n' | grep crumbRequestField | cut -d'"' -f4)
+          CRUMB_VALUE=$(echo "$CRUMB_RESPONSE" | tr ',' '\n' | grep '"crumb"' | cut -d'"' -f4)
+
+          echo "CRUMB_FIELD=$CRUMB_FIELD"
+          echo "CRUMB_VALUE=$CRUMB_VALUE"
+
+          if [ -z "$CRUMB_FIELD" ] || [ -z "$CRUMB_VALUE" ]; then
+            echo "警告: 无法解析 Crumb"
           fi
 
           echo "=== 触发 Jenkins Job: test-job ==="
+          # 用 -H 手动构造 header，确保格式正确
+          CRUMB_H=""
           if [ -n "$CRUMB_FIELD" ] && [ -n "$CRUMB_VALUE" ]; then
-            HTTP_CODE=$(curl -s -o /tmp/jenkins_response.txt -w "%{http_code}" \
-              -X POST \
-              -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
-              -H "${CRUMB_FIELD}:${CRUMB_VALUE}" \
-              "${JENKINS_URL}/job/test-job/build")
-          else
-            HTTP_CODE=$(curl -s -o /tmp/jenkins_response.txt -w "%{http_code}" \
-              -X POST \
-              -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
-              "${JENKINS_URL}/job/test-job/build")
+            CRUMB_H="-H ${CRUMB_FIELD}:${CRUMB_VALUE}"
           fi
+
+          HTTP_CODE=$(curl -s -o /tmp/jenkins_response.txt -w "%{http_code}" \
+            -X POST \
+            -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
+            ${CRUMB_H} \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            "${JENKINS_URL}/job/test-job/build")
 
           echo "HTTP Status: $HTTP_CODE"
 
           if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
             echo "✅ Jenkins Job 触发成功!"
           elif [ "$HTTP_CODE" = "401" ]; then
-            echo "❌ 认证失败，请检查 JENKINS_USER 和 JENKINS_TOKEN"
+            echo "❌ 认证失败"
             exit 1
           else
             echo "❌ 触发失败, 响应:"
@@ -73,9 +75,9 @@ jobs:
             RESULT=$(curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
               "${JENKINS_URL}/job/test-job/lastBuild/api/json" 2>/dev/null)
 
-            BUILDING=$(echo "$RESULT" | sed 's/.*"building":\([a-z]*\).*/\1/')
-            BUILD_NUM=$(echo "$RESULT" | sed 's/.*"number":\([0-9]*\).*/\1/')
-            BUILD_RESULT=$(echo "$RESULT" | sed 's/.*"result":"\([A-Z]*\)".*/\1/')
+            BUILDING=$(echo "$RESULT" | tr ',' '\n' | grep '"building"' | grep -o 'true\|false')
+            BUILD_NUM=$(echo "$RESULT" | tr ',' '\n' | grep '"number"' | grep -o '[0-9]*')
+            BUILD_RESULT=$(echo "$RESULT" | tr ',' '\n' | grep '"result"' | cut -d'"' -f4)
 
             echo "  [${i}/30] Build #${BUILD_NUM} - Building: ${BUILDING}, Result: ${BUILD_RESULT}"
 
