@@ -4,7 +4,7 @@ services:
     container_name: careerlens-smoke-test
     network_mode: "service:bff"
     volumes:
-      - ../scripts:/scripts:ro
+      - ./scripts:/scripts:ro
     command: ["python", "/scripts/smoke_test.py", "http://localhost:3000"]
     depends_on:
       - bff
