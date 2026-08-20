@@ -44,8 +44,7 @@ pipeline {
                         env.COMPOSE_CMD = '-f docker-compose.yml'
                         echo "✗ 未检测到 mysql8，将使用完整 compose 启动 MySQL"
                     }
-                    // smoke test 追加 test 配置
-                    env.COMPOSE_FULL = "${env.COMPOSE_CMD} -f docker-compose.test.yml"
+                    // smoke test 用 docker run 直接执行（避免卷挂载路径问题）
 
                     // ----- 检测变更 -----
                     env.CHANGED_SERVICES = 'all'
@@ -119,9 +118,7 @@ pipeline {
             steps {
                 sh '''
                     echo "清理旧 CI 容器..."
-                    docker compose ${COMPOSE_FULL} --profile test down --remove-orphans 2>/dev/null || true
-
-                    # 只停应用端口，不动 mysql8 等基础设施
+                    docker compose ${COMPOSE_CMD} down --remove-orphans 2>/dev/null || true
                     for name in careerlens-ai careerlens-backend careerlens-bff careerlens-frontend careerlens-smoke-test; do
                         docker rm -f $name 2>/dev/null || true
                     done
@@ -187,15 +184,65 @@ pipeline {
                 }
                 sh '''
                     echo "运行冒烟测试..."
-                    docker compose ${COMPOSE_FULL} --profile test up smoke-test 2>&1
-                    EXIT_CODE=$(docker inspect careerlens-smoke-test --format '{{.State.ExitCode}}' 2>/dev/null || echo "1")
-                    echo "冒烟测试退出码: ${EXIT_CODE}"
-                    docker compose ${COMPOSE_FULL} --profile test logs smoke-test
-                    if [ "${EXIT_CODE}" != "0" ]; then
-                        echo "冒烟测试失败!"
-                        exit 1
-                    fi
-                    echo "冒烟测试通过!"
+
+                    # 内联冒烟测试脚本（避免卷挂载路径问题）
+                    docker run --rm --network host python:3.11-slim python -c "
+import json, sys, urllib.request
+
+BASE = 'http://localhost:3000'
+
+def req(method, path, payload=None):
+    url = BASE + path
+    data = None
+    headers = {}
+    if payload is not None:
+        data = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+        headers['Content-Type'] = 'application/json'
+    r = urllib.request.urlopen(urllib.request.Request(url, data=data, headers=headers, method=method), timeout=30)
+    return r.status, json.loads(r.read().decode('utf-8'))
+
+ok = True
+print('== CareerLens 冒烟测试 ==')
+
+try:
+    s, _ = req('GET', '/health')
+    mark = 'PASS' if s == 200 else 'FAIL'
+    print(f'  [{mark}] BFF 健康检查')
+    ok = ok and s == 200
+except Exception as e:
+    print(f'  [FAIL] BFF 健康检查 {e}')
+    sys.exit(1)
+
+try:
+    s, jobs = req('GET', '/api/jobs?size=3')
+    passed = s == 200 and jobs.get('total', 0) > 0
+    print(f'  [{\"PASS\" if passed else \"FAIL\"}] 岗位列表 total={jobs.get(\"total\",0)}')
+    ok = ok and passed
+    job_id = jobs['items'][0]['job_id']
+except Exception as e:
+    print(f'  [FAIL] 岗位列表 {e}')
+    sys.exit(1)
+
+try:
+    s, detail = req('GET', f'/api/jobs/{job_id}')
+    passed = s == 200 and bool(detail.get('description'))
+    print(f'  [{\"PASS\" if passed else \"FAIL\"}] 岗位详情')
+    ok = ok and passed
+except Exception as e:
+    print(f'  [FAIL] 岗位详情 {e}')
+
+resume = '3年Java开发经验，熟悉Spring Boot、MySQL、Redis、Docker'
+try:
+    s, res = req('POST', '/api/analyze', {'resume_text': resume, 'job_id': job_id})
+    passed = s == 200 and 'match_score' in res
+    print(f'  [{\"PASS\" if passed else \"FAIL\"}] 匹配分析 score={res.get(\"match_score\",\"?\")}')
+    ok = ok and passed
+except Exception as e:
+    print(f'  [FAIL] 匹配分析 {e}')
+
+print(f'== 结果：{\"全部通过\" if ok else \"存在失败\"} ==')
+sys.exit(0 if ok else 1)
+"
                 '''
             }
         }
@@ -204,8 +251,8 @@ pipeline {
     post {
         always {
             sh '''
-                docker compose ${COMPOSE_FULL} --profile test down --remove-orphans 2>/dev/null || true
-                # 不删 mysql8 等基础设施
+                docker compose ${COMPOSE_CMD} down --remove-orphans 2>/dev/null || true
+                docker rm -f careerlens-smoke-test 2>/dev/null || true
                 docker image prune -f 2>/dev/null || true
             '''
         }
@@ -214,7 +261,7 @@ pipeline {
         }
         failure {
             echo "❌ CI Pipeline 失败"
-            sh 'docker compose ${COMPOSE_FULL} logs --tail=30 2>/dev/null || true'
+            sh 'docker compose ${COMPOSE_CMD} logs --tail=30 2>/dev/null || true'
         }
     }
 }
