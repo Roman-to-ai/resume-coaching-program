@@ -185,8 +185,8 @@ pipeline {
                 sh '''
                     echo "运行冒烟测试..."
 
-                    # 创建临时冒烟测试脚本
-                    cat > /tmp/smoke_test.py << 'SMOKE_EOF'
+                    # 创建临时冒烟测试脚本到工作区
+                    cat > smoke_test_ci.py << 'SMOKE_EOF'
 import json, sys, urllib.request
 
 BASE = "http://localhost:3000"
@@ -244,10 +244,9 @@ print("== 结果：" + ("全部通过" if ok else "存在失败") + " ==")
 sys.exit(0 if ok else 1)
 SMOKE_EOF
 
-                    # 用 host 网络模式运行，可直接访问 localhost:3000
-                    docker run --rm --network host \
-                      -v /tmp/smoke_test.py:/tmp/smoke_test.py:ro \
-                      python:3.11-slim python /tmp/smoke_test.py
+                    # 通过 stdin 把脚本传给容器（避免卷挂载路径问题）
+                    cat smoke_test_ci.py | docker run --rm --network host -i python:3.11-slim python -
+                    rm -f smoke_test_ci.py
                 '''
             }
         }
