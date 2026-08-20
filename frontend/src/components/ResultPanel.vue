@@ -5,11 +5,11 @@ const props = defineProps({ result: { type: Object, default: null } });
 
 const levelMeta = computed(() => {
   const map = {
-    high: { label: '高度匹配', color: '#16a34a' },
-    medium: { label: '中等匹配', color: '#d97706' },
-    low: { label: '匹配度较低', color: '#dc2626' },
+    high: { label: '高度匹配', color: '#10b981' },
+    medium: { label: '中等匹配', color: '#f59e0b' },
+    low: { label: '匹配度较低', color: '#ef4444' },
   };
-  return map[props.result?.level] || { label: '-', color: '#6b7280' };
+  return map[props.result?.level] || { label: '-', color: '#7c809a' };
 });
 
 function importanceLabel(v) {
@@ -117,12 +117,12 @@ function severityLabel(v) {
   font-size: 13px;
 }
 .chips .ok {
-  background: #e8f7ee;
-  color: #16a34a;
+  background: #ecfdf5;
+  color: #10b981;
 }
 .chips .no {
-  background: #fdecec;
-  color: #dc2626;
+  background: #fef2f2;
+  color: #ef4444;
 }
 .section {
   margin-top: 16px;
@@ -147,8 +147,8 @@ function severityLabel(v) {
   gap: 8px;
 }
 .skill-tags .hit {
-  background: #e8f7ee;
-  color: #16a34a;
+  background: #ecfdf5;
+  color: #10b981;
   padding: 3px 12px;
   border-radius: 999px;
   font-size: 13px;

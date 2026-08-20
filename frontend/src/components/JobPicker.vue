@@ -139,7 +139,7 @@ function goPage(p) {
   color: var(--muted);
 }
 .job-list .tags span {
-  background: #f0f2f7;
+  background: #eef0f8;
   padding: 1px 8px;
   border-radius: 999px;
 }
