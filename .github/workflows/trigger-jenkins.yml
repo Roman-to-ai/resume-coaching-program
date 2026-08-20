@@ -26,8 +26,8 @@ jobs:
             "${JENKINS_URL}/crumbIssuer/api/json" || true)
 
           if echo "$CRUMB_JSON" | grep -q "crumb"; then
-            CRUMB_FIELD=$(echo "$CRUMB_JSON" | jq -r '.crumbRequestField')
-            CRUMB_VALUE=$(echo "$CRUMB_JSON" | jq -r '.crumb')
+            CRUMB_FIELD=$(echo "$CRUMB_JSON" | node -e "const d=JSON.parse(require('fs').readFileSync(0,'utf8')); console.log(d.crumbRequestField)")
+            CRUMB_VALUE=$(echo "$CRUMB_JSON" | node -e "const d=JSON.parse(require('fs').readFileSync(0,'utf8')); console.log(d.crumb)")
             echo "Crumb 获取成功"
           else
             echo "警告: 无法获取 Crumb, 可能 CSRF 已禁用"
@@ -71,9 +71,9 @@ jobs:
             RESULT=$(curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
               "${JENKINS_URL}/job/test-job/lastBuild/api/json" 2>/dev/null)
 
-            BUILDING=$(echo "$RESULT" | jq -r '.building // "unknown"')
-            BUILD_NUM=$(echo "$RESULT" | jq -r '.number // "unknown"')
-            BUILD_RESULT=$(echo "$RESULT" | jq -r '.result // "null"')
+            BUILDING=$(echo "$RESULT" | node -e "const d=JSON.parse(require('fs').readFileSync(0,'utf8')); console.log(d.building ?? 'unknown')")
+            BUILD_NUM=$(echo "$RESULT" | node -e "const d=JSON.parse(require('fs').readFileSync(0,'utf8')); console.log(d.number ?? 'unknown')")
+            BUILD_RESULT=$(echo "$RESULT" | node -e "const d=JSON.parse(require('fs').readFileSync(0,'utf8')); console.log(d.result ?? 'null')")
 
             echo "  [${i}/30] Build #${BUILD_NUM} - Building: ${BUILDING}, Result: ${BUILD_RESULT}"
 
