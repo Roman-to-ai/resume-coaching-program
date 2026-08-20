@@ -1,12 +1,10 @@
 # docker-compose.ci.yml
 # CI 专用：复用宿主机已有的 mysql8 容器，不重建
-# - MySQL 连接通过 host.docker.internal 访问宿主机上的 mysql8
-# - 只构建/部署4个应用服务
+# 不指定 container_name，由 COMPOSE_PROJECT_NAME 自动加前缀区分生产容器
 
 services:
   ai-service:
     build: ./ai-service
-    container_name: careerlens-ai
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
       OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
@@ -16,7 +14,6 @@ services:
 
   backend:
     build: ./backend
-    container_name: careerlens-backend
     restart: on-failure
     environment:
       MYSQL_HOST: host.docker.internal
@@ -24,7 +21,7 @@ services:
       MYSQL_DATABASE: careerlens
       MYSQL_USER: root
       MYSQL_PASSWORD: 123456
-      AI_SERVICE_URL: http://careerlens-ai:8001
+      AI_SERVICE_URL: http://ai-service:8001
     ports:
       - "8080:8080"
     extra_hosts:
@@ -34,10 +31,9 @@ services:
 
   bff:
     build: ./bff
-    container_name: careerlens-bff
     environment:
-      BACKEND_BASE_URL: http://careerlens-backend:8080
-      AI_SERVICE_URL: http://careerlens-ai:8001
+      BACKEND_BASE_URL: http://backend:8080
+      AI_SERVICE_URL: http://ai-service:8001
     ports:
       - "3000:3000"
     depends_on:
@@ -45,7 +41,6 @@ services:
 
   frontend:
     build: ./frontend
-    container_name: careerlens-frontend
     ports:
       - "5173:80"
     depends_on:

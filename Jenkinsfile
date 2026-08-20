@@ -118,12 +118,10 @@ pipeline {
             steps {
                 sh '''
                     echo "清理旧 CI 容器..."
-                    docker compose ${COMPOSE_CMD} down --remove-orphans 2>/dev/null || true
-                    for name in careerlens-ai careerlens-backend careerlens-bff careerlens-frontend careerlens-smoke-test; do
-                        docker rm -f $name 2>/dev/null || true
-                    done
+                    # 用 -p 指定项目名，只删 CI 容器，不碰生产容器
+                    docker compose -p careerlens-ci ${COMPOSE_CMD} down --remove-orphans 2>/dev/null || true
 
-                    # 确保 mysql8 还在跑（CI 复用模式下）
+                    # 确保 mysql8 还在跑
                     if [ "${USE_CI_COMPOSE}" = "true" ]; then
                         docker start mysql8 2>/dev/null || true
                         echo "✓ mysql8 已就绪"
@@ -141,12 +139,12 @@ pipeline {
 
                     if (services == 'all') {
                         echo "全量构建..."
-                        sh 'docker compose ${COMPOSE_CMD} up -d --build --wait 2>&1'
+                        sh 'docker compose -p careerlens-ci ${COMPOSE_CMD} up -d --build --wait 2>&1'
                     } else {
                         echo "增量构建: ${services}"
 
                         // 确保 ai-service 启动（backend 依赖它）
-                        sh 'docker compose ${COMPOSE_CMD} up -d ai-service 2>&1'
+                        sh 'docker compose -p careerlens-ci ${COMPOSE_CMD} up -d ai-service 2>&1'
 
                         // 只构建变更的服务
                         def toBuild = []
@@ -155,12 +153,12 @@ pipeline {
                         if (services.contains('ai-service')) toBuild << 'ai-service'
                         if (services.contains('frontend'))   toBuild << 'frontend'
 
-                        sh "docker compose ${env.COMPOSE_CMD} up -d --build ${toBuild.join(' ')} 2>&1"
+                        sh "docker compose -p careerlens-ci ${env.COMPOSE_CMD} up -d --build ${toBuild.join(' ')} 2>&1"
 
                         // 等待服务就绪
                         echo "等待服务启动..."
                         sleep 15
-                        sh 'docker compose ${COMPOSE_CMD} ps 2>&1'
+                        sh 'docker compose -p careerlens-ci ${COMPOSE_CMD} ps 2>&1'
                     }
                 }
             }
@@ -179,7 +177,7 @@ pipeline {
                 script {
                     if (params.PIPELINE_MODE == 'test-only') {
                         echo "test-only：拉起服务..."
-                        sh 'docker compose ${COMPOSE_CMD} up -d --wait 2>&1'
+                        sh 'docker compose -p careerlens-ci ${COMPOSE_CMD} up -d --wait 2>&1'
                     }
                 }
                 sh '''
@@ -255,8 +253,7 @@ SMOKE_EOF
     post {
         always {
             sh '''
-                docker compose ${COMPOSE_CMD} down --remove-orphans 2>/dev/null || true
-                docker rm -f careerlens-smoke-test 2>/dev/null || true
+                docker compose -p careerlens-ci ${COMPOSE_CMD} down --remove-orphans 2>/dev/null || true
                 docker image prune -f 2>/dev/null || true
             '''
         }
@@ -265,7 +262,7 @@ SMOKE_EOF
         }
         failure {
             echo "❌ CI Pipeline 失败"
-            sh 'docker compose ${COMPOSE_CMD} logs --tail=30 2>/dev/null || true'
+            sh 'docker compose -p careerlens-ci ${COMPOSE_CMD} logs --tail=30 2>/dev/null || true'
         }
     }
 }
