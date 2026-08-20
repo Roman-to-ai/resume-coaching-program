@@ -13,7 +13,8 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p123456"]
       interval: 5s
       timeout: 5s
-      retries: 30
+      retries: 60
+      start_period: 30s
 
   ai-service:
     build: ./ai-service

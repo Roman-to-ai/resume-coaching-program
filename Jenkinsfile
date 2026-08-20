@@ -37,10 +37,8 @@ pipeline {
             steps {
                 sh '''
                     echo "构建并启动所有服务..."
-                    docker compose ${COMPOSE_FILES} up -d --build 2>&1
-                    echo "等待服务就绪 (MySQL healthcheck + 依赖启动)..."
-                    sleep 20
-                    echo "当前运行的容器:"
+                    docker compose ${COMPOSE_FILES} up -d --build --wait 2>&1
+                    echo "所有服务就绪!"
                     docker compose ${COMPOSE_FILES} ps
                 '''
             }
