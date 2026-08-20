@@ -9,8 +9,9 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
+      - ./db/careerlens.sql:/docker-entrypoint-initdb.d/init.sql:ro
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p123456"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-P", "3306", "-p123456"]
       interval: 5s
       timeout: 5s
       retries: 60
@@ -29,6 +30,7 @@ services:
   backend:
     build: ./backend
     container_name: careerlens-backend
+    restart: on-failure
     environment:
       MYSQL_HOST: mysql
       MYSQL_PORT: 3306

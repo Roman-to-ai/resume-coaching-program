@@ -4,6 +4,17 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      pipeline_mode:
+        description: 'Pipeline 执行模式'
+        required: true
+        default: 'smart'
+        type: choice
+        options:
+          - smart
+          - test-only
+          - build-all
+          - deploy
 
 jobs:
   trigger-jenkins:
@@ -12,6 +23,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2   # 需要前一次提交来做 git diff
 
       - name: Trigger Jenkins Job via API
         run: |
@@ -20,46 +33,35 @@ jobs:
           JENKINS_URL="http://localhost:8081"
           JENKINS_USER="${{ secrets.JENKINS_USER }}"
           JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
+          MODE="${{ github.event.inputs.pipeline_mode || 'smart' }}"
 
           echo "=== 获取 Jenkins Crumb ==="
           CRUMB_RESPONSE=$(curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
             "${JENKINS_URL}/crumbIssuer/api/json")
-          echo "Raw response: $CRUMB_RESPONSE"
 
-          # 用 awk 解析 JSON，比 sed 更可靠
           CRUMB_FIELD=$(echo "$CRUMB_RESPONSE" | tr ',' '\n' | grep crumbRequestField | cut -d'"' -f4)
           CRUMB_VALUE=$(echo "$CRUMB_RESPONSE" | tr ',' '\n' | grep '"crumb"' | cut -d'"' -f4)
 
-          echo "CRUMB_FIELD=$CRUMB_FIELD"
-          echo "CRUMB_VALUE=$CRUMB_VALUE"
-
-          if [ -z "$CRUMB_FIELD" ] || [ -z "$CRUMB_VALUE" ]; then
-            echo "警告: 无法解析 Crumb"
-          fi
-
-          echo "=== 触发 Jenkins Job: test-job ==="
-          # 用 -H 手动构造 header，确保格式正确
           CRUMB_H=""
           if [ -n "$CRUMB_FIELD" ] && [ -n "$CRUMB_VALUE" ]; then
             CRUMB_H="-H ${CRUMB_FIELD}:${CRUMB_VALUE}"
           fi
 
+          echo "=== 触发 Jenkins Job (模式: ${MODE}) ==="
           HTTP_CODE=$(curl -s -o /tmp/jenkins_response.txt -w "%{http_code}" \
             -X POST \
             -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
             ${CRUMB_H} \
             -H "Content-Type: application/x-www-form-urlencoded" \
-            "${JENKINS_URL}/job/test-job/build")
+            -d "PIPELINE_MODE=${MODE}" \
+            "${JENKINS_URL}/job/test-job/buildWithParameters")
 
           echo "HTTP Status: $HTTP_CODE"
 
           if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
-            echo "✅ Jenkins Job 触发成功!"
-          elif [ "$HTTP_CODE" = "401" ]; then
-            echo "❌ 认证失败"
-            exit 1
+            echo "✅ Jenkins Job 触发成功! (模式: ${MODE})"
           else
-            echo "❌ 触发失败, 响应:"
+            echo "❌ 触发失败:"
             cat /tmp/jenkins_response.txt
             exit 1
           fi
@@ -71,7 +73,7 @@ jobs:
           JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
 
           echo "等待 Jenkins 构建完成..."
-          for i in $(seq 1 30); do
+          for i in $(seq 1 60); do
             RESULT=$(curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
               "${JENKINS_URL}/job/test-job/lastBuild/api/json" 2>/dev/null)
 
@@ -79,7 +81,7 @@ jobs:
             BUILD_NUM=$(echo "$RESULT" | tr ',' '\n' | grep '"number"' | grep -o '[0-9]*')
             BUILD_RESULT=$(echo "$RESULT" | tr ',' '\n' | grep '"result"' | cut -d'"' -f4)
 
-            echo "  [${i}/30] Build #${BUILD_NUM} - Building: ${BUILDING}, Result: ${BUILD_RESULT}"
+            echo "  [${i}/60] Build #${BUILD_NUM} - Building: ${BUILDING}, Result: ${BUILD_RESULT}"
 
             if [ "$BUILDING" = "false" ]; then
               if [ "$BUILD_RESULT" = "SUCCESS" ]; then
@@ -90,8 +92,7 @@ jobs:
                 exit 1
               fi
             fi
-
-            sleep 5
+            sleep 10
           done
 
           echo "⏰ 等待超时"
