@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:8.0
+    image: vitamojo/mysql8:latest
     container_name: careerlens-mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
