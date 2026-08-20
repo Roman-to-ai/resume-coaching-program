@@ -185,64 +185,69 @@ pipeline {
                 sh '''
                     echo "运行冒烟测试..."
 
-                    # 内联冒烟测试脚本（避免卷挂载路径问题）
-                    docker run --rm --network host python:3.11-slim python -c "
+                    # 创建临时冒烟测试脚本
+                    cat > /tmp/smoke_test.py << 'SMOKE_EOF'
 import json, sys, urllib.request
 
-BASE = 'http://localhost:3000'
+BASE = "http://localhost:3000"
 
 def req(method, path, payload=None):
     url = BASE + path
     data = None
     headers = {}
     if payload is not None:
-        data = json.dumps(payload, ensure_ascii=False).encode('utf-8')
-        headers['Content-Type'] = 'application/json'
+        data = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        headers["Content-Type"] = "application/json"
     r = urllib.request.urlopen(urllib.request.Request(url, data=data, headers=headers, method=method), timeout=30)
-    return r.status, json.loads(r.read().decode('utf-8'))
+    return r.status, json.loads(r.read().decode("utf-8"))
 
 ok = True
-print('== CareerLens 冒烟测试 ==')
+print("== CareerLens 冒烟测试 ==")
 
 try:
-    s, _ = req('GET', '/health')
-    mark = 'PASS' if s == 200 else 'FAIL'
-    print(f'  [{mark}] BFF 健康检查')
+    s, _ = req("GET", "/health")
+    print("  [PASS] BFF 健康检查" if s == 200 else "  [FAIL] BFF 健康检查")
     ok = ok and s == 200
 except Exception as e:
-    print(f'  [FAIL] BFF 健康检查 {e}')
+    print("  [FAIL] BFF 健康检查 " + str(e))
     sys.exit(1)
 
 try:
-    s, jobs = req('GET', '/api/jobs?size=3')
-    passed = s == 200 and jobs.get('total', 0) > 0
-    print(f'  [{\"PASS\" if passed else \"FAIL\"}] 岗位列表 total={jobs.get(\"total\",0)}')
+    s, jobs = req("GET", "/api/jobs?size=3")
+    passed = s == 200 and jobs.get("total", 0) > 0
+    print("  [PASS] 岗位列表 total=" + str(jobs.get("total", 0)) if passed else "  [FAIL] 岗位列表")
     ok = ok and passed
-    job_id = jobs['items'][0]['job_id']
+    job_id = jobs["items"][0]["job_id"]
 except Exception as e:
-    print(f'  [FAIL] 岗位列表 {e}')
+    print("  [FAIL] 岗位列表 " + str(e))
     sys.exit(1)
 
 try:
-    s, detail = req('GET', f'/api/jobs/{job_id}')
-    passed = s == 200 and bool(detail.get('description'))
-    print(f'  [{\"PASS\" if passed else \"FAIL\"}] 岗位详情')
+    s, detail = req("GET", "/api/jobs/" + str(job_id))
+    passed = s == 200 and bool(detail.get("description"))
+    print("  [PASS] 岗位详情" if passed else "  [FAIL] 岗位详情")
     ok = ok and passed
 except Exception as e:
-    print(f'  [FAIL] 岗位详情 {e}')
+    print("  [FAIL] 岗位详情 " + str(e))
 
-resume = '3年Java开发经验，熟悉Spring Boot、MySQL、Redis、Docker'
+resume = "3年Java开发经验，熟悉Spring Boot、MySQL、Redis、Docker"
 try:
-    s, res = req('POST', '/api/analyze', {'resume_text': resume, 'job_id': job_id})
-    passed = s == 200 and 'match_score' in res
-    print(f'  [{\"PASS\" if passed else \"FAIL\"}] 匹配分析 score={res.get(\"match_score\",\"?\")}')
+    s, res = req("POST", "/api/analyze", {"resume_text": resume, "job_id": job_id})
+    passed = s == 200 and "match_score" in res
+    score = res.get("match_score", "?")
+    print("  [PASS] 匹配分析 score=" + str(score) if passed else "  [FAIL] 匹配分析")
     ok = ok and passed
 except Exception as e:
-    print(f'  [FAIL] 匹配分析 {e}')
+    print("  [FAIL] 匹配分析 " + str(e))
 
-print(f'== 结果：{\"全部通过\" if ok else \"存在失败\"} ==')
+print("== 结果：" + ("全部通过" if ok else "存在失败") + " ==")
 sys.exit(0 if ok else 1)
-"
+SMOKE_EOF
+
+                    # 用 host 网络模式运行，可直接访问 localhost:3000
+                    docker run --rm --network host \
+                      -v /tmp/smoke_test.py:/tmp/smoke_test.py:ro \
+                      python:3.11-slim python /tmp/smoke_test.py
                 '''
             }
         }
