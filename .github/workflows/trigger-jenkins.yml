@@ -1,0 +1,105 @@
+name: Trigger Jenkins Job
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  trigger-jenkins:
+    runs-on: self-hosted  # 在本地 WSL Runner 上运行
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Jenkins Job via API
+        run: |
+          set -e
+
+          JENKINS_URL="http://localhost:8081"
+          JENKINS_USER="${{ secrets.JENKINS_USER }}"
+          JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
+
+          echo "=== 获取 Jenkins Crumb ==="
+          CRUMB_JSON=$(curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
+            "${JENKINS_URL}/crumbIssuer/api/json" || true)
+
+          if echo "$CRUMB_JSON" | grep -q "crumb"; then
+            CRUMB_FIELD=$(echo "$CRUMB_JSON" | jq -r '.crumbRequestField')
+            CRUMB_VALUE=$(echo "$CRUMB_JSON" | jq -r '.crumb')
+            echo "Crumb 获取成功"
+          else
+            echo "警告: 无法获取 Crumb, 可能 CSRF 已禁用"
+            CRUMB_FIELD=""
+            CRUMB_VALUE=""
+          fi
+
+          echo "=== 触发 Jenkins Job: test-job ==="
+          CRUMB_HEADER=""
+          if [ -n "$CRUMB_FIELD" ] && [ -n "$CRUMB_VALUE" ]; then
+            CRUMB_HEADER="-H ${CRUMB_FIELD}:${CRUMB_VALUE}"
+          fi
+
+          HTTP_CODE=$(curl -s -o /tmp/jenkins_response.txt -w "%{http_code}" \
+            -X POST \
+            -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
+            ${CRUMB_HEADER:+-H "$CRUMB_FIELD:$CRUMB_VALUE"} \
+            "${JENKINS_URL}/job/test-job/build")
+
+          echo "HTTP Status: $HTTP_CODE"
+
+          if [ "$HTTP_CODE" = "201" ] || [ "$HTTP_CODE" = "200" ]; then
+            echo "✅ Jenkins Job 触发成功!"
+          elif [ "$HTTP_CODE" = "401" ]; then
+            echo "❌ 认证失败，请检查 JENKINS_USER 和 JENKINS_TOKEN"
+            exit 1
+          else
+            echo "❌ 触发失败, 响应:"
+            cat /tmp/jenkins_response.txt
+            exit 1
+          fi
+
+      - name: Wait for Jenkins build to complete
+        run: |
+          JENKINS_URL="http://localhost:8081"
+          JENKINS_USER="${{ secrets.JENKINS_USER }}"
+          JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
+
+          echo "等待 Jenkins 构建完成..."
+          for i in $(seq 1 30); do
+            RESULT=$(curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
+              "${JENKINS_URL}/job/test-job/lastBuild/api/json" 2>/dev/null)
+
+            BUILDING=$(echo "$RESULT" | jq -r '.building // "unknown"')
+            BUILD_NUM=$(echo "$RESULT" | jq -r '.number // "unknown"')
+            BUILD_RESULT=$(echo "$RESULT" | jq -r '.result // "null"')
+
+            echo "  [${i}/30] Build #${BUILD_NUM} - Building: ${BUILDING}, Result: ${BUILD_RESULT}"
+
+            if [ "$BUILDING" = "false" ]; then
+              if [ "$BUILD_RESULT" = "SUCCESS" ]; then
+                echo "✅ Jenkins 构建成功!"
+                exit 0
+              else
+                echo "❌ Jenkins 构建失败: ${BUILD_RESULT}"
+                exit 1
+              fi
+            fi
+
+            sleep 5
+          done
+
+          echo "⏰ 等待超时"
+          exit 1
+
+      - name: Show Jenkins build log
+        if: always()
+        run: |
+          JENKINS_URL="http://localhost:8081"
+          JENKINS_USER="${{ secrets.JENKINS_USER }}"
+          JENKINS_TOKEN="${{ secrets.JENKINS_TOKEN }}"
+
+          echo "=== Jenkins Console Output ==="
+          curl -s -u "${JENKINS_USER}:${JENKINS_TOKEN}" \
+            "${JENKINS_URL}/job/test-job/lastBuild/consoleText" 2>/dev/null || echo "(无法获取日志)"
