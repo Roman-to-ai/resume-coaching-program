@@ -1,11 +1,12 @@
+/* ── 基础重置（两个视图共用） ─ */
 :root {
-  --bg: #fffbf7;
+  --bg: #fef5f5;
   --card: #ffffff;
-  --border: #f0e0d0;
-  --text: #2d1f14;
-  --muted: #9a8577;
-  --primary: #f97316;
-  --primary-soft: #fff4eb;
+  --border: #f0d0d0;
+  --text: #2d1414;
+  --muted: #9a7777;
+  --primary: #e53e3e;
+  --primary-soft: #fff0f0;
   --success: #16a34a;
   --warn: #eab308;
   --danger: #dc2626;
@@ -27,13 +28,14 @@ body {
   line-height: 1.6;
 }
 
-#app {
+/* ── 原 CareerLens 应用专属样式（仅在 .app-view 下生效） ─ */
+.app-view {
   max-width: 1280px;
   margin: 0 auto;
   padding: 24px;
 }
 
-button {
+.app-view button {
   cursor: pointer;
   border: 1px solid var(--border);
   background: #fff;
@@ -44,30 +46,30 @@ button {
   transition: all 0.15s;
 }
 
-button:hover:not(:disabled) {
+.app-view button:hover:not(:disabled) {
   border-color: var(--primary);
   color: var(--primary);
 }
 
-button.primary {
+.app-view button.primary {
   background: var(--primary);
   color: #fff;
   border-color: var(--primary);
 }
 
-button.primary:hover:not(:disabled) {
+.app-view button.primary:hover:not(:disabled) {
   opacity: 0.9;
   color: #fff;
 }
 
-button:disabled {
+.app-view button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-input,
-textarea,
-select {
+.app-view input,
+.app-view textarea,
+.app-view select {
   width: 100%;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -78,14 +80,14 @@ select {
   background: #fff;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
+.app-view input:focus,
+.app-view textarea:focus,
+.app-view select:focus {
   outline: none;
   border-color: var(--primary);
 }
 
-.card {
+.app-view .card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;

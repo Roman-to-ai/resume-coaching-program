@@ -6,10 +6,10 @@ const props = defineProps({ result: { type: Object, default: null } });
 const levelMeta = computed(() => {
   const map = {
     high: { label: '高度匹配', color: '#16a34a' },
-    medium: { label: '中等匹配', color: '#f97316' },
+    medium: { label: '中等匹配', color: '#e53e3e' },
     low: { label: '匹配度较低', color: '#dc2626' },
   };
-  return map[props.result?.level] || { label: '-', color: '#9a8577' };
+  return map[props.result?.level] || { label: '-', color: '#9a7777' };
 });
 
 function importanceLabel(v) {

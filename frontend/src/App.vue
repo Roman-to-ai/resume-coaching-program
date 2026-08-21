@@ -1,9 +1,17 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+
+// ─────────────────────────────────────────────────
+// 切换开关：改为 true 显示 DeepSeek 风格首页
+//           改为 false 显示原 CareerLens 应用
+// ─────────────────────────────────────────────────
+const SHOW_HOMEPAGE = false;
+
 import { listJobs, getJob, analyze } from './api';
 import ResumeInput from './components/ResumeInput.vue';
 import JobPicker from './components/JobPicker.vue';
 import ResultPanel from './components/ResultPanel.vue';
+import HomePage from './components/homepage/HomePage.vue';
 
 const resumeText = ref('');
 const jobs = ref([]);
@@ -89,6 +97,11 @@ onMounted(() => loadJobs());
 </script>
 
 <template>
+  <!-- 切换 SHOW_HOMEPAGE 常量来切换视图 -->
+  <HomePage v-if="SHOW_HOMEPAGE" />
+
+  <template v-else>
+  <div class="app-view">
   <header class="header">
     <div class="brand">
       <span class="logo">CL</span>
@@ -142,11 +155,13 @@ onMounted(() => loadJobs());
     </div>
 
     <section id="result" class="card">
-      <h2>③ 分析结果</h2>
+      <h2> 分析结果</h2>
       <ResultPanel :result="result" />
       <p v-if="!result" class="placeholder">填写简历并选择岗位后，点击「开始匹配分析」查看结果</p>
     </section>
   </main>
+  </div>
+  </template>
 </template>
 
 <style scoped>
@@ -236,7 +251,7 @@ h2 {
   padding: 12px;
   max-height: 280px;
   overflow-y: auto;
-  background: #fef8f3;
+  background: #fef5f5;
   border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 13px;
