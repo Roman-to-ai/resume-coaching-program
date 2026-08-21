@@ -187,7 +187,7 @@ pipeline {
                     cat > smoke_test_ci.py << 'SMOKE_EOF'
 import json, sys, urllib.request
 
-BASE = "http://localhost:3000"
+BASE = "http://bff:3000"
 
 def req(method, path, payload=None):
     url = BASE + path
@@ -242,8 +242,8 @@ print("== 结果：" + ("全部通过" if ok else "存在失败") + " ==")
 sys.exit(0 if ok else 1)
 SMOKE_EOF
 
-                    # 通过 stdin 把脚本传给容器（避免卷挂载路径问题）
-                    cat smoke_test_ci.py | docker run --rm --network host -i python:3.11-slim python -
+                    # 通过 CI compose 网络访问 BFF 服务
+                    cat smoke_test_ci.py | docker run --rm --network careerlens-ci_default -i python:3.11-slim python -
                     rm -f smoke_test_ci.py
                 '''
             }
